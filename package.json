@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "publish:tree": "cd /tree-creator && npm publish"
+    "publish:tree": "cd dist/v/tree-creator && npm publish"
   },
   "private": true,
   "dependencies": {

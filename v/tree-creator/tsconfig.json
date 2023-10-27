@@ -21,6 +21,8 @@
   ],
   "extends": "../../tsconfig.base.json",
   "angularCompilerOptions": {
+    "enableIvy": true,
+    "compilationMode": "partial",
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,

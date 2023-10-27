@@ -9,7 +9,7 @@
     "inlineSources": true,
     "paths": {
       "@v/tree": ["./dist/tree-creator/*"],
-
     }
-  }
+  },
+
 }
