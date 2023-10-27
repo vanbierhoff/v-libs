@@ -1,0 +1,49 @@
+{
+  "name": "v/tree-creator",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "v/tree-creator/src",
+  "prefix": "v-libs",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "tsConfig": "tsconfig.build.json",
+        "project": "v/tree-creator/ng-package.json"
+      },
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "dependencies",
+          "params": "forward"
+        }
+      ]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "v/tree-creator/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "v/tree-creator/**/*.ts",
+          "v/tree-creator/**/*.html"
+        ]
+      }
+    }
+  }
+}
