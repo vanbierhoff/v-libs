@@ -1,0 +1,33 @@
+{
+  "name": "v-libs-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/v-libs-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/v-libs-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "v-libs:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "v-libs:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "v-libs:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/v-libs-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["v-libs"]
+}
