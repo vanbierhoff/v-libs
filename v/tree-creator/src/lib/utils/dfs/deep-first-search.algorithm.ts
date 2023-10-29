@@ -3,34 +3,33 @@ import { DeepFirstInterface } from './models/deep-first.interface';
 
 const notByField = Symbol('notField');
 
-export function deepFirstSearchAlgorithm(tree: object, options?: DeepFirstInterface) {
+export function deepFirstSearchAlgorithm(tree: object, options: DeepFirstInterface) {
   if (options) {
     options['deep'] = options?.deep || -1;
     options['byField'] = options?.byField || notByField;
   }
   if (!Array.isArray(tree)) {
-    return deepSearchByObject(tree, options);
+    return deepSearchByObject(tree, options );
   }
 }
 
 
 
 function deepSearchByObject(tree: object, options: DeepFirstInterface) {
-  const deepSearch = (obj, options) => {
+  const deepSearch = (obj: any, options: DeepFirstInterface): any => {
     const isList = Object.keys(tree).length === 1;
     const keys: string[] = Object.keys(obj);
-    if (isList) {
       if (options.byField !== notByField) {
-        const res = keys.some(key => obj[key] === options.asResult);
+        const res = keys.find(key => obj[key] === options.asResult);
         if (res) {
-          return true;
+          return obj[res];
         }
       }
-      if (tree.hasOwnProperty(options.byField)) {
-        return obj[options.byField];
+      if (tree.hasOwnProperty(options.byField as any)) {
+        return obj[options.byField as string];
       }
-    }
-    return keys.find(item => deepSearch(obj[item], options));
+
+    return keys.find(item => deepSearch(obj[item] as any, options));
   };
 
   return deepSearch(tree, options);

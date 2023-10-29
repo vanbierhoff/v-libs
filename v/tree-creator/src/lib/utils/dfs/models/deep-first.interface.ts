@@ -8,7 +8,7 @@ export interface DeepFirstInterface {
   /**
    * During searched function searches  a data in only fields with this name
    */
-  searchByField: string;
+  searchByField?: string;
   deep?: number ;
-  asResult: any;
+  asResult?: any;
 }
