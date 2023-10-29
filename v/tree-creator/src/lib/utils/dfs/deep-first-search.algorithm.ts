@@ -17,19 +17,19 @@ export function deepFirstSearchAlgorithm(tree: object, options: DeepFirstInterfa
 
 function deepSearchByObject(tree: object, options: DeepFirstInterface) {
   const deepSearch = (obj: any, options: DeepFirstInterface): any => {
-    const isList = Object.keys(tree).length === 1;
     const keys: string[] = Object.keys(obj);
       if (options.byField !== notByField) {
         const res = keys.find(key => obj[key] === options.asResult);
         if (res) {
           return obj[res];
         }
-      }
-      if (tree.hasOwnProperty(options.byField as any)) {
-        return obj[options.byField as string];
+        if (tree.hasOwnProperty(options.byField as string)) {
+          return obj[options.byField as string];
+        }
       }
 
-    return keys.find(item => deepSearch(obj[item] as any, options));
+
+    return keys.find(item => deepSearch(obj[item] as object, options));
   };
 
   return deepSearch(tree, options);
