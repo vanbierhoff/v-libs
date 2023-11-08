@@ -14,7 +14,7 @@ export class AppComponent  implements  OnInit{
 
   ngOnInit() {
     const result = deepFirstSearchAlgorithm(MOCK_OBJECT_FOR_DEEP, {
-      byField: 'twoObj'
+      asResult: 'id2'
     });
 
     console.log(result);

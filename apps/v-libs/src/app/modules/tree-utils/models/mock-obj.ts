@@ -23,3 +23,23 @@ export const MOCK_OBJECT_FOR_DEEP = {
     }
   }
 };
+
+
+export const MOCK_ARRAY_FOR_DEEP = [
+  1,
+  {
+    id: 5,
+    name: 'name',
+    child: [
+      1, 2
+    ]
+  },
+  [
+    {id: 100},
+    [
+      {name: 'name2'},
+      {name: 'name3'}
+    ]
+  ],
+  {id: 10}
+];
