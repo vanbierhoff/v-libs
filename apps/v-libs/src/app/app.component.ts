@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { deepFirstSearchAlgorithm } from '@v-libs/v/tree-creator';
-import { MOCK_OBJECT_FOR_DEEP } from './modules/tree-utils/models/mock-obj';
+import { MOCK_ARRAY_FOR_DEEP, MOCK_OBJECT_FOR_DEEP } from './modules/tree-utils/models/mock-obj';
+
 
 @Component({
   selector: 'v-libs-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent  implements  OnInit{
+export class AppComponent implements OnInit {
   title = 'v-libs';
 
 
@@ -18,6 +19,11 @@ export class AppComponent  implements  OnInit{
     });
 
     console.log(result);
+
+    const result2 = deepFirstSearchAlgorithm(MOCK_ARRAY_FOR_DEEP, {
+      asResult: 10
+    });
+    console.log(result2);
   }
 
 }
