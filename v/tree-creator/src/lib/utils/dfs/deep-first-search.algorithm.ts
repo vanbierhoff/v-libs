@@ -2,6 +2,7 @@ import { DeepFirstInterface } from './models/deep-first.interface';
 import { isPrimitive } from '../../helpers';
 import { NOT_BY_FIELD } from '../../consts/consts';
 import { deepSearchInObj } from './search-in-obj';
+import { searchInArray } from './search-in-array';
 
 
 
@@ -13,6 +14,10 @@ export function deepFirstSearchAlgorithm<T>(tree: T, options: DeepFirstInterface
   }
   if (!Array.isArray(tree)) {
     return deepSearchByObject(tree as any, options);
+  }
+
+  if (Array.isArray(tree)) {
+    return deepSearchByArray(tree, options);
   }
 }
 
@@ -26,10 +31,5 @@ function deepSearchByObject(tree: object, options: DeepFirstInterface) {
 const tree = [1, {name: 'name'}];
 
 function deepSearchByArray<T = any>(tree: Array<T>, options: DeepFirstInterface): void {
-  const deepSearch = (node: T, opt: DeepFirstInterface, index = 0) => {
-    if (isPrimitive(node) && node === options.asResult) {
-      return node;
-    }
-    return
-  };
+  return searchInArray(tree, options);
 }
