@@ -10,7 +10,7 @@ import { MOCK_ARRAY_FOR_DEEP, MOCK_OBJECT_FOR_DEEP } from './modules/tree-utils/
 })
 export class AppComponent implements OnInit {
   title = 'v-libs';
-
+  users = [1,2, 3]
 
 
   ngOnInit() {

@@ -12,6 +12,8 @@ import { MOCK_OBJECT_FOR_DEEP } from './models/mock-obj';
 export class TreeUtilsComponent implements OnInit {
 
 
+  users = [1,2, 3]
+
   ngOnInit() {
     const result = deepFirstSearchAlgorithm(MOCK_OBJECT_FOR_DEEP, {
       byField: 'twoObj'

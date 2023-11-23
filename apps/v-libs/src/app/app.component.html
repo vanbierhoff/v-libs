@@ -1,1 +1,6 @@
-<v-libs-nx-welcome></v-libs-nx-welcome> <router-outlet></router-outlet>
+@for (user of users; track $index) {
+{{ user }}
+        } @empty {
+Empty list of users
+}
+<h1> hello</h1>
