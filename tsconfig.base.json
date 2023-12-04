@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@v-libs/v/tree-creator": ["v/tree-creator/src/index.ts"]
+      "@v-libs/v/tree-creator": ["v/tree-creator/src/index.ts"],
+      "@v/f-core": ["v/f-core/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

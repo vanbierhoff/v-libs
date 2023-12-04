@@ -1,0 +1,44 @@
+{
+  "name": "f-core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "v/f-core/src",
+  "prefix": "v-libs",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "v/f-core/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "v/f-core/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "v/f-core/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "v/f-core/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "v/f-core/**/*.ts",
+          "v/f-core/**/*.html",
+          "v/f-core/package.json"
+        ]
+      }
+    }
+  }
+}

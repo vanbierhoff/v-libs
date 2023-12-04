@@ -3,7 +3,7 @@
   "allowedNonPeerDependencies": [
     "."
   ],
-  "dest": "../../dist/v/tree-creator",
+  "dest": "../../dist/v/form-core",
   "lib": {
     "entryFile": "./src/index.ts"
   }
