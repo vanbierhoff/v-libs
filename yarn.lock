@@ -3202,6 +3202,34 @@
     "@typescript-eslint/types" "6.12.0"
     eslint-visitor-keys "^3.4.1"
 
+"@v/event-stack@^0.0.4":
+  version "0.0.4"
+  resolved "http://potato.myfast.host/@v/event-stack/-/event-stack-0.0.4.tgz#fa43a909522d2a5477769cef09aaaca058e3f401"
+  integrity sha512-q9hdZcbmItLmEbm3zXQLDvhx/WbYAUu7y0mnJuG3E9reTJY624HxXELGBJVY6OqypPU5M8dkCjRf/M89bUjjGA==
+  dependencies:
+    tslib "^2.3.0"
+
+"@v/meta-helper@^0.0.3":
+  version "0.0.3"
+  resolved "http://potato.myfast.host/@v/meta-helper/-/meta-helper-0.0.3.tgz#164e8d0002cc6885c678210e98754a70cadb2c35"
+  integrity sha512-ADlnYEp1s0gLUaHSIviAOup6GT+GySEQwewl/cZWE64zRTEU1RhMBgWH844tBhkK5q7gA4An9b00QkLXWZtIRA==
+  dependencies:
+    tslib "^2.3.0"
+
+"@v/r-types@^0.0.4":
+  version "0.0.4"
+  resolved "http://potato.myfast.host/@v/r-types/-/r-types-0.0.4.tgz#e9d0e568347640129393654bad47b07979892e15"
+  integrity sha512-o4A+3opgNHULAB9rd/4r3jE7fFRi5V8RmfDJU2UYp0wpiyc9CvhhCMTxZ6kgD7rsQEODSG4GwVVk16fjvoOEGA==
+  dependencies:
+    tslib "^2.3.0"
+
+"@v/store@^0.1.4":
+  version "0.1.4"
+  resolved "http://potato.myfast.host/@v/store/-/store-0.1.4.tgz#20e6b7077508b3190b0d16fa3fc5cea8d7fac7ae"
+  integrity sha512-o0bCga3vNzrKtrP19teguR5ItMZeFkjIOA1T/OfKMsfvInT7RbSFAErPBFb6y//Gf1WQkNQWktwKYQiRn7AMvQ==
+  dependencies:
+    tslib "^2.3.0"
+
 "@vitejs/plugin-basic-ssl@1.0.1":
   version "1.0.1"
   resolved "http://potato.myfast.host/@vitejs/plugin-basic-ssl/-/plugin-basic-ssl-1.0.1.tgz#48c46eab21e0730921986ce742563ae83fe7fe34"
