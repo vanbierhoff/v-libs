@@ -1,5 +1,4 @@
 import { DeepFirstInterface } from './models/deep-first.interface';
-import { isPrimitive } from '../../helpers';
 import { NOT_BY_FIELD } from '../../consts/consts';
 import { deepSearchInObj } from './search-in-obj';
 import { searchInArray } from './search-in-array';

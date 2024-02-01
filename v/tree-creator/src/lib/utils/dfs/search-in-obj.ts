@@ -19,7 +19,9 @@ export const deepSearchInObj = (obj: any, options: DeepFirstInterface): any => {
   keys.find(item => {
     if (typeof obj[item] === 'object') {
       result = deepSearchInObj(obj[item] as object, options);
+      return result;
     }
+    return false;
   });
   return result;
 };

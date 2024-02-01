@@ -1,6 +1,12 @@
-@for (user of users; track user.id) {
-{{ user.name }}
-  } @empty {
-Empty list of users
+<!--@for (user of users; track user.id) {-->
+<!--{{ user.name }}-->
+<!--  } @empty {-->
+<!--Empty list of users-->
+<!--}-->
+
+@for (user of users; track user) {
+  {{ user }}
+} @empty {
+  Empty list of users
 }
 <h1> hello</h1>

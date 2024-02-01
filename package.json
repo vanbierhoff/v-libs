@@ -18,14 +18,15 @@
     "@angular/router": "17.0.4",
     "@nx/angular": "17.1.3",
     "@types/lodash": "^4.14.201",
-    "@v/event-stack": "^0.0.4",
+    "@v/event-stack": "^0.0.7",
     "@v/meta-helper": "^0.0.3",
     "@v/r-types": "^0.0.4",
-    "@v/store": "^0.1.4",
+    "@v/store": "^0.1.17",
     "lodash": "^4.17.21",
     "ng-packagr": "^16.2.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "validator": "^13.11.0",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {

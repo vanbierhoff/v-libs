@@ -3202,10 +3202,10 @@
     "@typescript-eslint/types" "6.12.0"
     eslint-visitor-keys "^3.4.1"
 
-"@v/event-stack@^0.0.4":
-  version "0.0.4"
-  resolved "http://potato.myfast.host/@v/event-stack/-/event-stack-0.0.4.tgz#fa43a909522d2a5477769cef09aaaca058e3f401"
-  integrity sha512-q9hdZcbmItLmEbm3zXQLDvhx/WbYAUu7y0mnJuG3E9reTJY624HxXELGBJVY6OqypPU5M8dkCjRf/M89bUjjGA==
+"@v/event-stack@^0.0.7":
+  version "0.0.7"
+  resolved "http://potato.myfast.host/@v/event-stack/-/event-stack-0.0.7.tgz#51661b0fa761e3e1caeaed2324ad7b7c598294c8"
+  integrity sha512-m7iJVze7KK1H7R4FJpaPA2+F0GbbWapq+AT2baMJa/MOWZivM1K6ylQSGGFBNLTToXtsd959cFldnYhDpFZrzQ==
   dependencies:
     tslib "^2.3.0"
 
@@ -3223,10 +3223,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@v/store@^0.1.4":
-  version "0.1.4"
-  resolved "http://potato.myfast.host/@v/store/-/store-0.1.4.tgz#20e6b7077508b3190b0d16fa3fc5cea8d7fac7ae"
-  integrity sha512-o0bCga3vNzrKtrP19teguR5ItMZeFkjIOA1T/OfKMsfvInT7RbSFAErPBFb6y//Gf1WQkNQWktwKYQiRn7AMvQ==
+"@v/store@^0.1.17":
+  version "0.1.17"
+  resolved "http://potato.myfast.host/@v/store/-/store-0.1.17.tgz#5dfa2d17ba4d29459671f8cc6d2def80652d2c3c"
+  integrity sha512-S0lVBy2QjZIVu/OlFrs2Rop31LETCFdTe2ogzlAlO09ua6X3TYXtQQofrHjznapnAisK5LyzfNOlL0FIvaOo3A==
   dependencies:
     tslib "^2.3.0"
 
@@ -10710,6 +10710,11 @@ validate-npm-package-name@^5.0.0:
   integrity sha512-YuKoXDAhBYxY7SfOKxHBDoSyENFeW5VvIIQp2TGQuit8gpK6MnWaQelBKxso72DoxTZfZdcP3W90LqpSkgPzLQ==
   dependencies:
     builtins "^5.0.0"
+
+validator@^13.11.0:
+  version "13.11.0"
+  resolved "http://potato.myfast.host/validator/-/validator-13.11.0.tgz#23ab3fd59290c61248364eabf4067f04955fbb1b"
+  integrity sha512-Ii+sehpSfZy+At5nPdnyMhx78fEoPDkR2XW/zimHEL3MyGJQOCQ7WeP20jPYRz7ZCpcKLB21NxuXHF3bxjStBQ==
 
 vary@^1, vary@~1.1.2:
   version "1.1.2"
