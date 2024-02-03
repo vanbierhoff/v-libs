@@ -7,5 +7,6 @@ import { FormField } from '../../../../../../../../v/f-core/src/lib/decorators/f
 export class BaseForm {
 
   @FormField
-  public baseInput: string = 'trueField';
+  // @ts-ignore
+  public baseInput: number = 'trueField';
 }

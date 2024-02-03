@@ -21,5 +21,6 @@ export class FormsComponent implements OnInit {
     console.log(form);
     const formItem = createForm<BaseForm>(BaseForm);
     console.log(formItem.getField('baseInput'));
+    formItem.validate().then(res => console.log(res));
   }
 }

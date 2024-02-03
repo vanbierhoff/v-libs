@@ -3,6 +3,7 @@ import { FormFieldMeta } from './models/form-field.meta';
 import { addMetaField } from '@v/meta-helper';
 import { FORM_META_FIELD } from '../../consts';
 import { FIELD_TYPES_LIST } from '../../form-instances/form-field/models/field-types.list';
+import { getBaseValidator, ValidatorInterface } from '@v/store';
 
 
 export function FormField<T = any>(options?: FormFieldOptionsInterface): PropertyDecorator;
@@ -14,6 +15,15 @@ export function FormField(optionsOrTarget: any = {}, key?: string) {
   ): any {
     const t = (Reflect as any).getMetadata('design:type', target, propertyName);
     const options = key ? {} : optionsOrTarget;
+    const baseValidator: false | ValidatorInterface = getBaseValidator(t);
+
+    if (baseValidator) {
+      if (options?.validators) {
+        options.validators = [...options.validators, baseValidator];
+      } else {
+        options.validators = [baseValidator];
+      }
+    }
     const formField: FormFieldMeta = {
       propertyName,
       type: t,

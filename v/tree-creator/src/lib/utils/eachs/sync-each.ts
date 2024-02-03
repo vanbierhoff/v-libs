@@ -6,7 +6,13 @@ export interface AsyncEachOptionsInterface {
   interval?: number;
 }
 
-
+/**
+ * Function for asyn traversing large arrays
+ *
+ * @param array
+ * @param fn
+ * @param options
+ */
 export const asyncEach = <T>(array: Array<T>, fn: (item: T, index: number) => void, options: AsyncEachOptionsInterface) => {
   let time = Date.now();
   let i = 0;
