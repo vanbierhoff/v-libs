@@ -1,0 +1,8 @@
+
+:host {
+  --colorTitle: red;
+}
+
+.title {
+  color: var(--colorTitle);
+}

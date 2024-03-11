@@ -7,9 +7,7 @@ import { FormField } from '../form-instances/form-field/form-field';
 
 @NgModule({
   imports: [
-    StoreModule.forRoot({
-      storeFieldInstance: FormField
-    })
+    StoreModule
   ]
 })
 export class FCoreModule {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { deepFirstSearchAlgorithm } from '@v-libs/v/tree-creator';
 import { MOCK_ARRAY_FOR_DEEP, MOCK_OBJECT_FOR_DEEP } from './modules/tree-utils/models/mock-obj';
 
@@ -10,7 +10,20 @@ import { MOCK_ARRAY_FOR_DEEP, MOCK_OBJECT_FOR_DEEP } from './modules/tree-utils/
 })
 export class AppComponent implements OnInit {
   title = 'v-libs';
-  users = [1,2, 3]
+  users = [1, 2, 3];
+
+
+  @HostBinding('style.color')
+  color = 'red';
+
+  @HostBinding('style.color')
+  colorRed = 'green';
+
+  // @HostBinding('style.--vars-color')
+  // colorVar = 'red';
+
+  @HostBinding('class.valid')
+  styVart = true;
 
 
   ngOnInit() {

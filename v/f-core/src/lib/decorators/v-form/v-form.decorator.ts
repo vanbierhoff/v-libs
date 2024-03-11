@@ -1,11 +1,8 @@
 import map from 'lodash/map';
 import { addMetaField } from '@v/meta-helper';
-
 import { getGlobalInjector } from '@v/store';
 import { FORM_META_INSTANCE } from '../../consts';
-import { createFormFields } from '../../form-builder-functions/create-form-field';
-import { FormFieldMeta } from '../form-fields/models/form-field.meta';
-import { FormField } from '../../form-instances/form-field/form-field';
+
 
 
 
@@ -28,9 +25,6 @@ export function VFormDecorator(options?: any): any {
           });
         }
         super(...args);
-        const fields: FormField[] = createFormFields(this);
-        console.log(fields);
-
       }
     };
   };

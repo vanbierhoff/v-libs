@@ -7,22 +7,25 @@ import {
   StoreFieldInstanceInterface
 } from '@v/store/store/store-items/store-field/models/store-field-instance.interface';
 import { TypeEvent } from '@v/event-stack';
+import { VFormInstance } from '../form-instance/form-instance';
+
 
 export class FormField<T = any, I_EVENTS = FormFieldEventsInterface<T>> extends StoreFieldInstance<T, I_EVENTS>
   implements StoreFieldInstanceInterface<T, I_EVENTS> {
 
   protected fieldType: FieldTypes;
 
-
-  constructor(config: FormFieldMetaInterface, value?: T) {
+  // добаврить сюда  ссылку на form?
+  constructor(config: FormFieldMetaInterface, form: VFormInstance<T>, value?: T) {
     super(config, value);
     this.fieldType = config.fieldType;
+    this.#form = form;
     this.eventStackManager.addMultiple
     ([FORM_FIELD_EVENTS.formFieldInit, FORM_FIELD_EVENTS.formFieldChange, FORM_FIELD_EVENTS.validate]);
   }
 
   protected errors: ValidationError[] = [];
-
+  #form: VFormInstance<T>;
 
   override async validate(): Promise<true | ValidationError[]> {
     const validate = await super.validate();

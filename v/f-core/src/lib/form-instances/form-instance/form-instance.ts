@@ -4,7 +4,7 @@ import { FormField } from '../form-field/form-field';
 
 export type VFormConstructor = new (...args: any[]) => any;
 
-export class VFormInstance<T, F> {
+export class VFormInstance<F> {
 
   constructor(form: F, fieldManager: FieldManager<FormField<any, any>>) {
     this.form = form;

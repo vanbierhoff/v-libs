@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FCoreModule } from '../../../../../../v/f-core/src/lib/form-mobule/f-core.module';
 import { BaseForm } from './models/base-form/base-form';
@@ -15,6 +15,9 @@ import { createForm } from '../../../../../../v/f-core/src/lib/form-builder-func
 })
 export class FormsComponent implements OnInit {
 
+  @HostBinding('style.--colorTitle')
+  public color: string = 'green';
+
 
   ngOnInit() {
     const form = new BaseForm();
@@ -22,5 +25,10 @@ export class FormsComponent implements OnInit {
     const formItem = createForm<BaseForm>(BaseForm);
     console.log(formItem.getField('baseInput'));
     formItem.validate().then(res => console.log(res));
+
+    setTimeout(() => {
+      this.color = 'blue';
+      console.log(this)
+    }, 3500)
   }
 }
