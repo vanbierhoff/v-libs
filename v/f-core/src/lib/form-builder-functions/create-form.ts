@@ -6,7 +6,7 @@ import { addFormToStore, formMonad } from '../form-meta-store/add-to-store';
 import { CREATED_FORM_META } from '../form-meta-store/const/form-meta-keys';
 
 
-export function createForm<F>(form: VFormConstructor): VFormInstance<F> {
+export function createForm<F>(form: VFormConstructor): F {
   let vForm = {};
 
   const formInstance = new form();
@@ -16,10 +16,5 @@ export function createForm<F>(form: VFormConstructor): VFormInstance<F> {
   vForm = new VFormInstance(formInstance, manager);
   addFormToStore(formInstance, CREATED_FORM_META, vForm as VFormInstance<F>);
 
-  const formData = formMonad(formInstance).chain((form: any) => {
-    form.baseInput = 'newValueFleid';
-    return form;
-  }).get();
-  console.log(formData);
-  return vForm as VFormInstance<F>;
+  return formInstance;
 }
