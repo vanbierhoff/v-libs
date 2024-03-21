@@ -6,6 +6,11 @@ import { FormField } from '../../../../../../../../v/f-core/src/lib/decorators/f
 @VFormDecorator()
 export class BaseForm {
 
-  @FormField
-  public baseInput: string = 'trueField';
+  @FormField({
+    initHook: (field) =>  {
+      console.log(field)
+      console.log(field.form)
+    }
+  })
+  public baseInput: string = '10';
 }

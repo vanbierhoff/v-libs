@@ -25,11 +25,12 @@ export class FormsComponent implements OnInit {
     const form = new BaseForm();
     console.log(form);
     const formItem = createForm<BaseForm>(BaseForm);
-
+    console.log(formMonad(formItem).get())
     const formInstance:VFormInstance<any> = formMonad(formItem).chain((form: any) => {
       form.baseInput = 'newValueFleid';
       return form;
     }).get();
+    console.log(formInstance)
     console.log(formInstance.getField('baseInput'));
     formInstance.validate().then(res => console.log(res));
 

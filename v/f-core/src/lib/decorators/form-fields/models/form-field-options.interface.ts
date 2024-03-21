@@ -6,7 +6,8 @@ import { FormField } from '../../../form-instances/form-field/form-field';
 
 
 export interface FormFieldOptionsInterface extends StoreFieldDecoratorInterface<any, FormField> {
-  type: BaseTypes | any;
-  fieldType: FieldTypes;
+  type?: BaseTypes | any;
+  fieldType?: FieldTypes;
+
 }
 

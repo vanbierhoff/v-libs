@@ -24,11 +24,8 @@ export function createFormFields<T extends object>(formInstance: Record<string |
         fieldType: allFields[i].fieldType,
         type: allFields[i].type,
         propertyName: allFields[i].propertyName,
-      }, form, fieldValue
+      }, fieldValue
     );
-    if ('initHook' in allFields[i]) {
-      allFields[i]!.initHook(field);
-    }
     formFields.push(field);
   }
 

@@ -8,6 +8,7 @@ import {
 } from '@v/store/store/store-items/store-field/models/store-field-instance.interface';
 import { TypeEvent } from '@v/event-stack';
 import { VFormInstance } from '../form-instance/form-instance';
+import { formMonad } from '../../form-meta-store/add-to-store';
 
 
 export class FormField<T = any, I_EVENTS = FormFieldEventsInterface<T>> extends StoreFieldInstance<T, I_EVENTS>
@@ -15,17 +16,38 @@ export class FormField<T = any, I_EVENTS = FormFieldEventsInterface<T>> extends 
 
   protected fieldType: FieldTypes;
 
-  // добаврить сюда  ссылку на form?
-  constructor(config: FormFieldMetaInterface, form: VFormInstance<T>, value?: T) {
+  constructor(config: FormFieldMetaInterface, value?: T) {
     super(config, value);
     this.fieldType = config.fieldType;
-    this.#form = form;
     this.eventStackManager.addMultiple
     ([FORM_FIELD_EVENTS.formFieldInit, FORM_FIELD_EVENTS.formFieldChange, FORM_FIELD_EVENTS.validate]);
   }
 
+  get form(): VFormInstance<T> {
+    return this.#form;
+  }
+
+  set form(form: VFormInstance<T>) {
+    if (this.#form instanceof VFormInstance) {
+      return;
+    }
+    this.#form = form;
+  }
+
+  set initialized(initialized: true) {
+    if (this.#initialized) {
+      console.error('form field already initialized');
+      return;
+    }
+    this.#initialized = true;
+    this.eventStackManager.emit(FORM_FIELD_EVENTS.formFieldInit, this);
+
+  }
+
+  #form: VFormInstance<T> = {} as VFormInstance<T>;
+  #initialized: boolean = false;
   protected errors: ValidationError[] = [];
-  #form: VFormInstance<T>;
+
 
   override async validate(): Promise<true | ValidationError[]> {
     const validate = await super.validate();
