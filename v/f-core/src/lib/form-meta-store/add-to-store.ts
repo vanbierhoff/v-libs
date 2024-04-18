@@ -2,12 +2,10 @@ import { addMetaField, getMetadata } from '@v/meta-helper';
 import { VFormInstance } from '../form-instances/form-instance/form-instance';
 import { CREATED_FORM_META } from './const/form-meta-keys';
 
-// сделать функтор или монаду для получения форм
 
 export const addFormToStore = <T extends object>(formTarget: T, key: string, form: VFormInstance<T>) => {
   addMetaField(formTarget, key, form);
 };
-
 
 const maybe = (key: string) => {
   const nestedMaybe = (target: any, chainRes?: any) => {

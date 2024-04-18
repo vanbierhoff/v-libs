@@ -1,5 +1,5 @@
 {
-  "name": "v-f-ui",
+  "name": "@v/f-ui",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "v/f-ui/src",
   "prefix": "v-libs",

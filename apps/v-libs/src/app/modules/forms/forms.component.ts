@@ -5,13 +5,15 @@ import { BaseForm } from './models/base-form/base-form';
 import { createForm } from '../../../../../../v/f-core/src/lib/form-builder-functions/create-form';
 import { formMonad } from '../../../../../../v/f-core/src/lib/form-meta-store/add-to-store';
 import { VFormInstance } from '../../../../../../v/f-core/src/lib/form-instances/form-instance/form-instance';
+import { VInputComponent } from '../../../../../../v/f-ui/src/lib/ui-elements/v-input/v-input.component';
+import { VCompositionComponent } from '../../../../../../v/f-ui/src/lib/ui-elements/v-label/v-composition.component';
 
 
 
 @Component({
   selector: 'v-libs-forms',
   standalone: true,
-  imports: [CommonModule, FCoreModule],
+  imports: [CommonModule, FCoreModule, VInputComponent, VCompositionComponent],
   templateUrl: './forms.component.html',
   styleUrl: './forms.component.css'
 })

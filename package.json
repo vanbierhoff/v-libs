@@ -21,7 +21,7 @@
     "@v/event-stack": "^0.0.7",
     "@v/meta-helper": "^0.0.3",
     "@v/r-types": "^0.0.4",
-    "@v/store": "^0.1.20",
+    "@v/store": "^0.1.23",
     "lodash": "^4.17.21",
     "ng-packagr": "^16.2.3",
     "rxjs": "~7.8.0",

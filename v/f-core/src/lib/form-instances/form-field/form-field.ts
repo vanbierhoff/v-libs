@@ -8,7 +8,6 @@ import {
 } from '@v/store/store/store-items/store-field/models/store-field-instance.interface';
 import { TypeEvent } from '@v/event-stack';
 import { VFormInstance } from '../form-instance/form-instance';
-import { formMonad } from '../../form-meta-store/add-to-store';
 
 
 export class FormField<T = any, I_EVENTS = FormFieldEventsInterface<T>> extends StoreFieldInstance<T, I_EVENTS>
