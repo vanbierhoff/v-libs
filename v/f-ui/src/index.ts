@@ -1,1 +1,1 @@
-export * from './lib/v-f-ui/v-f-ui.component';
+export * from './lib/ui-elements';

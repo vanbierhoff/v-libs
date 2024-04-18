@@ -1,5 +1,5 @@
 {
-  "name": "v/tree-creator",
+  "name": "tree-creator",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "v/tree-creator/src",
   "prefix": "v-libs",

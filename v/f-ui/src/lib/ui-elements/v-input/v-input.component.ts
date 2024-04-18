@@ -1,4 +1,15 @@
-import { Component, ElementRef, Inject, Input, OnInit, signal } from '@angular/core';
+import {
+  Component, computed,
+  ElementRef,
+  EventEmitter,
+  HostBinding, HostListener,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+  signal,
+  ViewChild
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { attrController } from '../../utils/attr-ontroller';
 import { FormField } from '../../../../../f-core/src/lib/form-instances/form-field/form-field';
@@ -10,7 +21,8 @@ import { FormField } from '../../../../../f-core/src/lib/form-instances/form-fie
   imports: [CommonModule],
   templateUrl: './v-input.component.html',
   host: {
-    // '[attr.disabled]': 'disabledSignal()'
+    '(input)': 'inputValue($event)',
+    '[value]': 'valueComp()'
   },
   styleUrl: './v-input.component.scss'
 })
@@ -29,18 +41,37 @@ export class VInputComponent implements OnInit {
   }
 
   @Input() set readonly(v: boolean) {
-    this.disabledSignal.set(v);
+    this.readonlySignal.set(v);
+  }
+
+  @ViewChild('input', {read: ElementRef})
+  input: ElementRef = {} as ElementRef;
+
+  @Output()
+  inputEv: EventEmitter<any> = new EventEmitter();
+
+  set fField(v: FormField) {
+    this.formField = v;
   }
 
   protected disabledSignal = signal(false);
   protected readonlySignal = signal(false);
+  protected value = signal('');
+  protected valueComp = computed(() => `${this.value()}  comp `);
 
   protected formField: FormField | null = null;
 
-  ngOnInit() {
-    this.elRef.nativeElement;
-    setTimeout(() => {
-      this.disabledSignal.set(true);
-    }, 3500);
+  inputValue(v: any) {
+    console.log(v);
   }
+
+  @HostListener('input', ['$event'])
+  inputValue2(v: any) {
+    console.log('2', v);
+  }
+
+  ngOnInit() {
+    this.value.set('data')
+  }
+
 }

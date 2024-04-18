@@ -6,7 +6,7 @@ import { createForm } from '../../../../../../v/f-core/src/lib/form-builder-func
 import { formMonad } from '../../../../../../v/f-core/src/lib/form-meta-store/add-to-store';
 import { VFormInstance } from '../../../../../../v/f-core/src/lib/form-instances/form-instance/form-instance';
 import { VInputComponent } from '../../../../../../v/f-ui/src/lib/ui-elements/v-input/v-input.component';
-import { VCompositionComponent } from '../../../../../../v/f-ui/src/lib/ui-elements/v-label/v-composition.component';
+import { VCompositionComponent } from '../../../../../../v/f-ui/src/lib/ui-elements/v-compose/v-composition.component';
 
 
 
@@ -23,22 +23,27 @@ export class FormsComponent implements OnInit {
   public color: string = 'green';
 
 
+  public show = true;
+  locked = false;
+
   ngOnInit() {
     const form = new BaseForm();
     console.log(form);
     const formItem = createForm<BaseForm>(BaseForm);
-    console.log(formMonad(formItem).get())
-    const formInstance:VFormInstance<any> = formMonad(formItem).chain((form: any) => {
+    console.log(formMonad(formItem).get());
+    const formInstance: VFormInstance<any> = formMonad(formItem).chain((form: any) => {
       form.baseInput = 'newValueFleid';
       return form;
     }).get();
-    console.log(formInstance)
+    console.log(formInstance);
     console.log(formInstance.getField('baseInput'));
     formInstance.validate().then(res => console.log(res));
 
     setTimeout(() => {
       this.color = 'blue';
-      console.log(this)
-    }, 3500)
+      console.log(this);
+      this.show = false;
+      this.locked = true;
+    }, 1500);
   }
 }

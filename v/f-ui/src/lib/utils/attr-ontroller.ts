@@ -1,12 +1,12 @@
-import { computed, effect, ElementRef, Signal } from '@angular/core';
+import { effect, ElementRef, Signal } from '@angular/core';
 
 
 export const attrController = (elRef: ElementRef, attrs: Record<string, Signal<boolean>>) => {
   Object.keys(attrs).forEach(attr => {
-    const operation = attrs[attr]() ? 'setAttribute' : 'removeAttribute';
-    elRef.nativeElement?.[operation](attr, true);
     effect(() => {
+      console.log('eff')
       const operation = attrs[attr]() ? 'setAttribute' : 'removeAttribute';
+      console.log(operation)
       elRef.nativeElement?.[operation](attr, true);
     });
   });
