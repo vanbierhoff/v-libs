@@ -3223,10 +3223,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@v/store@^0.1.23":
-  version "0.1.23"
-  resolved "http://potato.myfast.host/@v/store/-/store-0.1.23.tgz#3c1deac43e8f1749af9e71111cda7f5e27ae7b0f"
-  integrity sha512-lVzpLCzaIFyKx78y7URWNJrbRdwGjBpMZY9DM9RWK87IBPwFZBxJeC0IziQqiNzp/cfX86wIyTNlfEBg0A/j8A==
+"@v/store@^0.1.26":
+  version "0.1.26"
+  resolved "http://potato.myfast.host/@v/store/-/store-0.1.26.tgz#e4dda9b1dcb1e7b8ca84f599fbdfee5109eb7f00"
+  integrity sha512-3TxqcKlJ4Yeq0zXAEflFATF9sSkqJ+6AqMGA6dioct5mRqiS51SD6mMRqImfrKULX0mAPXSnXrR0MkB2Ann47A==
   dependencies:
     tslib "^2.3.0"
 

@@ -45,7 +45,7 @@ export class FormField<T = any, I_EVENTS = FormFieldEventsInterface<T>> extends 
 
   #form: VFormInstance<T> = {} as VFormInstance<T>;
   #initialized: boolean = false;
-  protected errors: ValidationError[] = [];
+  public errors: ValidationError[] = [];
 
 
   override async validate(): Promise<true | ValidationError[]> {

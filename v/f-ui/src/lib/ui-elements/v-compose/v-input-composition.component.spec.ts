@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { VCompositionComponent } from './v-composition.component';
+import { VInputCompositionComponent } from './v-input-composition.component';
 
 describe('VInputComponent', () => {
-  let component: VCompositionComponent;
-  let fixture: ComponentFixture<VCompositionComponent>;
+  let component: VInputCompositionComponent;
+  let fixture: ComponentFixture<VInputCompositionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VCompositionComponent],
+      imports: [VInputCompositionComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(VCompositionComponent);
+    fixture = TestBed.createComponent(VInputCompositionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

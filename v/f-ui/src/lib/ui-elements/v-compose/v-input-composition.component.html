@@ -1,0 +1,6 @@
+<div class="label">
+  <ng-content select="[[vLabel], label]"></ng-content>
+</div>
+
+<ng-content select="input"></ng-content>
+<div class="errors-block">{{ childComponent.formField.errors | getError }}</div>

@@ -1,18 +1,20 @@
 import {
   Component, computed,
   ElementRef,
-  EventEmitter,
-  HostBinding, HostListener,
+  EventEmitter, forwardRef,
   Inject,
   Input,
   OnInit,
   Output,
   signal,
-  ViewChild
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { attrController } from '../../utils/attr-ontroller';
-import { FormField } from '../../../../../f-core/src/lib/form-instances/form-field/form-field';
+import { ValidatorInterface } from '@v/store';
+import { ComponentToken } from '../../../const/component.token';
+import { attrController } from '../../../utils/attr-ontroller';
+import { FormField } from '../../../../../../f-core/src/lib/form-instances/form-field/form-field';
+import { BaseFieldFactory } from '../../../base-component';
+import { FIELD_TYPES_LIST } from '../../../../../../f-core/src/lib/form-instances/form-field/models/field-types.list';
 
 
 @Component({
@@ -21,9 +23,12 @@ import { FormField } from '../../../../../f-core/src/lib/form-instances/form-fie
   imports: [CommonModule],
   templateUrl: './v-input.component.html',
   host: {
-    '(input)': 'inputValue($event)',
-    '[value]': 'valueComp()'
+    '(input)': 'inputValue($event.target.value)',
+    '[value]': 'computedInputValue()'
   },
+  providers: [{
+    provide: ComponentToken, useExisting: forwardRef(() => VInputComponent)
+  }],
   styleUrl: './v-input.component.scss'
 })
 export class VInputComponent implements OnInit {
@@ -35,6 +40,9 @@ export class VInputComponent implements OnInit {
     });
   }
 
+  @Input() set validators(vds: ValidatorInterface<any>[]) {
+    vds.forEach(v => this.formField.addValidator(v));
+  }
 
   @Input() set locked(v: boolean) {
     this.disabledSignal.set(v);
@@ -43,9 +51,6 @@ export class VInputComponent implements OnInit {
   @Input() set readonly(v: boolean) {
     this.readonlySignal.set(v);
   }
-
-  @ViewChild('input', {read: ElementRef})
-  input: ElementRef = {} as ElementRef;
 
   @Output()
   inputEv: EventEmitter<any> = new EventEmitter();
@@ -57,21 +62,17 @@ export class VInputComponent implements OnInit {
   protected disabledSignal = signal(false);
   protected readonlySignal = signal(false);
   protected value = signal('');
-  protected valueComp = computed(() => `${this.value()}  comp `);
+  protected computedInputValue = computed(() => this.value());
 
-  protected formField: FormField | null = null;
+  public formField: FormField = BaseFieldFactory(FIELD_TYPES_LIST.input as any, 5);
 
   inputValue(v: any) {
-    console.log(v);
-  }
-
-  @HostListener('input', ['$event'])
-  inputValue2(v: any) {
-    console.log('2', v);
+    this.formField.setValue(v);
+    this.value.set(v);
   }
 
   ngOnInit() {
-    this.value.set('data')
+    this.value.set('data');
   }
 
 }
