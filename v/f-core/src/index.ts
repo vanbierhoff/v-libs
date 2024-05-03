@@ -1,1 +1,1 @@
-export * from './lib/f-core/f-core.component';
+export * from './lib';

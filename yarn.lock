@@ -3209,6 +3209,13 @@
   dependencies:
     tslib "^2.3.0"
 
+"@v/f-core@^0.0.6":
+  version "0.0.6"
+  resolved "http://potato.myfast.host/@v/f-core/-/f-core-0.0.6.tgz#919d870c2b6d2775b3d031364427b43641198cbc"
+  integrity sha512-E82QDU6TkE1tPHriHBFfP0VFwzVTEB7RnwsDSOmAc48V4Jr/2rjfALs0RXz99R+6IkXn/u8R88P9V4zrHJTU4Q==
+  dependencies:
+    tslib "^2.3.0"
+
 "@v/meta-helper@^0.0.3":
   version "0.0.3"
   resolved "http://potato.myfast.host/@v/meta-helper/-/meta-helper-0.0.3.tgz#164e8d0002cc6885c678210e98754a70cadb2c35"
