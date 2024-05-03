@@ -1,7 +1,5 @@
 import { FieldManager, ValidationError } from '@v/store';
 import { FormField } from '../form-field/form-field';
-import { forEach } from 'lodash';
-
 
 export type VFormConstructor = new (...args: any[]) => any;
 

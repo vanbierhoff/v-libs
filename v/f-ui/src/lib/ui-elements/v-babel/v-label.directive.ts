@@ -1,12 +1,11 @@
-import { Directive, TemplateRef } from '@angular/core';
+import { Directive, Input} from '@angular/core';
 
 
 @Directive({
-  selector: '[vLabels]',
+  selector: '[vLabel]',
   standalone: true
 })
 export class VLabelDirective {
-  constructor(public readonly template: TemplateRef<any>) {
-  }
+  @Input('vLabel') public label: string = '';
 
 }

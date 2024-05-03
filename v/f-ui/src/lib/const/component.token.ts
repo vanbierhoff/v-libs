@@ -1,4 +1,8 @@
-import { FormField } from '../../../../f-core/src/lib/form-instances/form-field/form-field';
+// @ts-ignore
+import { FormFieldDecorator } from "@v/f-core";
+
+
+
 
 
 /**
@@ -6,15 +10,16 @@ import { FormField } from '../../../../f-core/src/lib/form-instances/form-field/
  * The class acts as an interface indicating the available fields and methods
  */
 export abstract class ComponentToken {
+  [x: string]: any;
   set locked(v: boolean) {
   }
 
   set readonly(v: boolean) {
   }
 
-  set fField(v: FormField) {
+  set fField(v: FormFieldDecorator) {
   }
 
-  public formField: FormField = {} as FormField;
+  public formField: FormFieldDecorator = {} as FormFieldDecorator;
 
 }

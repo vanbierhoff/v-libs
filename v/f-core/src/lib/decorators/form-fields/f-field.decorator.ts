@@ -6,9 +6,9 @@ import { FIELD_TYPES_LIST } from '../../form-instances/form-field/models/field-t
 import { getBaseValidator, ValidatorInterface } from '@v/store';
 
 
-export function FormField<T = any>(options?: FormFieldOptionsInterface): PropertyDecorator;
-export function FormField<T = any>(target: any, key: string): any;
-export function FormField(optionsOrTarget: any = {}, key?: string) {
+export function FormFieldDecorator<T = any>(options?: FormFieldOptionsInterface): PropertyDecorator;
+export function FormFieldDecorator<T = any>(target: any, key: string): any;
+export function FormFieldDecorator(optionsOrTarget: any = {}, key?: string) {
   const decorator = function (
     target: any,
     propertyName: string

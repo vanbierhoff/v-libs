@@ -6,15 +6,16 @@ import {
   Input,
   OnInit,
   Output,
-  signal,
+  signal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ValidatorInterface } from '@v/store';
 import { ComponentToken } from '../../../const/component.token';
 import { attrController } from '../../../utils/attr-ontroller';
-import { FormField } from '../../../../../../f-core/src/lib/form-instances/form-field/form-field';
+
 import { BaseFieldFactory } from '../../../base-component';
-import { FIELD_TYPES_LIST } from '../../../../../../f-core/src/lib/form-instances/form-field/models/field-types.list';
+// @ts-ignore
+import { FIELD_TYPES_LIST, FormFieldDecorator } from '@v/f-core';
 
 
 @Component({
@@ -52,10 +53,12 @@ export class VInputComponent implements OnInit {
     this.readonlySignal.set(v);
   }
 
+  @Input() startValue: string = '';
+
   @Output()
   inputEv: EventEmitter<any> = new EventEmitter();
 
-  set fField(v: FormField) {
+  set fField(v: FormFieldDecorator) {
     this.formField = v;
   }
 
@@ -64,7 +67,7 @@ export class VInputComponent implements OnInit {
   protected value = signal('');
   protected computedInputValue = computed(() => this.value());
 
-  public formField: FormField = BaseFieldFactory(FIELD_TYPES_LIST.input as any, 5);
+  public formField: FormFieldDecorator = BaseFieldFactory(FIELD_TYPES_LIST.input as any, this.startValue);
 
   inputValue(v: any) {
     this.formField.setValue(v);

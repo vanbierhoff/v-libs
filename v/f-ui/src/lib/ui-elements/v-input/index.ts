@@ -1,1 +1,1 @@
-export * from './v-input.component';
+export * from './views/v-input.component';

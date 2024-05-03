@@ -1,15 +1,13 @@
-import { FormField } from '../../../../f-core/src/lib/form-instances/form-field/form-field';
-import { FormFieldEventsInterface } from '../../../../f-core/src/lib/consts/events/form-field.events';
-import {
-  FieldTypes
-} from '../../../../f-core/src/lib/form-instances/form-field/models/field-types.list';
+
 import { getBaseValidator, ValidatorInterface } from '@v/store';
+// @ts-ignore
+import { FieldTypes, FormFieldDecorator, FormFieldEventsInterface } from '@v/f-core';
 
 
 const BaseName = 'defaultName';
 
 export const BaseFieldFactory = <T>
-(type: FieldTypes, v: any): FormField<T, FormFieldEventsInterface<T>> => {
+(type: FieldTypes, v: any): FormFieldDecorator<T, FormFieldEventsInterface<T>> => {
   const validators: ValidatorInterface | false = getBaseValidator(
     getTypeForCreateValidator(v), 'INVALID_TYPE');
 

@@ -1,15 +1,17 @@
 import {
   AfterViewInit,
   Component,
-  ContentChild, ElementRef,
-  forwardRef,
-  OnInit, ViewChild
+  ContentChild,
+  forwardRef, Input,
+  OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComponentToken } from '../../const/component.token';
-import { FORM_FIELD_EVENTS } from '../../../../../f-core/src/lib/consts/events/form-field.events';
 import { GetErrorPipe } from './pipes/get-error.pipe';
-import { VLabelDirective } from '../v-babel/v-label.directive';
+// @ts-ignore
+import { FORM_FIELD_EVENTS } from '@v/f-core';
+
+
 
 
 @Component({
@@ -24,11 +26,7 @@ export class VInputCompositionComponent implements OnInit, AfterViewInit {
   @ContentChild(forwardRef(() => ComponentToken), {read: ComponentToken})
   protected childComponent: ComponentToken = {} as ComponentToken;
 
-
-  @ContentChild(forwardRef(() => VLabelDirective))
-  protected vLabel: VLabelDirective = {} as any;
-
-
+  @Input() label: string = '';
 
   ngOnInit(): void {
   }
@@ -37,6 +35,6 @@ export class VInputCompositionComponent implements OnInit, AfterViewInit {
     this.childComponent.formField.listenEvent(FORM_FIELD_EVENTS.changeValue, () => {
       this.childComponent.formField.validate();
     });
-    console.log(this.vLabel);
+
   }
 }

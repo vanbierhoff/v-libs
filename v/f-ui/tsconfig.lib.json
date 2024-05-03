@@ -5,7 +5,11 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": []
+    "types": [],
+    "paths": {
+      "@v/f-core": ["v/f-core/src/lib"],
+
+    }
   },
   "exclude": [
     "src/**/*.spec.ts",
@@ -13,5 +17,6 @@
     "jest.config.ts",
     "src/**/*.test.ts"
   ],
+
   "include": ["src/**/*.ts"]
 }
