@@ -3209,10 +3209,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@v/f-core@^0.0.6":
-  version "0.0.6"
-  resolved "http://potato.myfast.host/@v/f-core/-/f-core-0.0.6.tgz#919d870c2b6d2775b3d031364427b43641198cbc"
-  integrity sha512-E82QDU6TkE1tPHriHBFfP0VFwzVTEB7RnwsDSOmAc48V4Jr/2rjfALs0RXz99R+6IkXn/u8R88P9V4zrHJTU4Q==
+"@v/f-core@^0.0.7":
+  version "0.0.7"
+  resolved "http://potato.myfast.host/@v/f-core/-/f-core-0.0.7.tgz#3a28085adc189b6a2e01a250c6dd7490f3903c39"
+  integrity sha512-Iya0rDOC/K/cWcEReRl9tk3BmL7PxFJAlKgAd9EjBi/BZoknS6zqf6xX1wbg3wAlk9pSk+aKUGBqPvwbfibjXg==
   dependencies:
     tslib "^2.3.0"
 

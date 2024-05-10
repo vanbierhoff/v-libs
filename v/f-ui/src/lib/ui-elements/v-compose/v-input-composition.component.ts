@@ -8,7 +8,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { ComponentToken } from '../../const/component.token';
 import { GetErrorPipe } from './pipes/get-error.pipe';
-// @ts-ignore
 import { FORM_FIELD_EVENTS } from '@v/f-core';
 
 

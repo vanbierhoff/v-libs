@@ -1,6 +1,4 @@
-// @ts-ignore
-import { FormFieldDecorator } from "@v/f-core";
-
+import { FormField } from '@v/f-core';
 
 
 
@@ -17,9 +15,9 @@ export abstract class ComponentToken {
   set readonly(v: boolean) {
   }
 
-  set fField(v: FormFieldDecorator) {
+  set fField(v: FormField) {
   }
 
-  public formField: FormFieldDecorator = {} as FormFieldDecorator;
+  public formField: FormField = {} as FormField;
 
 }

@@ -6,10 +6,6 @@
     "declarationMap": true,
     "inlineSources": true,
     "types": [],
-    "paths": {
-      "@v/f-core": ["v/f-core/src/lib"],
-
-    }
   },
   "exclude": [
     "src/**/*.spec.ts",
