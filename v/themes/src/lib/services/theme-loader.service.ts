@@ -139,7 +139,6 @@ export class ThemeLoaderService {
   }
 
 
-
   protected async defineTypeLink(theme: AppliesTheme): Promise<TypeThemeInterface> {
     if (theme?.item.style) {
       const result: StyleData = await theme.item.style();
