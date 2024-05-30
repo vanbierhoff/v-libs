@@ -92,7 +92,8 @@ export class ThemeLoaderService {
     this.renderer.setAttribute(el.nativeElement, name, '');
   }
 
-  protected upOrAddConsumers(name: string, style?: Array<HTMLStyleElement>, names?: Array<string>): void {
+  protected upOrAddConsumers(name: string, style?: Array<HTMLStyleElement>, names?: Array<string>): void
+  protected upOrAddConsumers(name: string, style: Array<HTMLStyleElement>, names: Array<string>): void {
     const consumer = this.themeConsumers.find((item) => item.name === name);
 
     if (!consumer && style) {
@@ -100,7 +101,7 @@ export class ThemeLoaderService {
         name,
         consumers: 1,
         style: [...style],
-        linkNames: [...names!]
+        linkNames: [...names]
       });
       return;
     }
@@ -108,7 +109,7 @@ export class ThemeLoaderService {
       consumer.consumers += 1;
       if (style) {
         consumer.style.push(...style);
-        consumer.linkNames.push(...names!);
+        consumer.linkNames.push(...names);
       }
     }
   }
