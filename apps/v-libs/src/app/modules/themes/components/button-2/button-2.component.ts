@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostBinding, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { THEME_LINK } from '../../../../../../../../v/themes/src/lib/const/theme-tokens';
-import { BaseTheme } from '../../../../theme/tests/base-theme/base-theme';
+import { BASE_THEME_LINK, BaseTheme } from '../../../../theme/tests/base-theme/base-theme';
 import { ThemeLoaderService } from '../../../../../../../../v/themes/src/lib/services/theme-loader.service';
 
 
@@ -13,7 +13,7 @@ import { ThemeLoaderService } from '../../../../../../../../v/themes/src/lib/ser
   providers: [
     {
       provide: THEME_LINK,
-      useValue: BaseTheme
+      useValue: BASE_THEME_LINK
     },
 
     ThemeLoaderService

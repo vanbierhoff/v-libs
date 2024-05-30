@@ -7,6 +7,7 @@ export interface ThemeModuleInterface {
 }
 
 export interface ThemeListInterface {
-  headTheme: string;
-  themes: Array<ThemeInterface>;
+  theme: string;
+  items: Array<ThemeInterface>;
+  themes?: Array<ThemeModuleInterface>;
 }

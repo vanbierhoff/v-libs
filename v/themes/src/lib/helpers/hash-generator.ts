@@ -1,7 +1,7 @@
 const hashList = new Map();
 
 export function hashGenerator(name: string, length: number = 14) {
-  let result = 'v-theme--';
+  let result = 'vth' + name + '-';
   const characters = 'Zabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
   let counter = 0;
@@ -19,9 +19,15 @@ export function hashGenerator(name: string, length: number = 14) {
 }
 
 export function hasCssHash(name: string): false | string {
+  console.log('hash', name);
   const hash = hashList.get(name);
   if (hash) {
     return hash;
   }
   return false;
 }
+
+export function removeCssHash(name: string) {
+  hashList.delete(name);
+}
+

@@ -2,10 +2,11 @@ import { Component, ElementRef, HostBinding, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { THEME_LINK } from '../../../../../../../v/themes/src/lib/const/theme-tokens';
 import { ThemeLoaderService } from '../../../../../../../v/themes/src/lib/services/theme-loader.service';
-import { BaseTheme } from '../../../theme/tests/base-theme/base-theme';
+import { BASE_THEME_LINK, BaseTheme } from '../../../theme/tests/base-theme/base-theme';
 import { Button1Component } from '../components/button-1/button-1.component';
 import { Button2Component } from '../components/button-2/button-2.component';
 import { RouterLink } from '@angular/router';
+import { ThemeDataService } from '../../../../../../../v/themes/src/lib/services/theme-data.service';
 
 
 @Component({
@@ -15,10 +16,11 @@ import { RouterLink } from '@angular/router';
   providers: [
     {
       provide: THEME_LINK,
-      useValue: BaseTheme
+      useValue: BASE_THEME_LINK
     },
 
-    ThemeLoaderService
+    ThemeLoaderService,
+    ThemeDataService
   ],
   templateUrl: './theme.component.html',
   styleUrl: './theme.component.scss'
@@ -41,10 +43,21 @@ export class ThemeComponent implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       this.viewBtn = false;
-    }, 3000)
+    }, 3000);
     setTimeout(() => {
-
       this.viewBtn2 = false;
-    }, 6000)
+      this.viewTwo();
+    }, 6000);
+  }
+
+  viewTwo() {
+    setTimeout(() => {
+      this.viewBtn2 = true;
+    }, 3000);
+
+    // setTimeout(() => {
+    //
+    //   this.viewBtn2 = true;
+    // }, 6000);
   }
 }
