@@ -7,16 +7,28 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nx/angular:webpack-browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
+        "customWebpackConfig": {
+          "path": "apps/v-libs/custom-webpack.config.js"
+        },
         "outputPath": "dist/apps/v-libs",
         "index": "apps/v-libs/src/index.html",
         "main": "apps/v-libs/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/v-libs/tsconfig.app.json",
-        "assets": ["apps/v-libs/src/favicon.ico", "apps/v-libs/src/assets"],
-        "styles": ["apps/v-libs/src/styles.scss"],
+        "assets": [
+          "apps/v-libs/src/favicon.ico",
+          "apps/v-libs/src/assets"
+        ],
+        "styles": [
+          "apps/v-libs/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -47,13 +59,13 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@angular-builders/custom-webpack:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "v-libs:build:production"
+          "buildTarget": "v-libs:build:production"
         },
         "development": {
-          "browserTarget": "v-libs:build:development"
+          "buildTarget": "v-libs:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -61,19 +73,26 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "v-libs:build"
+        "buildTarget": "v-libs:build"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["apps/v-libs/**/*.ts", "apps/v-libs/**/*.html"]
+        "lintFilePatterns": [
+          "apps/v-libs/**/*.ts",
+          "apps/v-libs/**/*.html"
+        ]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/v-libs/jest.config.ts",
         "passWithNoTests": true

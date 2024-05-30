@@ -45,5 +45,5 @@ Targets can be defined in the `package.json` or `projects.json`. Learn more [in 
 
 new library: 
 ```
-nx g @nx/angular:library my-ui-lib --tags=ui`
+nx g @nx/angular:library --directory=v/themes --importPath=@v/themes @v/theems
 ```

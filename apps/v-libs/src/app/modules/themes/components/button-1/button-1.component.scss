@@ -1,0 +1,9 @@
+
+:host {
+  border-radius: 14px;
+  --colorTitle: red;
+}
+
+.title {
+  color: var(--colorTitle);
+}
