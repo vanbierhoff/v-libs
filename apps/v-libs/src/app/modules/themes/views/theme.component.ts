@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostBinding, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { THEME_LINK } from '../../../../../../../v/themes/src/lib/const/theme-tokens';
-import { ThemeLoaderService } from '../../../../../../../v/themes/src/lib/services/theme-loader.service';
+import { ThemeManagerService } from '../../../../../../../v/themes/src/lib/services/theme-manager.service';
 import { BASE_THEME_LINK, BaseTheme } from '../../../theme/tests/base-theme/base-theme';
 import { Button1Component } from '../components/button-1/button-1.component';
 import { Button2Component } from '../components/button-2/button-2.component';
@@ -19,7 +19,7 @@ import { ThemeDataService } from '../../../../../../../v/themes/src/lib/services
       useValue: BASE_THEME_LINK
     },
 
-    ThemeLoaderService,
+    ThemeManagerService,
     ThemeDataService
   ],
   templateUrl: './theme.component.html',
@@ -29,7 +29,7 @@ export class ThemeComponent implements OnInit {
 
   constructor(
     protected ElRef: ElementRef,
-    protected theme: ThemeLoaderService) {
+    protected theme: ThemeManagerService) {
   }
 
   @HostBinding('style.--colorTitle')

@@ -12,7 +12,7 @@ import { ThemeConsumersInterface } from '../models/theme-loader.interface';
 
 
 @Injectable({providedIn: 'root'})
-export class ThemeLoaderService {
+export class ThemeManagerService {
 
   constructor(
     protected renderer: Renderer2,

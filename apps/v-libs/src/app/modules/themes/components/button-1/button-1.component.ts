@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ThemeLoaderService } from '../../../../../../../../v/themes/src/lib/services/theme-loader.service';
+import { ThemeManagerService } from '../../../../../../../../v/themes/src/lib/services/theme-manager.service';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class Button1Component implements OnInit, OnDestroy {
 
   constructor(
     protected ElRef: ElementRef,
-    protected theme: ThemeLoaderService) {
+    protected theme: ThemeManagerService) {
   }
 
 

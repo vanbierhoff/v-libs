@@ -2,7 +2,7 @@ import { Component, ElementRef, HostBinding, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { THEME_LINK } from '../../../../../../../../v/themes/src/lib/const/theme-tokens';
 import { BASE_THEME_LINK, BaseTheme } from '../../../../theme/tests/base-theme/base-theme';
-import { ThemeLoaderService } from '../../../../../../../../v/themes/src/lib/services/theme-loader.service';
+import { ThemeManagerService } from '../../../../../../../../v/themes/src/lib/services/theme-manager.service';
 
 
 
@@ -16,7 +16,7 @@ import { ThemeLoaderService } from '../../../../../../../../v/themes/src/lib/ser
       useValue: BASE_THEME_LINK
     },
 
-    ThemeLoaderService
+    ThemeManagerService
   ],
   templateUrl: './button-2.component.html',
   styleUrl: './button-2.component.scss'
@@ -25,7 +25,7 @@ export class Button2Component implements OnInit {
 
   constructor(
     protected ElRef: ElementRef,
-    protected theme: ThemeLoaderService) {
+    protected theme: ThemeManagerService) {
   }
 
   @HostBinding('style.--colorTitle')
