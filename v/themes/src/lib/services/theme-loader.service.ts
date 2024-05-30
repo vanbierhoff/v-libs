@@ -1,7 +1,6 @@
 import { ElementRef, Inject, Injectable, Renderer2 } from '@angular/core';
-import { THEME_LINK } from '../const/theme-tokens';
-import { ThemeModuleInterface } from '../models/theme-module.interface';
-import { CssData, StyleData, ThemeInterface } from '../models/theme.interface';
+
+import { CssData, StyleData } from '../models/theme.interface';
 import { handleCssFile, toStyleFormat } from './theme-handler';
 import { DOCUMENT } from '@angular/common';
 import { TypeThemeInterface } from '../models/type-theme.interface';
@@ -9,6 +8,7 @@ import { hasCssHash, removeCssHash } from '../helpers/hash-generator';
 import { remove } from 'lodash';
 import { ThemeDataService } from './theme-data.service';
 import { AppliesTheme } from '../models/theme-data.service';
+import { ThemeConsumersInterface } from '../models/theme-loader.interface';
 
 
 @Injectable({providedIn: 'root'})
@@ -21,12 +21,7 @@ export class ThemeLoaderService {
   ) {
   }
 
-  protected themeConsumers: Array<{
-    name: string,
-    consumers: number,
-    style: Array<HTMLStyleElement>,
-    linkNames: Array<string>
-  }> = [];
+  protected themeConsumers: Array<ThemeConsumersInterface> = [];
 
   /**
    *
@@ -36,31 +31,29 @@ export class ThemeLoaderService {
    */
   public async apply(name: string, elRef: ElementRef): Promise<void> {
     const themes = this.themeData.getApplies(name);
-    console.log(themes);
 
     if (!themes) {
       console.warn(`Theme with name${name} not found`);
       return;
     }
-    const styles: Array<HTMLStyleElement> = [];
-    const linkNames: Array<string> = [];
+
+    const styleData: ThemeConsumersInterface['styleData'] = [];
     for await (const theme of themes) {
       const {type, value} = await this.defineTypeLink(theme);
       if (type === 'style') {
         return this.setAttribute(elRef, 'style', toStyleFormat(value));
       }
       if (type === 'css') {
-        const linkName = theme.theme + '-' + name;
-        const style = this.linkCssFile({type, value}, elRef, name, theme.theme + '-' + name);
+        const linkName: string = theme.theme + '-' + name;
+        const style = this.linkCssFile({type, value}, elRef, theme.theme + '-' + name);
         if (style) {
-          styles.push(style);
-          linkNames.push(linkName);
+          styleData.push({style, linkName});
         }
       }
     }
 
-    if (styles.length > 0) {
-      this.upOrAddConsumers(name, styles, linkNames);
+    if (styleData.length > 0) {
+      this.upOrAddConsumers(name, styleData);
     } else {
       this.upOrAddConsumers(name);
     }
@@ -70,7 +63,7 @@ export class ThemeLoaderService {
     this.removeByNameConsumers(name);
   }
 
-  protected linkCssFile(theme: TypeThemeInterface, el: ElementRef, name: string, linkName: string): HTMLStyleElement | void {
+  protected linkCssFile(theme: TypeThemeInterface, el: ElementRef,  linkName: string): HTMLStyleElement | void {
     const hash = hasCssHash(linkName);
     if (hash) {
       return this.setAttribute(el, hash, '');
@@ -92,24 +85,22 @@ export class ThemeLoaderService {
     this.renderer.setAttribute(el.nativeElement, name, '');
   }
 
-  protected upOrAddConsumers(name: string, style?: Array<HTMLStyleElement>, names?: Array<string>): void
-  protected upOrAddConsumers(name: string, style: Array<HTMLStyleElement>, names: Array<string>): void {
+  protected upOrAddConsumers(name: string, styleData?: ThemeConsumersInterface['styleData']): void
+  protected upOrAddConsumers(name: string, styleData: ThemeConsumersInterface['styleData']): void {
     const consumer = this.themeConsumers.find((item) => item.name === name);
 
-    if (!consumer && style) {
+    if (!consumer && styleData) {
       this.themeConsumers.push({
         name,
         consumers: 1,
-        style: [...style],
-        linkNames: [...names]
+        styleData
       });
       return;
     }
     if (consumer) {
       consumer.consumers += 1;
-      if (style) {
-        consumer.style.push(...style);
-        consumer.linkNames.push(...names);
+      if (styleData) {
+        consumer.styleData.push(...styleData);
       }
     }
   }
@@ -125,12 +116,10 @@ export class ThemeLoaderService {
     if (count === 0) {
       remove(this.themeConsumers, (item) => {
         if (item.name === name) {
-          item.style.forEach((style) => {
-            style.remove();
+          item.styleData.forEach((styleData) => {
+            styleData.style.remove();
+            removeCssHash(styleData.linkName);
           });
-          item.linkNames.forEach((linkName) => {
-            removeCssHash(linkName);
-          })
           return true;
         }
         return false;
