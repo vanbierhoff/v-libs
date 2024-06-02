@@ -23,7 +23,7 @@ export function handleCssFile(css: string, name: string): {
   hash: string
 } {
 
-  if (css.startsWith(':host')) {
+  if (css.includes(':host')) {
     const hash = hashGenerator(name);
     const hashReplace = css.replace(/:host/, '[' + hash + ']');
 

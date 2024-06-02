@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {
     "publish:tree": "cd dist/v/tree-creator && npm publish",
-    "publish:f": "cd dist/v/f-core && npm publish"
+    "publish:f": "cd dist/v/f-core && npm publish",
+    "publish:f-ui": "cd dist/v/f-ui && npm publish",
+    "publish:themes": "cd dist/v/themes && npm publish"
   },
   "private": true,
   "dependencies": {
@@ -21,7 +23,8 @@
     "@nx/angular": "17.1.3",
     "@types/lodash": "^4.14.201",
     "@v/event-stack": "^0.0.7",
-    "@v/f-core": "^0.0.7",
+    "@v/f-core": "",
+    "@v/themes": "*",
     "@v/meta-helper": "^0.0.3",
     "@v/r-types": "^0.0.4",
     "@v/store": "^0.1.26",

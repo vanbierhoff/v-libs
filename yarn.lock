@@ -4472,7 +4472,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@v/f-core@^0.0.7":
+"@v/f-core@":
   version "0.0.7"
   resolved "http://potato.myfast.host/@v/f-core/-/f-core-0.0.7.tgz#3a28085adc189b6a2e01a250c6dd7490f3903c39"
   integrity sha512-Iya0rDOC/K/cWcEReRl9tk3BmL7PxFJAlKgAd9EjBi/BZoknS6zqf6xX1wbg3wAlk9pSk+aKUGBqPvwbfibjXg==
@@ -4497,6 +4497,13 @@
   version "0.1.26"
   resolved "http://potato.myfast.host/@v/store/-/store-0.1.26.tgz#e4dda9b1dcb1e7b8ca84f599fbdfee5109eb7f00"
   integrity sha512-3TxqcKlJ4Yeq0zXAEflFATF9sSkqJ+6AqMGA6dioct5mRqiS51SD6mMRqImfrKULX0mAPXSnXrR0MkB2Ann47A==
+  dependencies:
+    tslib "^2.3.0"
+
+"@v/themes@*":
+  version "0.0.1"
+  resolved "http://potato.myfast.host/@v/themes/-/themes-0.0.1.tgz#91b41f461dee178035be240b1f3e79b6309c856f"
+  integrity sha512-y3FFadrOooK8Y4hC8GHbIO29SWIG+IJAWEOgZvl9E/OjRVSHATK3kJmS7OL+FNPHYBfrHy2gUEy3W4WhfGvBFw==
   dependencies:
     tslib "^2.3.0"
 

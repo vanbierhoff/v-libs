@@ -13,7 +13,9 @@ import { ValidatorInterface } from '@v/store';
 import { ComponentToken } from '../../../const/component.token';
 import { attrController } from '../../../utils/attr-ontroller';
 import { BaseFieldFactory } from '../../../base-component';
-import { FIELD_TYPES_LIST, FormField} from '@v/f-core';
+import { FIELD_TYPES_LIST, FormField } from '@v/f-core';
+import { ThemeManagerService } from '@v/themes';
+import { V_INPUT_THEME } from '../const/v-input.theme';
 
 
 @Component({
@@ -25,14 +27,19 @@ import { FIELD_TYPES_LIST, FormField} from '@v/f-core';
     '(input)': 'inputValue($event.target.value)',
     '[value]': 'computedInputValue()'
   },
+
   providers: [{
     provide: ComponentToken, useExisting: forwardRef(() => VInputComponent)
-  }],
+  },
+    ThemeManagerService
+  ],
   styleUrl: './v-input.component.scss'
 })
 export class VInputComponent implements OnInit {
 
-  constructor(@Inject(ElementRef) protected elRef: ElementRef) {
+  constructor(@Inject(ElementRef) protected elRef: ElementRef,
+              protected themeManager: ThemeManagerService
+  ) {
     attrController(elRef, {
       disabled: this.disabledSignal,
       readonly: this.readonlySignal
@@ -45,6 +52,10 @@ export class VInputComponent implements OnInit {
 
   @Input() set locked(v: boolean) {
     this.disabledSignal.set(v);
+  }
+
+  @Input() set theme(theme: string) {
+    this.themeName = theme;
   }
 
   @Input() set readonly(v: boolean) {
@@ -64,6 +75,7 @@ export class VInputComponent implements OnInit {
   protected readonlySignal = signal(false);
   protected value = signal('');
   protected computedInputValue = computed(() => this.value());
+  protected themeName: string = V_INPUT_THEME;
 
   public formField: FormField = BaseFieldFactory(FIELD_TYPES_LIST.input as any, this.startValue);
 
@@ -73,7 +85,7 @@ export class VInputComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.value.set('data');
+    this.themeManager.apply(this.themeName, this.elRef);
   }
 
 }

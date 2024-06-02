@@ -26,11 +26,10 @@ export class ThemeDataService {
       theme: this.theme.theme,
       item: this.theme.items.find((item) => item.name === name)
     };
-    if (!theme || theme.item === undefined) {
+    if (theme.item !== undefined) {
+      appliesList.push(theme as AppliesTheme);
       console.warn(`Theme with name${name} not found`);
-      return;
     }
-    appliesList.push(theme as AppliesTheme);
 
     if (!this.theme?.themes) {
       return appliesList;

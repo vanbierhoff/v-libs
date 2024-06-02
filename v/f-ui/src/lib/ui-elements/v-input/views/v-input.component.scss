@@ -2,18 +2,10 @@
   position: relative;
   --broder-rad: 4px;
   --border-color: #2f75c4;
+  --textColor: #0e3b72;;
   --focus-color: #165cab;
-
-  border-radius: var(--broder-rad);
-  border: none;
-  outline: none;
-
-  &:focus {
-    border: 1px solid var(--border-color);
-    border-color: var(--focus-color);
-  }
+  --fontSize: 14px;
+  font-size: var(--fontSize);
+  color: var(--textColor);
 }
 
-.errors-block {
-  position: absolute;
-}

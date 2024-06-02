@@ -2,6 +2,7 @@ import {
   ThemeListInterface,
   ThemeModuleInterface
 } from '../../../../../../../v/themes/src/lib/models/theme-module.interface';
+import { BASE_F_UI_THEME } from '../../../../../../../v/f-ui/src/lib/base-theme/base-f-ui.theme';
 
 
 
@@ -37,5 +38,5 @@ export const uiElTheme: ThemeModuleInterface = {
 export const BASE_THEME_LINK: ThemeListInterface = {
   theme: 'base',
   items: BaseTheme.items,
-  themes: [uiElTheme]
+  themes: [uiElTheme, BASE_F_UI_THEME]
 };

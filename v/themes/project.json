@@ -1,11 +1,27 @@
 {
-  "name": "@v/themes",
+  "name": "themes",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "v/themes/src",
   "prefix": "v-libs",
   "tags": [],
   "projectType": "library",
   "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "v/themes/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "v/themes/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "v/themes/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
