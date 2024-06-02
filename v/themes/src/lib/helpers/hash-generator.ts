@@ -19,7 +19,6 @@ export function hashGenerator(name: string, length: number = 14) {
 }
 
 export function hasCssHash(name: string): false | string {
-  console.log('hash', name);
   const hash = hashList.get(name);
   if (hash) {
     return hash;

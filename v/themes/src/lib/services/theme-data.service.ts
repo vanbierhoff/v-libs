@@ -1,8 +1,9 @@
-import { Inject, Injectable, Renderer2 } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { THEME_LINK } from '../const/theme-tokens';
 import { ThemeListInterface, ThemeModuleInterface } from '../models/theme-module.interface';
 import { find } from 'lodash';
-import { AppliesTheme } from '../models/theme-data.service';
+import { AppliesTheme } from '../models/theme-data.interface';
+
 
 
 
@@ -13,7 +14,6 @@ export class ThemeDataService {
     @Inject(THEME_LINK) private theme: ThemeListInterface
   ) {
   }
-
 
   /**
    *
@@ -49,6 +49,34 @@ export class ThemeDataService {
 
     return appliesList;
   }
+
+  async loadThemes(names: Array<string>): Promise<void> {
+    for await (const name of names) {
+      const appliesList = this.getApplies(name);
+      if (!appliesList) {
+        continue;
+      }
+      for await (const theme of appliesList) {
+        await this.loadStyles(theme);
+      }
+    }
+  }
+
+
+  protected async loadStyles(theme: AppliesTheme): Promise<void> {
+    if (theme?.item.style) {
+      await theme.item.style();
+      return;
+    }
+    if (theme?.item.css) {
+      await theme.item.css();
+      return;
+    }
+    console.warn('Styles or style block not defined');
+  }
+
+
+
 }
 
 

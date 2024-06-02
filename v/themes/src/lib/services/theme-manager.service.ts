@@ -1,5 +1,4 @@
 import { ElementRef, Inject, Injectable, Renderer2 } from '@angular/core';
-
 import { CssData, StyleData } from '../models/theme.interface';
 import { handleCssFile, toStyleFormat } from './theme-handler';
 import { DOCUMENT } from '@angular/common';
@@ -7,8 +6,8 @@ import { TypeThemeInterface } from '../models/type-theme.interface';
 import { hasCssHash, removeCssHash } from '../helpers/hash-generator';
 import { remove } from 'lodash';
 import { ThemeDataService } from './theme-data.service';
-import { AppliesTheme } from '../models/theme-data.service';
-import { ThemeConsumersInterface } from '../models/theme-loader.interface';
+import { AppliesTheme } from '../models/theme-data.interface';
+import { ThemeConsumersInterface } from '../models/theme-manager.interface';
 
 
 @Injectable({providedIn: 'root'})
@@ -107,7 +106,7 @@ export class ThemeManagerService {
 
   protected removeByNameConsumers(name: string) {
     const consumer = this.themeConsumers.find((item) => item.name === name);
-    console.log(this.themeConsumers);
+
     if (!consumer) {
       return;
     }

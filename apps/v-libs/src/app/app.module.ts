@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { setGlobalInjector } from '@v/store';
+import { THEME_LINK } from '../../../../v/themes/src/lib/const/theme-tokens';
+import { BASE_THEME_LINK } from './theme/tests/base-theme/base-theme';
 
 
 @NgModule({
@@ -33,7 +35,11 @@ import { setGlobalInjector } from '@v/store';
       deps: [
         Injector
       ]
-    }
+    },
+    {
+      provide: THEME_LINK,
+      useValue: BASE_THEME_LINK
+    },
 
   ],
   bootstrap: [AppComponent]
