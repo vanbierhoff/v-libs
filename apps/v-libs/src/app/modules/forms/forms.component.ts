@@ -8,13 +8,14 @@ import { VFormInstance } from '../../../../../../v/f-core/src/lib/form-instances
 import { VInputCompositionComponent } from '../../../../../../v/f-ui/src/lib/ui-elements/v-compose/v-input-composition.component';
 import { VInputComponent } from '../../../../../../v/f-ui/src/lib/ui-elements/v-input/views/v-input.component';
 import { VLabelDirective } from '../../../../../../v/f-ui/src/lib/ui-elements/v-babel/v-label.directive';
+import { VButtonComponent } from '../../../../../../v/f-ui/src/lib/ui-elements/v-button/v-button.component';
 
 
 
 @Component({
   selector: 'v-libs-forms',
   standalone: true,
-  imports: [CommonModule, FCoreModule, VInputComponent, VInputCompositionComponent, VLabelDirective],
+  imports: [CommonModule, FCoreModule, VInputComponent, VInputCompositionComponent, VLabelDirective, VButtonComponent],
   templateUrl: './forms.component.html',
   styleUrl: './forms.component.css'
 })

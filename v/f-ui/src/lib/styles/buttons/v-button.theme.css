@@ -21,4 +21,47 @@
     pointer-events: none;
   }
 
+  .loader {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    animation: vLoaderRotate 3s linear infinite;
+  }
+
+  .loader-circle {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 1.5rem;
+    animation: vLoaderDashOffset 3s linear infinite;
+  }
+
 }
+
+@keyframes vLoaderDashOffset {
+  0% {
+    stroke-dashoffset: -66;
+  }
+
+  50% {
+    stroke-dashoffset: -314;
+  }
+
+  100% {
+    stroke-dashoffset: -66;
+  }
+}
+
+@keyframes vLoaderRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(1turn);
+  }
+
+  100% {
+    transform: rotate(3turn);
+  }
+}
+

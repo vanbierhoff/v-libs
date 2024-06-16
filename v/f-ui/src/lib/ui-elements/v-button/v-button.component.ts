@@ -8,6 +8,7 @@ import { VLoaderDirective } from '../directives/v-loader/v-loader.directive';
 import { ThemeManagerService } from '@v/themes';
 import { V_BUTTON_THEME } from '../v-input/const/v-button.theme';
 import { attrController } from '../../utils/attr-ontroller';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
 
@@ -15,11 +16,12 @@ import { attrController } from '../../utils/attr-ontroller';
 @Component({
   selector: 'button[vButton], a[vButton]',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, VLoaderDirective],
   templateUrl: './v-button.component.html',
   styleUrl: './v-button.component.scss',
+  providers: [ThemeManagerService],
   host: {
-    '(click)': 'clickedEmit($event)',
+    '(click)': 'clickedEmit($event)'
   }
 })
 export class VButtonComponent implements OnInit {
@@ -38,7 +40,8 @@ export class VButtonComponent implements OnInit {
 
 
   constructor(@Inject(ElementRef) protected elRef: ElementRef,
-              protected themeManager: ThemeManagerService
+              protected themeManager: ThemeManagerService,
+
   ) {
     attrController(elRef, {
       disabled: this.disabled
