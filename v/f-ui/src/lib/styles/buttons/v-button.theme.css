@@ -1,7 +1,24 @@
 :host {
+  background: var(--btnBackground);
+  border-radius: var(--brRadius);
+  outline: none;
+  border: none;
+  padding: 10px 20px;
+  color: var(--textColor);
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--btnHoverBackground);
+  }
+
   .button-wrapper {
-    background: var(--btnBackground);
-    border-radius: var(--brRadius);
+  }
+
+  &[disabled=true] {
+    background: var(--disabledBackground);
+    color: var(--disabledColor);
+    pointer-events: none;
   }
 
 }

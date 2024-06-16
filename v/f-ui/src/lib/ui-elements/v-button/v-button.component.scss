@@ -1,5 +1,19 @@
 :host {
   --btnBackground: #405fe7;
+  --btnHoverBackground: #1334c9;
   --textColor: #fff;
+  --disabledBackground: #b4b3b3;
+  --disabledColor: #070505;
   --brRadius: 4px;
+  transition: background-color 0.15s linear;
+}
+
+@keyframes backgroundTransition {
+  0% {
+    background-color: var(--btnBackground);
+  }
+
+  100% {
+    background-color: var(--btnHoverBackground);
+  }
 }

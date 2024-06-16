@@ -32,7 +32,7 @@ export class ThemeManagerService {
     const themes = this.themeData.getApplies(name);
 
     if (!themes) {
-      console.warn(`Theme with name${name} not found`);
+      console.warn(`Theme with name ${name} not found`);
       return;
     }
 

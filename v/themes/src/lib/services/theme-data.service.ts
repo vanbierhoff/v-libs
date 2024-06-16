@@ -28,7 +28,6 @@ export class ThemeDataService {
     };
     if (theme.item !== undefined) {
       appliesList.push(theme as AppliesTheme);
-      console.warn(`Theme with name${name} not found`);
     }
 
     if (!this.theme?.themes) {

@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { THEME_LINK } from '../../../../../../../../v/themes/src/lib/const/theme-tokens';
 import { BASE_THEME_LINK, BaseTheme } from '../../../../theme/tests/base-theme/base-theme';
 import { ThemeManagerService } from '../../../../../../../../v/themes/src/lib/services/theme-manager.service';
+import { VButtonComponent } from '../../../../../../../../v/f-ui/src/lib/ui-elements/v-button/v-button.component';
 
 
 
 @Component({
   selector: 'button-two',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, VButtonComponent],
   providers: [
     {
       provide: THEME_LINK,
@@ -28,16 +29,16 @@ export class Button2Component implements OnInit {
     protected theme: ThemeManagerService) {
   }
 
-  @HostBinding('style.--colorTitle')
-  public color: string = 'green';
-
-  @HostBinding('style.color')
-  colorRed = 'green';
-
-
-
+  public disabled = true;
 
   ngOnInit() {
     this.theme.apply('buttonBlock', this.ElRef);
+    setTimeout(() => {
+      this.disabled = false;
+    }, 2500);
+  }
+
+  testClicked() {
+    console.log('test clicked');
   }
 }

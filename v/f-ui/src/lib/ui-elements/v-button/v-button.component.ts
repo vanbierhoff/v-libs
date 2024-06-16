@@ -1,14 +1,13 @@
 import {
-  AfterViewInit,
-  Component,
-  ContentChild,
-  forwardRef, Input,
-  OnInit, ViewChild
+  Component, effect, ElementRef,
+  Inject, input, Input, InputSignal,
+  OnInit, output, ViewChild
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ComponentToken } from '../../const/component.token';
-import { FORM_FIELD_EVENTS } from '@v/f-core';
 import { VLoaderDirective } from '../directives/v-loader/v-loader.directive';
+import { ThemeManagerService } from '@v/themes';
+import { V_BUTTON_THEME } from '../v-input/const/v-button.theme';
+import { attrController } from '../../utils/attr-ontroller';
 
 
 
@@ -18,29 +17,58 @@ import { VLoaderDirective } from '../directives/v-loader/v-loader.directive';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './v-button.component.html',
-  styleUrl: './v-input-composition.component.scss'
+  styleUrl: './v-button.component.scss',
+  host: {
+    '(click)': 'clickedEmit($event)',
+  }
 })
-export class VButtonComponent implements OnInit, AfterViewInit {
+export class VButtonComponent implements OnInit {
+
 
   @Input() iconStyle: string = '';
-
   @Input() iconPosition: 'left' | 'right' = 'left';
-
   @ViewChild(VLoaderDirective, {read: VLoaderDirective})
-  public loader: VLoaderDirective;
+  public loader: VLoaderDirective = {} as VLoaderDirective;
+  public hasApplyTheme: boolean = false;
+  public prevTheme: string = '';
+  themeName: InputSignal<string> = input<string>(V_BUTTON_THEME);
+  disabled: InputSignal<boolean> = input<boolean>(false);
 
-  // themeName = input()
+  clicked = output<Event>();
 
-  @ContentChild(forwardRef(() => ComponentToken), {read: ComponentToken})
-  protected childComponent: ComponentToken = {} as ComponentToken;
 
-  ngOnInit(): void {
+  constructor(@Inject(ElementRef) protected elRef: ElementRef,
+              protected themeManager: ThemeManagerService
+  ) {
+    attrController(elRef, {
+      disabled: this.disabled
+    });
+    this.changeThemeEffect();
   }
 
-  ngAfterViewInit() {
-    this.childComponent.formField.listenEvent(FORM_FIELD_EVENTS.changeValue, () => {
-      this.childComponent.formField.validate();
-    });
+  ngOnInit(): void {
 
+  }
+
+  changeThemeEffect() {
+    effect(async () => {
+      if (this.hasApplyTheme) {
+        this.themeManager.unApply(this.prevTheme);
+      }
+      await this.themeManager.apply(this.themeName(), this.elRef);
+      this.prevTheme = this.themeName();
+      this.hasApplyTheme = true;
+    });
+  }
+
+  clickedEmit(ev: Event) {
+    this.clicked.emit(ev);
+
+  }
+
+  changeDisabledEffect() {
+    effect(async () => {
+
+    });
   }
 }
