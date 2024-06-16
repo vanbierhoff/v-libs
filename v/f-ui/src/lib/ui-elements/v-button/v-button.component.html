@@ -1,0 +1,21 @@
+<div class="button-wrapper">
+  <i *ngIf="iconStyle"
+     class="icon {{iconStyle}}"></i>
+
+  @if (iconPosition === 'left') {
+    <ng-content select="i"></ng-content>
+  }
+
+  @if (loader?.template) {
+    <ng-container [ngTemplateOutlet]="loader.template"></ng-container>
+  } @else {
+    <span>...</span>
+  }
+
+  <ng-content></ng-content>
+
+  @if (iconPosition === 'right') {
+    <ng-content select="i"></ng-content>
+  }
+
+</div>

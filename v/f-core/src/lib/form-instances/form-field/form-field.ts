@@ -13,7 +13,10 @@ import { VFormInstance } from '../form-instance/form-instance';
 export class FormField<T = any, I_EVENTS = FormFieldEventsInterface<T>> extends StoreFieldInstance<T, I_EVENTS>
   implements StoreFieldInstanceInterface<T, I_EVENTS> {
 
+  public errors: ValidationError[] = [];
   protected fieldType: FieldTypes;
+  #form: VFormInstance<T> = {} as VFormInstance<T>;
+  #initialized: boolean = false;
 
   constructor(config: FormFieldMetaInterface, value?: T) {
     super(config, value);
@@ -43,11 +46,6 @@ export class FormField<T = any, I_EVENTS = FormFieldEventsInterface<T>> extends 
 
   }
 
-  #form: VFormInstance<T> = {} as VFormInstance<T>;
-  #initialized: boolean = false;
-  public errors: ValidationError[] = [];
-
-
   override async validate(): Promise<true | ValidationError[]> {
     const validate = await super.validate();
     if (validate !== true) {
@@ -61,8 +59,9 @@ export class FormField<T = any, I_EVENTS = FormFieldEventsInterface<T>> extends 
 
 
   override setValue<T = any>(value: any): T {
+    super.setValue(value);
     this.eventStackManager.emit(FORM_FIELD_EVENTS.formFieldChange, this);
-    return super.setValue(value);
+    return value;
   }
 
 

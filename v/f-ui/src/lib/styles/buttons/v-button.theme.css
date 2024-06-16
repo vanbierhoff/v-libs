@@ -1,0 +1,7 @@
+:host {
+  .button-wrapper {
+    background: var(--btnBackground);
+    border-radius: var(--brRadius);
+  }
+
+}
