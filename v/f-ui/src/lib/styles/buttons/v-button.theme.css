@@ -13,6 +13,8 @@
   }
 
   .button-wrapper {
+    display: flex;
+    align-items: center;
   }
 
   &[disabled=true] {
@@ -25,43 +27,60 @@
     width: 16px;
     height: 16px;
     border-radius: 50%;
+    margin-right: 10px;
     animation: vLoaderRotate 3s linear infinite;
   }
 
   .loader-circle {
     fill: none;
-    stroke: #fff;
+    stroke: var(--loaderColor);
     stroke-width: 1.5rem;
     animation: vLoaderDashOffset 3s linear infinite;
   }
 
+  .v-icon {
+    i {
+      background-position: 50%;
+    }
+  }
+
+  .v-icon--right {
+    margin-left: 10px;
+  }
+
+  .v-icon--left {
+    margin-right: 10px;
+  }
+
 }
 
-@keyframes vLoaderDashOffset {
-  0% {
-    stroke-dashoffset: -66;
+
+  @keyframes vLoaderDashOffset {
+    0% {
+      stroke-dashoffset: -66;
+    }
+
+    50% {
+      stroke-dashoffset: -314;
+    }
+
+    100% {
+      stroke-dashoffset: -66;
+    }
   }
 
-  50% {
-    stroke-dashoffset: -314;
+  @keyframes vLoaderRotate {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    50% {
+      transform: rotate(1turn);
+    }
+
+    100% {
+      transform: rotate(3turn);
+    }
   }
 
-  100% {
-    stroke-dashoffset: -66;
-  }
-}
-
-@keyframes vLoaderRotate {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  50% {
-    transform: rotate(1turn);
-  }
-
-  100% {
-    transform: rotate(3turn);
-  }
-}
 

@@ -1,21 +1,28 @@
-<div class="button-wrapper" vLoader>
+<div class="button-wrapper" vLoader #loader=vLoader>
   <i *ngIf="iconStyle"
      class="icon {{iconStyle}}"></i>
 
   @if (iconPosition === 'left') {
-    <ng-content select="i"></ng-content>
+    <span class="v-icon v-icon--left">
+         <ng-container [ngTemplateOutlet]="icon"></ng-container>
+    </span>
+
   }
 
-  @if (loader?.template) {
+  @if (loader?.template && disabled() || loader.load) {
     <ng-container [ngTemplateOutlet]="loader.template"></ng-container>
-  } @else {
-   <span [innerHTML]="loader.safeHtml"></span>
+  }
+
+  @if (!loader?.template && disabled() || loader.load) {
+    <span [innerHTML]="loader.safeHtml"></span>
   }
 
   <ng-content></ng-content>
 
   @if (iconPosition === 'right') {
-    <ng-content select="i"></ng-content>
+    <span class="v-icon v-icon--right">
+       <ng-container [ngTemplateOutlet]="icon"></ng-container>
+    </span>
   }
 
 </div>

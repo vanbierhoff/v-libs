@@ -1,14 +1,13 @@
 import {
   Component, effect, ElementRef,
-  Inject, input, Input, InputSignal,
-  OnInit, output, ViewChild
+  Inject, input, Input, InputSignal, OnDestroy,
+  OnInit, output, TemplateRef, ViewChild
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VLoaderDirective } from '../directives/v-loader/v-loader.directive';
 import { ThemeManagerService } from '@v/themes';
 import { V_BUTTON_THEME } from '../v-input/const/v-button.theme';
 import { attrController } from '../../utils/attr-ontroller';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
 
@@ -24,11 +23,12 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     '(click)': 'clickedEmit($event)'
   }
 })
-export class VButtonComponent implements OnInit {
+export class VButtonComponent implements OnInit, OnDestroy {
 
 
   @Input() iconStyle: string = '';
   @Input() iconPosition: 'left' | 'right' = 'left';
+  @Input() icon: TemplateRef<any> | null = null ;
   @ViewChild(VLoaderDirective, {read: VLoaderDirective})
   public loader: VLoaderDirective = {} as VLoaderDirective;
   public hasApplyTheme: boolean = false;
@@ -73,5 +73,9 @@ export class VButtonComponent implements OnInit {
     effect(async () => {
 
     });
+  }
+
+  ngOnDestroy() {
+    this.themeManager.unApply(this.themeName())
   }
 }

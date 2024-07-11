@@ -7,6 +7,17 @@
 </div>
 <button
   class="button-1"
-  vButton>button test</button>
+  vButton
+  #button
+  iconPosition="right"
+  [icon]="icon"
+  [disabled]="false"
+>
+  <ng-template #icon>
+    <i class="icon-flag icon-flag--arg"></i>
+  </ng-template>
+
+  button test
+</button>
 
 
