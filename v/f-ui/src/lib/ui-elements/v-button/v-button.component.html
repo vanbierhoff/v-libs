@@ -1,12 +1,13 @@
 <div class="button-wrapper" vLoader #loader=vLoader>
-  <i *ngIf="iconStyle"
-     class="icon {{iconStyle}}"></i>
 
   @if (iconPosition === 'left') {
     <span class="v-icon v-icon--left">
          <ng-container [ngTemplateOutlet]="icon"></ng-container>
     </span>
+  }
 
+  @if (iconPosition === 'manual') {
+         <ng-container [ngTemplateOutlet]="icon"></ng-container>
   }
 
   @if (loader?.template && disabled() || loader.load) {
@@ -24,5 +25,4 @@
        <ng-container [ngTemplateOutlet]="icon"></ng-container>
     </span>
   }
-
 </div>

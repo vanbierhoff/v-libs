@@ -10,8 +10,6 @@ import { V_BUTTON_THEME } from '../v-input/const/v-button.theme';
 import { attrController } from '../../utils/attr-ontroller';
 
 
-
-
 @Component({
   selector: 'button[vButton], a[vButton]',
   standalone: true,
@@ -25,10 +23,19 @@ import { attrController } from '../../utils/attr-ontroller';
 })
 export class VButtonComponent implements OnInit, OnDestroy {
 
+  constructor(@Inject(ElementRef) protected elRef: ElementRef,
+              protected themeManager: ThemeManagerService
+  ) {
+    attrController(elRef, {
+      disabled: this.disabled
+    });
+    this.changeThemeEffect();
+  }
+
 
   @Input() iconStyle: string = '';
-  @Input() iconPosition: 'left' | 'right' = 'left';
-  @Input() icon: TemplateRef<any> | null = null ;
+  @Input() iconPosition: 'left' | 'right' | 'manual' = 'left';
+  @Input() icon: TemplateRef<any> | null = null;
   @ViewChild(VLoaderDirective, {read: VLoaderDirective})
   public loader: VLoaderDirective = {} as VLoaderDirective;
   public hasApplyTheme: boolean = false;
@@ -38,16 +45,6 @@ export class VButtonComponent implements OnInit, OnDestroy {
 
   clicked = output<Event>();
 
-
-  constructor(@Inject(ElementRef) protected elRef: ElementRef,
-              protected themeManager: ThemeManagerService,
-
-  ) {
-    attrController(elRef, {
-      disabled: this.disabled
-    });
-    this.changeThemeEffect();
-  }
 
   ngOnInit(): void {
 
@@ -76,6 +73,6 @@ export class VButtonComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.themeManager.unApply(this.themeName())
+    this.themeManager.unApply(this.themeName());
   }
 }

@@ -3,7 +3,9 @@
      label="label1"
      *ngIf="show">
   <span vLabel>labvel message</span>
-  <input vInput [locked]="locked">
+  <input vInput
+         [transformer]="transformer"
+         [locked]="locked">
 </div>
 <button
   class="button-1"

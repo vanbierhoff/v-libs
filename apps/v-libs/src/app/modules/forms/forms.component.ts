@@ -11,6 +11,7 @@ import {
 import { VInputComponent } from '../../../../../../v/f-ui/src/lib/ui-elements/v-input/views/v-input.component';
 import { VLabelDirective } from '../../../../../../v/f-ui/src/lib/ui-elements/v-babel/v-label.directive';
 import { VButtonComponent } from '../../../../../../v/f-ui/src/lib/ui-elements/v-button/v-button.component';
+import { ValueTransformer } from '../../../../../../v/f-ui/src/lib/shared';
 
 
 
@@ -30,6 +31,14 @@ export class FormsComponent implements OnInit {
   public vButton: VButtonComponent | undefined = undefined;
 
   public show = true;
+
+  public transformer: ValueTransformer<any, string> = (v: any) => {
+    if(v.startsWith('+')) {
+      return v;
+    }
+    return `+${v}`
+  };
+
   locked = false;
 
   ngOnInit() {
@@ -52,7 +61,7 @@ export class FormsComponent implements OnInit {
       // this.locked = true;
     }, 1500);
 
-    this.getAccessToVButton()
+    this.getAccessToVButton();
   }
 
   getAccessToVButton() {
