@@ -7,14 +7,14 @@ export const addFormToStore = <T extends object>(formTarget: T, key: string, for
   addMetaField(formTarget, key, form);
 };
 
-const maybe = (key: string) => {
+const maybe = <T>(key: string) => {
   const nestedMaybe = (target: any, chainRes?: any) => {
     const chainResult: any = chainRes;
-    const map = (fn: any) => {
+    const map = <RESULT>(fn: (target: T) => RESULT) => {
       return nestedMaybe(target, fn(getMetadata(key, target)[0]));
     };
     const ap = (functor: any) => functor.map((f: any) => (key && f ? f(key) : null));
-    const get = () => key ? getMetadata(key, target)[0] : null;
+    const get = (): T => key ? getMetadata(key, target)[0] : null;
     const chain = (fn: any): any => nestedMaybe(target, fn(chainResult ?? getMetadata(key, target)[0]));
     return Object.assign(map, {map, ap, chain, get});
   };
@@ -22,4 +22,4 @@ const maybe = (key: string) => {
 
 };
 
-export const formMonad = maybe(CREATED_FORM_META);
+export const createFormMonad = <T>(target: T) => maybe<VFormInstance<T>>(CREATED_FORM_META)(target);

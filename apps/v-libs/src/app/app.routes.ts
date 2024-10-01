@@ -8,6 +8,10 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('./modules/forms/forms.component').then(c => c.FormsComponent)
   },
   {
+    path: 'forms-directive',
+    loadComponent: () => import('./modules/forms/form-directive/forms-directive.component').then(c => c.FormsDirectiveComponent)
+  },
+  {
     path: 'theme',
     resolve: {
       ThemesResolver

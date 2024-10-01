@@ -3,7 +3,23 @@
      label="label1"
      *ngIf="show">
   <span vLabel>labvel message</span>
-  <input vInput [locked]="locked">
+  <input vInput
+         [transformer]="transformer"
+         [locked]="locked">
 </div>
+<button
+  class="button-1"
+  vButton
+  #button
+  iconPosition="right"
+  [icon]="icon"
+  [disabled]="false"
+>
+  <ng-template #icon>
+    <i class="icon-flag icon-flag--arg"></i>
+  </ng-template>
+
+  button test
+</button>
 
 

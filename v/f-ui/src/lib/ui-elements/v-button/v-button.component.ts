@@ -1,7 +1,7 @@
 import {
   Component, effect, ElementRef,
-  Inject, input, Input, InputSignal,
-  OnInit, output, ViewChild
+  Inject, input, Input, InputSignal, OnDestroy,
+  OnInit, output, TemplateRef, ViewChild
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VLoaderDirective } from '../directives/v-loader/v-loader.directive';
@@ -10,32 +10,18 @@ import { V_BUTTON_THEME } from '../v-input/const/v-button.theme';
 import { attrController } from '../../utils/attr-ontroller';
 
 
-
-
 @Component({
   selector: 'button[vButton], a[vButton]',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, VLoaderDirective],
   templateUrl: './v-button.component.html',
   styleUrl: './v-button.component.scss',
+  providers: [ThemeManagerService],
   host: {
-    '(click)': 'clickedEmit($event)',
+    '(click)': 'clickedEmit($event)'
   }
 })
-export class VButtonComponent implements OnInit {
-
-
-  @Input() iconStyle: string = '';
-  @Input() iconPosition: 'left' | 'right' = 'left';
-  @ViewChild(VLoaderDirective, {read: VLoaderDirective})
-  public loader: VLoaderDirective = {} as VLoaderDirective;
-  public hasApplyTheme: boolean = false;
-  public prevTheme: string = '';
-  themeName: InputSignal<string> = input<string>(V_BUTTON_THEME);
-  disabled: InputSignal<boolean> = input<boolean>(false);
-
-  clicked = output<Event>();
-
+export class VButtonComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(ElementRef) protected elRef: ElementRef,
               protected themeManager: ThemeManagerService
@@ -45,6 +31,20 @@ export class VButtonComponent implements OnInit {
     });
     this.changeThemeEffect();
   }
+
+
+  @Input() iconStyle: string = '';
+  @Input() iconPosition: 'left' | 'right' | 'manual' = 'left';
+  @Input() icon: TemplateRef<any> | null = null;
+  @ViewChild(VLoaderDirective, {read: VLoaderDirective})
+  public loader: VLoaderDirective = {} as VLoaderDirective;
+  public hasApplyTheme: boolean = false;
+  public prevTheme: string = '';
+  themeName: InputSignal<string> = input<string>(V_BUTTON_THEME);
+  disabled: InputSignal<boolean> = input<boolean>(false);
+
+  clicked = output<Event>();
+
 
   ngOnInit(): void {
 
@@ -70,5 +70,9 @@ export class VButtonComponent implements OnInit {
     effect(async () => {
 
     });
+  }
+
+  ngOnDestroy() {
+    this.themeManager.unApply(this.themeName());
   }
 }
