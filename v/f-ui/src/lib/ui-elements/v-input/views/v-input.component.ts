@@ -66,8 +66,6 @@ export class VInputComponent implements OnInit, OnDestroy {
 
   @Input() transformer: ValueTransformer<any, any> | null = null;
 
-  @Input() valueTransformer: ValueTransformer<unknown, unknown> | null = null;
-
   @Output()
   inputEv: EventEmitter<any> = new EventEmitter();
 
@@ -104,8 +102,7 @@ export class VInputComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
+  // TODO set destroy ref or set injector to fix memory leaks
   setEffects() {
     effect(async () => {
       if (this.hasApplyTheme) {
