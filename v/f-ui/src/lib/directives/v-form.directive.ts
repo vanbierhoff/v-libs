@@ -6,18 +6,18 @@ import {
   HostListener,
   inject,
   Input,
-  OnInit, QueryList
+  QueryList
 } from '@angular/core';
 import { ComponentToken } from '../const/component.token';
-import { VFormInstance } from 'v/f-core/src/lib/form-instances/form-instance/form-instance';
-import { createFormMonad } from '../../../../f-core/src/lib/form-meta-store/add-to-store';
+import { VFormInstance, createFormMonad } from '@v/f-core';
+
 
 
 @Directive({
   selector: 'form[vForm]',
   standalone: true
 })
-export class VFormDirective implements OnInit {
+export class VFormDirective {
 
   constructor() {
     this.elRef = inject(ElementRef);
@@ -43,20 +43,12 @@ export class VFormDirective implements OnInit {
     }
   }) public vForm!: VFormInstance<unknown>;
 
-  ngOnInit() {
-    setTimeout(() => {
-      console.log(this.childComponent);
-    }, 5000);
-  }
-
 
   @HostListener('submit', ['$event'])
   async onSubmit(event: Event) {
     event?.preventDefault();
-    console.log('event submit', event);
     if (this.vForm instanceof VFormInstance) {
       const result = await this.vForm.validate();
-      console.log('resutl valid', result);
     }
   }
 

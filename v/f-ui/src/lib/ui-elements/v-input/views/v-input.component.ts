@@ -116,8 +116,6 @@ export class VInputComponent implements OnInit, OnDestroy {
       this.hasApplyTheme = true;
     });
 
-    effect(() => {
-    });
   }
 
   protected tuneAsVFormItem() {

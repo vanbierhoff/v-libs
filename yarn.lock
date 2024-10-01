@@ -5158,10 +5158,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@v/f-core@*":
-  version "0.0.7"
-  resolved "http://potato.myfast.host/@v/f-core/-/f-core-0.0.7.tgz#3a28085adc189b6a2e01a250c6dd7490f3903c39"
-  integrity sha512-Iya0rDOC/K/cWcEReRl9tk3BmL7PxFJAlKgAd9EjBi/BZoknS6zqf6xX1wbg3wAlk9pSk+aKUGBqPvwbfibjXg==
+"@v/f-core@^0.0.8":
+  version "0.0.8"
+  resolved "http://s16392859.fastvps-server.com/@v/f-core/-/f-core-0.0.8.tgz#05f84d5c3e6b44caef09cfc7f24fd451cc9054b4"
+  integrity sha512-tGtwFIayzCY0vO5BgxBLNMmaLhfsQsqY5Pqiioh5Pzy4p6kT8MWOvGWEGvJ2WfqUaJtpjhxT8aX3GPDhrXTqXA==
   dependencies:
     tslib "^2.3.0"
 

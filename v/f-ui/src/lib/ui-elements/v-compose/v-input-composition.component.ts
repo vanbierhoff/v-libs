@@ -35,7 +35,6 @@ export class VInputCompositionComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.childComponent);
     this.childComponent.formField.listenEvent(FORM_FIELD_EVENTS.changeValue, () => {
       this.childComponent.formField.validate();
     });
