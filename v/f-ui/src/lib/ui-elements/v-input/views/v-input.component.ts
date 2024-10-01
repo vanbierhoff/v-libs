@@ -6,7 +6,7 @@ import {
   Input, InputSignal, OnDestroy,
   OnInit,
   Output,
-  signal
+  signal, WritableSignal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ValidatorInterface } from '@v/store';
@@ -17,6 +17,7 @@ import { FIELD_TYPES_LIST, FormField } from '@v/f-core';
 import { ThemeManagerService } from '@v/themes';
 import { V_INPUT_THEME } from '../const/v-input.theme';
 import { ValueTransformer } from '../../../shared';
+import { VFormDirective } from '../../../directives/v-form.directive';
 
 
 @Component({
@@ -39,6 +40,8 @@ import { ValueTransformer } from '../../../shared';
 export class VInputComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(ElementRef) protected elRef: ElementRef,
+              @Inject(VFormDirective)
+              readonly formDirective: VFormDirective | null,
               protected themeManager: ThemeManagerService
   ) {
     attrController(elRef, {
@@ -63,16 +66,17 @@ export class VInputComponent implements OnInit, OnDestroy {
 
   @Input() transformer: ValueTransformer<any, any> | null = null;
 
-  @Input() outputTransformer: ValueTransformer<any, any> | null = null;
+  @Input() valueTransformer: ValueTransformer<unknown, unknown> | null = null;
 
   @Output()
   inputEv: EventEmitter<any> = new EventEmitter();
 
   set fField(v: FormField) {
     this.formField = v;
+    this.value.set(v.value);
   }
 
-  protected value = signal('');
+  protected value: WritableSignal<string | number | unknown> = signal('');
 
   protected computedInputValue = computed(() => {
       const v = this.transformer ? this.transformer(this.value()) : this.value();
@@ -85,7 +89,7 @@ export class VInputComponent implements OnInit, OnDestroy {
   protected hasApplyTheme: boolean = false;
   protected prevTheme: string = '';
 
-  public formField: FormField = BaseFieldFactory(FIELD_TYPES_LIST.input as any, this.startValue);
+  public formField!: FormField;
 
   inputValue(v: any) {
     this.value.set(v);
@@ -93,7 +97,14 @@ export class VInputComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.themeManager.apply(this.themeName(), this.elRef);
+    if (this.formDirective) {
+      this.tuneAsVFormItem();
+    } else {
+      this.tuneAsIndependent();
+    }
   }
+
+
 
   setEffects() {
     effect(async () => {
@@ -107,6 +118,17 @@ export class VInputComponent implements OnInit, OnDestroy {
 
     effect(() => {
     });
+  }
+
+  protected tuneAsVFormItem() {
+    const field = this.formDirective?.vForm.getField(this.name);
+    if (field) {
+      this.fField = field;
+    }
+  }
+
+  protected tuneAsIndependent() {
+    this.fField = BaseFieldFactory(FIELD_TYPES_LIST.input as any, this.startValue);
   }
 
   ngOnDestroy() {

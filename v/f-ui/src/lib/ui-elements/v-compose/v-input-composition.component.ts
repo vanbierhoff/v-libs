@@ -18,7 +18,10 @@ import { FORM_FIELD_EVENTS } from '@v/f-core';
   standalone: true,
   imports: [CommonModule, GetErrorPipe],
   templateUrl: './v-input-composition.component.html',
-  styleUrl: './v-input-composition.component.scss'
+  styleUrl: './v-input-composition.component.scss',
+  providers: [{
+    provide: ComponentToken, useExisting: forwardRef(() => VInputCompositionComponent)
+  }]
 })
 export class VInputCompositionComponent implements OnInit, AfterViewInit {
 
@@ -28,12 +31,13 @@ export class VInputCompositionComponent implements OnInit, AfterViewInit {
   @Input() label: string = '';
 
   ngOnInit(): void {
+
   }
 
   ngAfterViewInit() {
+    console.log(this.childComponent);
     this.childComponent.formField.listenEvent(FORM_FIELD_EVENTS.changeValue, () => {
       this.childComponent.formField.validate();
     });
-
   }
 }
