@@ -1,10 +1,27 @@
 <form [vForm]="formData">
   <div vInputCompose
-       >
+  >
     <span vLabel>labvel message</span>
     <input vInput
            name="testInput">
   </div>
+
+  ____________________
+
+  @for (formItem of formData.formInstance.testInputArray; track formItem) {
+    <form [vForm]="formItem">
+      <div vInputCompose
+      >
+        <span vLabel>labvel message</span>
+        <input vInput
+               type="number"
+               name="numberField">
+      </div>
+    </form>
+  } @empty {
+    Empty list of users
+  }
+
 
   <button type="submit">Отправить заявку</button>
 </form>

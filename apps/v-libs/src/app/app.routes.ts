@@ -12,6 +12,10 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('./modules/forms/form-directive/forms-directive.component').then(c => c.FormsDirectiveComponent)
   },
   {
+    path: 'rx',
+    loadComponent: () => import('./modules/reactions/reactions.component').then(c => c.ReactionsComponent)
+  },
+  {
     path: 'theme',
     resolve: {
       ThemesResolver

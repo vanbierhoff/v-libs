@@ -1,13 +1,13 @@
-import { StoreFieldDecoratorInterface } from '@v/store';
-import { FieldTypes } from '../../../form-instances/form-field/models/field-types.list';
-import { BaseTypes } from '@v/store/store/models/base-types';
-import { FormField } from '../../../form-instances/form-field/form-field';
+import { BaseTypes, ValidatorInterface } from '@v/cdk';
+import { FieldTypes, FormField } from '@v/f-core';
 
 
 
-export interface FormFieldOptionsInterface extends StoreFieldDecoratorInterface<any, FormField> {
+export interface FormFieldOptionsInterface<V = any, F = any> {
   type?: BaseTypes | any;
   fieldType?: FieldTypes;
+  validators?: ValidatorInterface<V>[] | [];
 
+  initHook?(field: FormField<F>): void;
 }
 

@@ -1,7 +1,7 @@
 import map from 'lodash/map';
 import { addMetaField } from '@v/meta-helper';
-import { getGlobalInjector } from '@v/store';
 import { FORM_META_INSTANCE } from '../../consts';
+import { getGlobalInjector } from '@v/cdk';
 
 
 

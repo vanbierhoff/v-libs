@@ -17,13 +17,13 @@ export function createFormFields<T extends object>(formInstance: Record<string |
   for(let i = 0; allFields.length > i; i++) {
 
     const fieldValue = formInstance[allFields[i].propertyName] || undefined;
-    // где-то тул или в декораторе прокинуть ссылку на target . т.не на базовую форму!
     const field = new FormField({
         validators: allFields[i].validators ?? undefined,
-        policy: allFields[i].policy ?? undefined,
+      // TODO add policy to cdk
+      // policy: allFields[i].policy ?? undefined,
         fieldType: allFields[i].fieldType,
         type: allFields[i].type,
-        propertyName: allFields[i].propertyName,
+        name: allFields[i].propertyName,
       }, fieldValue
     );
     formFields.push(field);

@@ -22,4 +22,4 @@ const maybe = <T>(key: string) => {
 
 };
 
-export const createFormMonad = <T>(target: T) => maybe<VFormInstance<T>>(CREATED_FORM_META)(target);
+export const createFormBox = <T>(target: T) => maybe<VFormInstance<T>>(CREATED_FORM_META)(target);

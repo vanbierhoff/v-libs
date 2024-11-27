@@ -1,0 +1,11 @@
+:host {
+  position: relative;
+  --broder-rad: 4px;
+  --border-color: #2f75c4;
+  --textColor: #01152d;;
+  --focus-color: #165cab;
+  --fontSize: 14px;
+  font-size: var(--fontSize);
+  color: var(--textColor);
+}
+

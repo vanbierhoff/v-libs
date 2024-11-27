@@ -1,4 +1,18 @@
-<button class="title" vButton
-(clicked)="testClicked()"
-        [disabled]="disabled"
->button 2</button>
+<button
+  class="title"
+  [id]="25"
+  vButton
+  vLoader
+  #loader="vLoader"
+  [isLoadInput]="disabled"
+  [loader]="loader"
+  #button
+  [disabled]="disabled"
+  [icon]="icon"
+>
+  <ng-template #icon>
+    <i class="icon-flag icon-flag--arg"></i>
+  </ng-template>
+
+  button test
+</button>

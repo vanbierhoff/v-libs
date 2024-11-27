@@ -1,28 +1,31 @@
-import { Component, ElementRef, HostBinding, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { THEME_LINK } from '../../../../../../../../v/themes/src/lib/const/theme-tokens';
 import { BASE_THEME_LINK, BaseTheme } from '../../../../theme/tests/base-theme/base-theme';
 import { ThemeManagerService } from '../../../../../../../../v/themes/src/lib/services/theme-manager.service';
 import { VButtonComponent } from '../../../../../../../../v/f-ui/src/lib/ui-elements/v-button/v-button.component';
+import {
+  VLoaderDirective
+} from '../../../../../../../../v/f-ui/src/lib/ui-elements/directives/v-loader/v-loader.directive';
 
 
 
 @Component({
   selector: 'button-two',
   standalone: true,
-  imports: [CommonModule, VButtonComponent],
+  imports: [CommonModule, VButtonComponent, VLoaderDirective],
   providers: [
     {
       provide: THEME_LINK,
       useValue: BASE_THEME_LINK
     },
-
     ThemeManagerService
   ],
+
   templateUrl: './button-2.component.html',
   styleUrl: './button-2.component.scss'
 })
-export class Button2Component implements OnInit {
+export class Button2Component implements OnInit, AfterViewInit {
 
   constructor(
     protected ElRef: ElementRef,
@@ -31,11 +34,21 @@ export class Button2Component implements OnInit {
 
   public disabled = true;
 
+  @ViewChild('button', {read: VButtonComponent}) button: VButtonComponent = {} as VButtonComponent;
+
   ngOnInit() {
     this.theme.apply('buttonBlock', this.ElRef);
+
     setTimeout(() => {
       this.disabled = false;
+      console.log('disabled', this.disabled);
+      console.log('button', this.button);
+      //this.button?.loader.load = false;
     }, 2500);
+  }
+
+  ngAfterViewInit() {
+  //  this.button?.loader.load = true;
   }
 
   testClicked() {

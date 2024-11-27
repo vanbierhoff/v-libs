@@ -1,4 +1,14 @@
-import { Directive, ElementRef, Input, TemplateRef } from '@angular/core';
+import {
+  computed,
+  Directive, effect,
+  ElementRef,
+  input,
+  Input,
+  InputSignal, OnInit,
+  signal,
+  TemplateRef,
+  WritableSignal
+} from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
@@ -7,12 +17,12 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   standalone: true,
   exportAs: 'vLoader'
 })
-export class VLoaderDirective {
-
-
-  public isLoading: boolean = false;
+export class VLoaderDirective implements OnInit {
   @Input()
   public template: TemplateRef<any> | null = null;
+ // TODO использовать битовую маску или классиччесский сеттер который дернет signal
+  isLoadInput: InputSignal<boolean> = input(false);
+
 
   #baseTpl = `<svg
         class="loader"
@@ -38,14 +48,18 @@ export class VLoaderDirective {
               protected sanitizer: DomSanitizer
   ) {
     this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(this.#baseTpl);
+    computed(() => this.load = this.isLoadInput());
   }
 
-  get load(): boolean {
-    return this.isLoading;
+  protected readonly isLoadingFlag: WritableSignal<boolean> = signal(false);
+  public isLoading = computed(() => this.isLoadInput());
+
+
+  ngOnInit() {
+
   }
 
   set load(v: boolean) {
-    this.isLoading = v;
   }
 
 
