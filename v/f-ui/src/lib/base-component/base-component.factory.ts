@@ -1,5 +1,5 @@
-import { getBaseValidator, ValidatorInterface } from '@v/store';
 import { FieldTypes, FormField, FormFieldEventsInterface } from '@v/f-core';
+import { getBaseValidator, ValidatorInterface } from '@v/cdk';
 
 
 const BaseName = 'defaultName';
@@ -12,7 +12,7 @@ export const BaseFieldFactory = <T>
   return new FormField<T, FormFieldEventsInterface<T>>(
     {
       fieldType: type,
-      propertyName: BaseName,
+      name: BaseName,
       validators: validators ? [validators] : []
     });
 };

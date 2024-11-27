@@ -1,5 +1,6 @@
 import { FormField } from '../../form-instances/form-field/form-field';
-import { ValidationError } from '@v/store';
+import { ValidationError } from '@v/cdk';
+
 
 
 export const FORM_FIELD_EVENTS = {

@@ -1,13 +1,14 @@
 import { VFormConstructor, VFormInstance } from '../form-instances/form-instance/form-instance';
 import { createFormFields } from './create-form-field';
-import { FieldManager } from '@v/store';
 import { FormField } from '../form-instances/form-field/form-field';
 import { addFormToStore } from '../form-meta-store/add-to-store';
 import { CREATED_FORM_META } from '../form-meta-store/const/form-meta-keys';
-import { find, forEach } from 'lodash';
 import { FormFieldMeta } from '../decorators/form-fields/models/form-field.meta';
 import { getMetadata } from '@v/meta-helper';
 import { FORM_META_FIELD } from '../consts';
+import { asFieldFactory } from './factories/as-field.factory';
+import { asNestedFormFactory } from './factories/as-nested-form-factory';
+import { FieldManager } from '@v/cdk';
 
 
 export function createForm<F>(form: VFormConstructor): F {
@@ -25,18 +26,18 @@ export function createForm<F>(form: VFormConstructor): F {
 }
 
 
-const initFields = (form: VFormInstance<any>, formInstance: any) => {
-  const metaFields: FormFieldMeta[] | undefined = getMetadata<FormFieldMeta[]>(FORM_META_FIELD, formInstance.constructor);
-  forEach(form.fieldManager.getAll(), (field: FormField<any, any>) => {
+const initFields = (form: VFormInstance<unknown>, formInstance: any) => {
+  const metaFields: Array<FormFieldMeta> | undefined = getMetadata<FormFieldMeta[]>(FORM_META_FIELD, formInstance.constructor);
+  form.fieldManager.getAll().forEach((field: FormField<unknown, unknown>) => {
     field.form = form;
-    const formField = find(metaFields, {propertyName: field.propertyName});
+    const formField = metaFields?.find(item => item.propertyName === field.name);
     if (!formField) {
-      field.initialized = true;
       return;
     }
-    if (formField.hasOwnProperty('initHook')) {
-      formField.initHook(field);
-      field.initialized = true;
+    if (formField.hasOwnProperty('prototype')) {
+      return asNestedFormFactory(formField, field);
     }
+    asFieldFactory(formField, field);
+
   });
 };

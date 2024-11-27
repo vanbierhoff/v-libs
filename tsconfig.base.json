@@ -17,6 +17,7 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@v-libs/v/tree-creator": ["v/tree-creator/src/index.ts"],
+      "@v/cdk": ["v/cdk/src/index.ts"],
       "@v/f-core": ["v/f-core/src/index.ts"],
       "@v/f-ui": ["v/f-ui/src/index.ts"],
       "@v/themes": ["v/themes/src/index.ts"]

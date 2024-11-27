@@ -36,9 +36,12 @@ testem.log
 
 # System Files
 .DS_Store
-Thumbs.db
+Thumbs.dbdaemon.log
 
 .nx/cache
+.nx
+.vscode
 .angular
 .npmrc
 .yarnrc
+

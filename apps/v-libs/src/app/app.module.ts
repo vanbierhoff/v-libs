@@ -3,9 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
-import { setGlobalInjector } from '@v/store';
-import { THEME_LINK } from '../../../../v/themes/src/lib/const/theme-tokens';
+import { THEME_LINK } from '@v/themes';
 import { BASE_THEME_LINK } from './theme/tests/base-theme/base-theme';
+import { setGlobalInjector } from '@v/cdk';
 
 
 @NgModule({
@@ -29,8 +29,7 @@ import { BASE_THEME_LINK } from './theme/tests/base-theme/base-theme';
             return value;
           }
         });
-        return () => {
-        };
+        return () => {};
       },
       deps: [
         Injector

@@ -1,4 +1,5 @@
 import { FormField } from '@v/f-core';
+import {  NgControl } from '@angular/forms';
 
 
 
@@ -18,6 +19,6 @@ export abstract class ComponentToken {
   set fField(v: FormField) {
   }
 
-  public formField: FormField = {} as FormField;
+  public control: NgControl| null = null;
 
 }

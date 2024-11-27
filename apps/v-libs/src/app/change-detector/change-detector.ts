@@ -1,4 +1,4 @@
-function customHashCode(key: string, value: any): number {
+function getHashForValue(key: string, value: any): number {
   let hash = 0;
   for(let i = 0; i < key.length; i++) {
     hash = (hash << 5) - hash + key.charCodeAt(i); // Calculate hash for key
@@ -13,14 +13,14 @@ function customHashCode(key: string, value: any): number {
   return hash;
 }
 
-function generateBitMask(obj: any): number {
+function generateHashCode(obj: any): number {
   let mask = 0;
   for(const key in obj) {
     if (obj.hasOwnProperty(key)) {
-      mask |= 1 << customHashCode(key, obj[key]);
+      mask |= 1 << getHashForValue(key, obj[key]);
       const value = obj[key];
       if (typeof value === 'object') {
-        mask |= generateBitMask(value);
+        mask |= generateHashCode(value);// to 32 bits number
       }
     }
   }
@@ -28,8 +28,8 @@ function generateBitMask(obj: any): number {
 }
 
 export function detectChanges(oldObj: any, newObj: any): boolean {
-  const oldMask = generateBitMask(oldObj);
-  const newMask = generateBitMask(newObj);
+  const oldMask = generateHashCode(oldObj);
+  const newMask = generateHashCode(newObj);
   console.log(oldMask, newMask);
   return oldMask !== newMask;
 }

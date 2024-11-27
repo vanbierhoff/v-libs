@@ -1,23 +1,23 @@
 import {
   Component, computed, effect,
   ElementRef,
-  EventEmitter, forwardRef,
+  EventEmitter, forwardRef, inject,
   Inject, input,
   Input, InputSignal, OnDestroy,
-  OnInit,
+  OnInit, Optional,
   Output,
   signal, WritableSignal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ValidatorInterface } from '@v/store';
 import { ComponentToken } from '../../../const/component.token';
 import { attrController } from '../../../utils/attr-ontroller';
-import { BaseFieldFactory } from '../../../base-component';
-import { FIELD_TYPES_LIST, FormField } from '@v/f-core';
 import { ThemeManagerService } from '@v/themes';
 import { V_INPUT_THEME } from '../const/v-input.theme';
 import { ValueTransformer } from '../../../shared';
-import { VFormDirective } from '../../../directives/v-form.directive';
+
+import {
+  FormGroupDirective, NgControl
+} from '@angular/forms';
 
 
 @Component({
@@ -29,7 +29,6 @@ import { VFormDirective } from '../../../directives/v-form.directive';
     '(input)': 'inputValue($event.target.value)',
     '[value]': 'computedInputValue()'
   },
-
   providers: [{
     provide: ComponentToken, useExisting: forwardRef(() => VInputComponent)
   },
@@ -40,19 +39,23 @@ import { VFormDirective } from '../../../directives/v-form.directive';
 export class VInputComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(ElementRef) protected elRef: ElementRef,
-              @Inject(VFormDirective)
-              readonly formDirective: VFormDirective | null,
+              @Optional()
+              @Inject(FormGroupDirective)
+              readonly formDirective: FormGroupDirective | null,
               protected themeManager: ThemeManagerService
   ) {
     attrController(elRef, {
       disabled: this.locked,
       readonly: this.readonly
     });
-    this.setEffects();
-  }
 
-  @Input() set validators(vds: ValidatorInterface<any>[]) {
-    vds.forEach(v => this.formField.addValidator(v));
+    setTimeout(() => {
+      console.log(this.formDirective);
+
+      console.log('ngControl', this.control);
+    }, 5000);
+
+    this.setEffects();
   }
 
   readonly: InputSignal<boolean> = input<boolean>(false);
@@ -69,25 +72,20 @@ export class VInputComponent implements OnInit, OnDestroy {
   @Output()
   inputEv: EventEmitter<any> = new EventEmitter();
 
-  set fField(v: FormField) {
-    this.formField = v;
-    this.value.set(v.value);
-  }
 
   protected value: WritableSignal<string | number | unknown> = signal('');
 
   protected computedInputValue = computed(() => {
       const v = this.transformer ? this.transformer(this.value()) : this.value();
-      this.formField.setValue(v);
       this.inputEv.emit(v);
       return v;
     }
   );
+  readonly control: NgControl | null = inject(NgControl, {optional: true, self: true});
 
   protected hasApplyTheme: boolean = false;
   protected prevTheme: string = '';
 
-  public formField!: FormField;
 
   inputValue(v: any) {
     this.value.set(v);
@@ -95,11 +93,6 @@ export class VInputComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.themeManager.apply(this.themeName(), this.elRef);
-    if (this.formDirective) {
-      this.tuneAsVFormItem();
-    } else {
-      this.tuneAsIndependent();
-    }
   }
 
   // TODO set destroy ref or set injector to fix memory leaks
@@ -113,17 +106,6 @@ export class VInputComponent implements OnInit, OnDestroy {
       this.hasApplyTheme = true;
     });
 
-  }
-
-  protected tuneAsVFormItem() {
-    const field = this.formDirective?.vForm.getField(this.name);
-    if (field) {
-      this.fField = field;
-    }
-  }
-
-  protected tuneAsIndependent() {
-    this.fField = BaseFieldFactory(FIELD_TYPES_LIST.input as any, this.startValue);
   }
 
   ngOnDestroy() {

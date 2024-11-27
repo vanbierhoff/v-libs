@@ -1,4 +1,4 @@
-<div class="button-wrapper" vLoader #loader=vLoader>
+<div class="button-wrapper">
 
   @if (iconPosition === 'left') {
     <span class="v-icon v-icon--left">
@@ -7,18 +7,20 @@
   }
 
   @if (iconPosition === 'manual') {
-         <ng-container [ngTemplateOutlet]="icon"></ng-container>
+    <ng-container [ngTemplateOutlet]="icon"></ng-container>
   }
 
-  @if (loader?.template && disabled() || loader.load) {
-    <ng-container [ngTemplateOutlet]="loader.template"></ng-container>
-  }
-
-  @if (!loader?.template && disabled() || loader.load) {
-    <span [innerHTML]="loader.safeHtml"></span>
+  @if (loader) {
+    @if (loader.isLoading()) {
+      <ng-container [ngTemplateOutlet]="loader.template"></ng-container>
+    }
+    @if (!loader?.template && loader?.isLoading()) {
+      <span [innerHTML]="loader?.safeHtml"></span>
+    }
   }
 
   <ng-content></ng-content>
+  {{ loader?.isLoading() }}
 
   @if (iconPosition === 'right') {
     <span class="v-icon v-icon--right">

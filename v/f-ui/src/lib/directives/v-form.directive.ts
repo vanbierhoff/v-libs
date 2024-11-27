@@ -9,7 +9,7 @@ import {
   QueryList
 } from '@angular/core';
 import { ComponentToken } from '../const/component.token';
-import { VFormInstance, createFormMonad } from '@v/f-core';
+import { VFormInstance, createFormBox } from '@v/f-core';
 
 
 
@@ -32,10 +32,11 @@ export class VFormDirective {
   @Input({
     required: true,
     transform: (value: unknown) => {
+      console.log('value ', value);
       if (value instanceof VFormInstance) {
         return value;
       }
-      const form = createFormMonad(value).get();
+      const form = createFormBox(value).get();
       if (form instanceof VFormInstance) {
         return form;
       }
@@ -49,6 +50,7 @@ export class VFormDirective {
     event?.preventDefault();
     if (this.vForm instanceof VFormInstance) {
       const result = await this.vForm.validate();
+      console.log('result valid, ', result);
     }
   }
 
