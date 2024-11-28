@@ -16,3 +16,9 @@ export const ThemesResolver: (route: ActivatedRouteSnapshot, state: RouterStateS
   const themeDataService = inject(ThemeDataService);
   await themeDataService.loadThemes(route?.data?.['appliesStyleNames']);
 };
+
+
+export const themePreload = async (appliesStyleNames: Array<string>, dataService?: ThemeDataService) => {
+  const themeDataService = dataService || inject(ThemeDataService);
+  await themeDataService.loadThemes(appliesStyleNames);
+};

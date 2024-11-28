@@ -66,8 +66,8 @@ export class ThemeDataService {
       await theme.item.style();
       return;
     }
-    if (theme?.item.css) {
-      await theme.item.css();
+    if (theme?.item.cssFile) {
+      await theme.item.cssFile();
       return;
     }
     console.warn('Styles or style block not defined');

@@ -1,7 +1,8 @@
-export type CssData = { default: string };
-export type StyleData = { style: any };
+export type CssFileData = { default: string };
+export type StyleData = { style: any } | CssFileData;
 
-export type LazyCss = () => Promise<CssData>;
+
+export type LazyCssFile = () => Promise<CssFileData>;
 export type LazyStyle = () => Promise<StyleData>;
 
 export interface ThemeInterface {
@@ -12,7 +13,7 @@ export interface ThemeInterface {
   /**
    * css file for link
    */
-  css?: LazyCss;
+  cssFile?: LazyCssFile;
   /**
    * styles for added to host
    */

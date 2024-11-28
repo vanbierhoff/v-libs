@@ -1,7 +1,8 @@
-import { Component, effect, HostBinding, OnInit, signal } from '@angular/core';
+import { Component, effect, ElementRef, HostBinding, inject, OnInit, signal } from '@angular/core';
 import { deepFirstSearchAlgorithm } from '@v-libs/v/tree-creator';
 import { MOCK_ARRAY_FOR_DEEP, MOCK_OBJECT_FOR_DEEP } from './modules/tree-utils/models/mock-obj';
 import { detectChanges, newObject, oldObject } from './change-detector/change-detector';
+import { ThemeManagerService } from '@v/themes';
 
 
 let changed = 0;
@@ -9,6 +10,7 @@ let changed = 0;
 @Component({
   selector: 'v-libs-root',
   templateUrl: './app.component.html',
+  providers: [ThemeManagerService],
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
@@ -22,12 +24,8 @@ export class AppComponent implements OnInit {
     });
   }
 
-
-  @HostBinding('style.color')
-  color = 'red';
-
-  @HostBinding('style.color')
-  colorRed = 'green';
+  theme = inject(ThemeManagerService);
+  elRef = inject(ElementRef);
 
   // @HostBinding('style.--vars-color')
   // colorVar = 'red';
@@ -45,6 +43,8 @@ export class AppComponent implements OnInit {
     const result = deepFirstSearchAlgorithm(MOCK_OBJECT_FOR_DEEP, {
       asResult: 'id2'
     });
+
+    this.theme.apply('vars', this.elRef);
 
 
     this.colorSignal.set('red');

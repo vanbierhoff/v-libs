@@ -2,6 +2,7 @@ import { Route } from '@angular/router';
 import { ThemesResolver } from '../../../../v/themes/src/lib/services/themes.resolver';
 
 
+
 export const appRoutes: Route[] = [
   {
     path: 'forms',
@@ -21,7 +22,7 @@ export const appRoutes: Route[] = [
       ThemesResolver
     },
     data: {
-      appliesStyleNames: ['buttonCss', 'buttonBlock']
+      appliesStyleNames: ['buttonCss', 'buttonBlock', 'vars']
     },
     loadComponent: () => import('./modules/themes/views/theme.component').then(c => c.ThemeComponent)
   }

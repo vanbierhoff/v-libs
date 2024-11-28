@@ -1,5 +1,5 @@
 import { ElementRef, Inject, Injectable, Renderer2 } from '@angular/core';
-import { CssData, StyleData } from '../models/theme.interface';
+import { CssFileData, StyleData } from '../models/theme.interface';
 import { handleCssFile, toStyleFormat } from './theme-handler';
 import { DOCUMENT } from '@angular/common';
 import { TypeThemeInterface } from '../models/type-theme.interface';
@@ -10,7 +10,7 @@ import { AppliesTheme } from '../models/theme-data.interface';
 import { ThemeConsumersInterface } from '../models/theme-manager.interface';
 
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ThemeManagerService {
 
   constructor(
@@ -38,15 +38,15 @@ export class ThemeManagerService {
 
     const styleData: ThemeConsumersInterface['styleData'] = [];
     for await (const theme of themes) {
-      const {type, value} = await this.defineTypeLink(theme);
+      const { type, value } = await this.defineTypeLink(theme);
       if (type === 'style') {
         return this.setAttribute(elRef, 'style', toStyleFormat(value));
       }
       if (type === 'css') {
         const linkName: string = theme.theme + '-' + name;
-        const style = this.linkCssFile({type, value}, elRef, theme.theme + '-' + name);
+        const style = this.linkCssFile({ type, value }, elRef, theme.theme + '-' + name);
         if (style) {
-          styleData.push({style, linkName});
+          styleData.push({ style, linkName });
         }
       }
     }
@@ -62,7 +62,7 @@ export class ThemeManagerService {
     this.removeByNameConsumers(name);
   }
 
-  protected linkCssFile(theme: TypeThemeInterface, el: ElementRef,  linkName: string): HTMLStyleElement | void {
+  protected linkCssFile(theme: TypeThemeInterface, el: ElementRef, linkName: string): HTMLStyleElement | void {
     const hash = hasCssHash(linkName);
     if (hash) {
       return this.setAttribute(el, hash, '');
@@ -129,14 +129,14 @@ export class ThemeManagerService {
 
   protected async defineTypeLink(theme: AppliesTheme): Promise<TypeThemeInterface> {
     if (theme?.item.style) {
-      const result: StyleData = await theme.item.style();
+      const result: StyleData  = await theme.item.style();
       return {
         type: 'style',
-        value: result.style
+        value: result
       };
     }
-    if (theme?.item.css) {
-      const result: CssData = await theme.item.css();
+    if (theme?.item.cssFile) {
+      const result: CssFileData = await theme.item.cssFile();
       return {
         type: 'css',
         value: result.default

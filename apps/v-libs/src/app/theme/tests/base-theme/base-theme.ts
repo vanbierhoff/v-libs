@@ -1,7 +1,4 @@
-import {
-  ThemeListInterface,
-  ThemeModuleInterface
-} from '../../../../../../../v/themes/src/lib/models/theme-module.interface';
+import { ThemeListInterface, ThemeModuleInterface } from 'v/themes/src/lib/models/theme-module.interface';
 import { BASE_F_UI_THEME } from '../../../../../../../v/f-ui/src/lib/base-theme/base-f-ui.theme';
 
 
@@ -12,11 +9,11 @@ export const BaseTheme: ThemeModuleInterface = {
   items: [
     {
       name: 'buttonCss',
-      css: () => import('./styles/button.theme.css')
+      cssFile: () => import('./styles/button.theme.css')
     },
     {
       name: 'buttonBlock',
-      style: () => import('./styles/button-style')
+      style: () => import('./styles/button-style.theme.css')
     }
   ]
 };
@@ -25,12 +22,16 @@ export const uiElTheme: ThemeModuleInterface = {
   theme: 'uiEl',
   items: [
     {
+      name: 'vars',
+      cssFile: () => import('./styles/theme-vars.theme.css')
+    },
+    {
       name: 'buttonCss',
-      css: () => import('./styles/button-ui.theme.css')
+      cssFile: () => import('./styles/button-ui.theme.css')
     },
     {
       name: 'buttonBlock',
-      style: () => import('./styles/button-style')
+      style: () => import('./styles/button-style.theme.css')
     }
   ]
 };

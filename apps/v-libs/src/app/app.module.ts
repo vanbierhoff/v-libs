@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
-import { THEME_LINK } from '@v/themes';
+import { THEME_LINK, ThemeDataService, themePreload } from '@v/themes';
 import { BASE_THEME_LINK } from './theme/tests/base-theme/base-theme';
 import { setGlobalInjector } from '@v/cdk';
 
@@ -12,13 +12,13 @@ import { setGlobalInjector } from '@v/cdk';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes, {initialNavigation: 'enabledBlocking'})
+    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' })
   ],
   providers: [
     {
       provide: APP_INITIALIZER,
       multi: true,
-      useFactory: (injector: Injector) => {
+      useFactory: (injector: Injector, t: ThemeDataService) => {
         setGlobalInjector({
           get(token: any, order?: number, originalFormConstructor?: any): any {
             const notFound = Symbol('notFound');
@@ -29,16 +29,19 @@ import { setGlobalInjector } from '@v/cdk';
             return value;
           }
         });
-        return () => {};
+        return async () => {
+          await themePreload(['vars'], t);
+        };
       },
       deps: [
-        Injector
+        Injector,
+        ThemeDataService
       ]
     },
     {
       provide: THEME_LINK,
       useValue: BASE_THEME_LINK
-    },
+    }
 
   ],
   bootstrap: [AppComponent]
