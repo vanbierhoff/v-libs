@@ -1,7 +1,7 @@
 import { Component, effect, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { provideStackRunner, reaction, reactor } from '@v/reactions';
 
-import { reaction, reactor, provideStackRunner } from '@v-reactions/source';
 
 
 

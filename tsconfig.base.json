@@ -21,6 +21,7 @@
       "@v/f-core": ["v/f-core/src/index.ts"],
       "@v/f-ui": ["v/f-ui/src/index.ts"],
       "@v/reactions": ["v/reactions/src/index.ts"],
+      "@v/stack": ["v/stack/src/index.ts"],
       "@v/themes": ["v/themes/src/index.ts"]
     }
   },

@@ -22,7 +22,6 @@
     "@angular/router": "18.0.3",
     "@nx/angular": "19.3.0",
     "@types/lodash": "^4.14.201",
-    "@v-reactions/source": "0.0.21",
     "@v/event-stack": "^0.0.7",
     "@v/f-core": "^0.0.8",
     "@v/meta-helper": "^0.0.3",

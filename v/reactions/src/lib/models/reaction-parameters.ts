@@ -1,5 +1,4 @@
-import { BaseScheduler, Stack } from '@v/stack-runner';
-import { BrowserSchedulerStrategyType } from '@v/stack-runner/src/lib/scheduler/models/runner.interface';
+import { BaseScheduler, BrowserSchedulerStrategyType, Stack } from '@v/stack';
 
 
 export let stackItem: Stack;

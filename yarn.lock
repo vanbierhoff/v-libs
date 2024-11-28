@@ -5203,15 +5203,6 @@
   resolved "http://potato.myfast.host/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-"@v-reactions/source@0.0.21":
-  version "0.0.21"
-  resolved "http://s16392859.fastvps-server.com/@v-reactions/source/-/source-0.0.21.tgz#fdbb33ef3c392cdd6eb4635b3703ae6acf921d25"
-  integrity sha512-wrwUYYJxAG3fJXL40czqKlIACgFCex1ddZlDlmtptn/FGxY5zF5b3+kL/d2Srjlps7pPSyfWGXOil4KzgN6dlw==
-  dependencies:
-    "@v/stack-runner" "^0.0.2"
-    rxjs "^7.8.1"
-    tslib "^2.3.0"
-
 "@v/event-stack@^0.0.7":
   version "0.0.7"
   resolved "http://potato.myfast.host/@v/event-stack/-/event-stack-0.0.7.tgz#51661b0fa761e3e1caeaed2324ad7b7c598294c8"
@@ -5237,13 +5228,6 @@
   version "0.0.4"
   resolved "http://potato.myfast.host/@v/r-types/-/r-types-0.0.4.tgz#e9d0e568347640129393654bad47b07979892e15"
   integrity sha512-o4A+3opgNHULAB9rd/4r3jE7fFRi5V8RmfDJU2UYp0wpiyc9CvhhCMTxZ6kgD7rsQEODSG4GwVVk16fjvoOEGA==
-  dependencies:
-    tslib "^2.3.0"
-
-"@v/stack-runner@^0.0.2":
-  version "0.0.2"
-  resolved "http://s16392859.fastvps-server.com/@v/stack-runner/-/stack-runner-0.0.2.tgz#9b0daaa63d235e5d75ef10643b278496b3ffd868"
-  integrity sha512-iYVs9vF3tx1OzpshscrETjPQwVgQLs+9SdR07/cITimkPpaNhMOQEL+UmCZ56va3ZREupaERbRJ2ROyddg9XBA==
   dependencies:
     tslib "^2.3.0"
 

@@ -11,12 +11,12 @@ export interface XReactor<T> extends ReactorFn<T> {
 }
 
 export interface GlobalReactorInterface {
-  cbFn: ReactionFnInterface;
+  cbFn: ReactionFnInterface ;
   cbId: number;
   isRunning?: boolean;
-  deep?: number;
+  deep: number;
   planned: boolean;
-  nextUpdateReactions?: Array<{
+  nextUpdateReactions: Array<{
     fn: UnionReactionFnInterface,
     id: number
   }>;
