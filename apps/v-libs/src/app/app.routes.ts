@@ -22,9 +22,19 @@ export const appRoutes: Route[] = [
       ThemesResolver
     },
     data: {
-      appliesStyleNames: ['buttonCss', 'buttonBlock', 'vars']
+      appliesStyleNames: ['buttonCss', 'buttonBlock', ]
     },
     loadComponent: () => import('./modules/themes/views/theme.component').then(c => c.ThemeComponent)
+  },
+  {
+    path: 'inputs',
+    resolve: {
+      ThemesResolver
+    },
+    data: {
+      appliesStyleNames: ['buttonCss', 'buttonBlock', ]
+    },
+    loadComponent: () => import('./modules/ui/inputs/inputs.component').then(c => c.InputsComponent)
   }
 
 ];

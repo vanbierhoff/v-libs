@@ -1,0 +1,5 @@
+:host {
+  border: var(--baseBorder);
+  border-radius: var(--baseRad);
+  box-shadow: var(--baseBoxShadow);
+}

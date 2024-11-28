@@ -21,7 +21,7 @@ import {
 
 
 @Component({
-  selector: 'v-textarea input[vTextarea]',
+  selector: 'v-textarea textarea[vTextarea]',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './v-textarea.component.html',

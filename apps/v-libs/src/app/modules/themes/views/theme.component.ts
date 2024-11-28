@@ -7,12 +7,13 @@ import { Button1Component } from '../components/button-1/button-1.component';
 import { Button2Component } from '../components/button-2/button-2.component';
 import { RouterLink } from '@angular/router';
 import { ThemeDataService } from '../../../../../../../v/themes/src/lib/services/theme-data.service';
+import { VInputComponent } from '@v/f-ui';
 
 
 @Component({
   selector: 'v-libs-theme',
   standalone: true,
-  imports: [CommonModule, Button1Component, Button2Component, RouterLink],
+  imports: [CommonModule, Button1Component, Button2Component, RouterLink, VInputComponent],
   providers: [
     {
       provide: THEME_LINK,

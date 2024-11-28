@@ -1,0 +1,31 @@
+<p class="title">forms works!</p>
+
+<section class="inputs-group">
+  <div vInputCompose
+       label="label1"
+  >
+    <input vInput
+           [transformer]="transformer"
+           [locked]="locked">
+
+    <span vLabel>labvel message</span>
+
+  </div>
+
+  <input vInput
+         [transformer]="transformer"
+         [locked]="locked">
+  <div vInputCompose>
+    <input vInput
+           [transformer]="transformer"
+           [locked]="locked">
+    <span vLabel>custom message</span>
+  </div>
+
+</section>
+
+
+<section class="inputs-group">
+  <textarea vTextarea></textarea>
+</section>
+

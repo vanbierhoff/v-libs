@@ -1,3 +1,9 @@
 :root {
-  background: #03333b;
+  --baseBackground: #2245C5;
+  --baseHoverBackground: #1939ad;
+  --baseDisabledBackground: #6b706f;
+  --baseBorder: 3px solid #0a2793;
+  --baseRad: 4px;
+  --baseBoxShadow: 2px 2px 4px 0px #0a2793;
 }
+

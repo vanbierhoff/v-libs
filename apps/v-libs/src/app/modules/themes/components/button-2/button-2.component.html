@@ -4,10 +4,26 @@
   vButton
   vLoader
   #loader="vLoader"
-  [isLoadInput]="disabled"
+  [isLoadInput]="true"
   [loader]="loader"
   #button
-  [disabled]="disabled"
+  [disabled]="true"
+  [icon]="icon"
+>
+  <ng-template #icon>
+    <i class="icon-flag icon-flag--arg"></i>
+  </ng-template>
+
+  button test
+</button>
+
+
+<button
+  class="btn2"
+  [id]="25"
+  vButton
+  #button
+  [disabled]="true"
   [icon]="icon"
 >
   <ng-template #icon>

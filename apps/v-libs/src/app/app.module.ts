@@ -6,7 +6,11 @@ import { appRoutes } from './app.routes';
 import { THEME_LINK, ThemeDataService, themePreload } from '@v/themes';
 import { BASE_THEME_LINK } from './theme/tests/base-theme/base-theme';
 import { setGlobalInjector } from '@v/cdk';
+import { V_VARS_THEME } from '../../../../v/f-ui/src/lib/ui-elements/v-input/const/v-vars.theme';
+import { BASE_F_UI_THEME } from '@v/f-ui';
 
+
+ BASE_THEME_LINK.themes?.push(BASE_F_UI_THEME);
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +34,7 @@ import { setGlobalInjector } from '@v/cdk';
           }
         });
         return async () => {
-          await themePreload(['vars'], t);
+          await themePreload([V_VARS_THEME], t);
         };
       },
       deps: [

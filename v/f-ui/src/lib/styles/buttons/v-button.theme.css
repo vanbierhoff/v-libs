@@ -1,39 +1,71 @@
 :host {
-  background: var(--btnBackground);
+  background: transparent;
+  border: none;
+
+}
+
+.button-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--baseBackground);
   border-radius: var(--brRadius);
   outline: none;
-  border: none;
+  border: var(--baseBorder);
+  border-right: none;
+  border-left: none;
   padding: 10px 20px;
+
   color: var(--textColor);
   font-weight: 500;
   cursor: pointer;
+  position: relative;
+  box-shadow: var(--baseBoxShadow);
 
-  &:hover {
-    background: var(--btnHoverBackground);
+  &:after {
+    width: 9px;
+    top: 0;
+    right: -9px;
+    height: 100%;
+    position: absolute;
+    content: '';
+    background: var(--rightPixel) no-repeat;
   }
 
-  .button-wrapper {
-    display: flex;
-    align-items: center;
+  &:before {
+    position: absolute;
+    width: 9px;
+    top: 0;
+    height: 100%;
+    left: -9px;
+    content: '';
+    background: var(--leftPixel) no-repeat;
+  }
+
+  &:hover {
+    background: var(--baseHoverBackground);
   }
 
   &[disabled=true] {
-    background: var(--disabledBackground);
+    background: var(--baseDisabledBackground);
     color: var(--disabledColor);
     pointer-events: none;
   }
 
   .loader {
-    width: 16px;
-    height: 16px;
+    position: absolute;
+    left: 10px;
+  }
+
+  .loader__item {
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
-    margin-right: 10px;
     animation: vLoaderRotate 3s linear infinite;
   }
 
   .loader-circle {
     fill: none;
-    stroke: var(--loaderColor);
+    stroke: var(--baseDisabledBackground);
     stroke-width: 1.5rem;
     animation: vLoaderDashOffset 3s linear infinite;
   }
@@ -45,42 +77,45 @@
   }
 
   .v-icon--right {
-    margin-left: 10px;
+    left: 10px;
   }
 
-  .v-icon--left {
-    margin-right: 10px;
+  .v-icon--right {
+    right: 10px;
   }
+}
 
+.button-wrapper--load {
+  padding-left: 40px;
 }
 
 
-  @keyframes vLoaderDashOffset {
-    0% {
-      stroke-dashoffset: -66;
-    }
-
-    50% {
-      stroke-dashoffset: -314;
-    }
-
-    100% {
-      stroke-dashoffset: -66;
-    }
+@keyframes vLoaderDashOffset {
+  0% {
+    stroke-dashoffset: -66;
   }
 
-  @keyframes vLoaderRotate {
-    0% {
-      transform: rotate(0deg);
-    }
-
-    50% {
-      transform: rotate(1turn);
-    }
-
-    100% {
-      transform: rotate(3turn);
-    }
+  50% {
+    stroke-dashoffset: -314;
   }
+
+  100% {
+    stroke-dashoffset: -66;
+  }
+}
+
+@keyframes vLoaderRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(1turn);
+  }
+
+  100% {
+    transform: rotate(3turn);
+  }
+}
 
 

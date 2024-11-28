@@ -1,11 +1,10 @@
 .button-1 {
-  /*font-size: 24px;*/
-  /*background: aquamarine;*/
 }
 
 :host {
   color: #86980d;
   background: #dac015 !important;
+  background: url('../../../../../assets/flags/arg.svg');
   font-size: 14px;
 
   button {

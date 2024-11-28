@@ -3,6 +3,7 @@ import { deepFirstSearchAlgorithm } from '@v-libs/v/tree-creator';
 import { MOCK_ARRAY_FOR_DEEP, MOCK_OBJECT_FOR_DEEP } from './modules/tree-utils/models/mock-obj';
 import { detectChanges, newObject, oldObject } from './change-detector/change-detector';
 import { ThemeManagerService } from '@v/themes';
+import { V_VARS_THEME } from '../../../../v/f-ui/src/lib/ui-elements/v-input/const/v-vars.theme';
 
 
 let changed = 0;
@@ -44,7 +45,7 @@ export class AppComponent implements OnInit {
       asResult: 'id2'
     });
 
-    this.theme.apply('vars', this.elRef);
+    this.theme.apply(V_VARS_THEME, this.elRef);
 
 
     this.colorSignal.set('red');

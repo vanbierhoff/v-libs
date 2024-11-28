@@ -4,6 +4,7 @@
   height: 30px;
   background: center bottom 0 no-repeat linear-gradient(90deg, rgba(48,10,73,1) 0%, rgba(59,10,96,1) 30%, rgba(244,227,237,1) 100%);
   background-size: 400% 2px;
+  box-shadow: var(--baseBoxShadow);
 
   &:focus {
     animation: gradient 0.4s ease;

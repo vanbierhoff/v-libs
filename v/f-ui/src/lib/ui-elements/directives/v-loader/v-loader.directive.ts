@@ -25,7 +25,7 @@ export class VLoaderDirective implements OnInit {
 
 
   #baseTpl = `<svg
-        class="loader"
+        class="loader__item"
         focusable="false"
         viewBox="0 0 100 100"
         xmlns="http://www.w3.org/2000/svg"

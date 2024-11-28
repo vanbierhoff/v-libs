@@ -1,4 +1,6 @@
-<div class="button-wrapper">
+<div class="button-wrapper"
+[class.button-wrapper--load]="loader?.isLoading()"
+>
 
   @if (iconPosition === 'left') {
     <span class="v-icon v-icon--left">
@@ -15,7 +17,9 @@
       <ng-container [ngTemplateOutlet]="loader.template"></ng-container>
     }
     @if (!loader?.template && loader?.isLoading()) {
-      <span [innerHTML]="loader?.safeHtml"></span>
+      <div class="loader">
+        <div [innerHTML]="loader?.safeHtml"></div>
+      </div>
     }
   }
 
