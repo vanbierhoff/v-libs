@@ -1,0 +1,36 @@
+{
+  "name": "@v/reactions",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "v/reactions/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "v/reactions/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "v/reactions/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "v/reactions/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "v/reactions/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

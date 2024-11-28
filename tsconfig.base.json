@@ -20,6 +20,7 @@
       "@v/cdk": ["v/cdk/src/index.ts"],
       "@v/f-core": ["v/f-core/src/index.ts"],
       "@v/f-ui": ["v/f-ui/src/index.ts"],
+      "@v/reactions": ["v/reactions/src/index.ts"],
       "@v/themes": ["v/themes/src/index.ts"]
     }
   },
