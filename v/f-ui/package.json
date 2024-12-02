@@ -4,8 +4,7 @@
   "peerDependencies": {
     "@angular/common": "^17.0.0",
     "@angular/core": "^17.0.0",
-    "@v/f-core": "*",
-    "@v/store": "*"
+    "@v/themes": "*"
   },
   "dependencies": {
     "tslib": "^2.3.0"
