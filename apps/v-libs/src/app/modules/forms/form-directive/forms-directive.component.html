@@ -1,4 +1,4 @@
-<form [vForm]="formData">
+<form>
   <div vInputCompose
   >
     <span vLabel>labvel message</span>
@@ -7,20 +7,6 @@
   </div>
 
   ____________________
-
-  @for (formItem of formData.formInstance.testInputArray; track formItem) {
-    <form [vForm]="formItem">
-      <div vInputCompose
-      >
-        <span vLabel>labvel message</span>
-        <input vInput
-               type="number"
-               name="numberField">
-      </div>
-    </form>
-  } @empty {
-    Empty list of users
-  }
 
 
   <button type="submit">Отправить заявку</button>

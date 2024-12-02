@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComponentToken } from '../../const/component.token';
-import { GetErrorPipe } from './pipes/get-error.pipe';
-import { FORM_FIELD_EVENTS } from '@v/f-core';
+
+
 
 
 
@@ -16,7 +16,7 @@ import { FORM_FIELD_EVENTS } from '@v/f-core';
 @Component({
   selector: 'div[vInputCompose], section[vInputCompose], span[vInputCompose]',
   standalone: true,
-  imports: [CommonModule, GetErrorPipe],
+  imports: [CommonModule],
   templateUrl: './v-input-composition.component.html',
   styleUrl: './v-input-composition.component.scss',
   providers: [{
@@ -31,7 +31,6 @@ export class VInputCompositionComponent implements OnInit, AfterViewInit {
   @Input() label: string = '';
 
   ngOnInit(): void {
-
   }
 
   ngAfterViewInit() {
