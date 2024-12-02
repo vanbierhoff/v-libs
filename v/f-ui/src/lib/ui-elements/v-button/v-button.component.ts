@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { VLoaderDirective } from '../directives/v-loader/v-loader.directive';
 import { ThemeManagerService } from '@v/themes';
 import { V_BUTTON_THEME } from '../v-input/const/v-button.theme';
-import { attrController } from '../../utils/attr-ontroller';
+
 
 
 
@@ -19,7 +19,8 @@ import { attrController } from '../../utils/attr-ontroller';
   styleUrl: './v-button.component.scss',
   providers: [ThemeManagerService],
   host: {
-    '(click)': 'clickedEmit($event)'
+    '(click)': 'clickedEmit($event)',
+    '[attr.disabled]': 'disabled()'
   }
 
 })
@@ -28,9 +29,6 @@ export class VButtonComponent implements OnInit, OnDestroy {
   constructor(@Inject(ElementRef) protected elRef: ElementRef,
               protected themeManager: ThemeManagerService
   ) {
-    attrController(elRef, {
-      disabled: this.disabled
-    });
     this.changeThemeEffect();
   }
 
@@ -43,8 +41,8 @@ export class VButtonComponent implements OnInit, OnDestroy {
 
   public hasApplyTheme: boolean = false;
   public prevTheme: string = '';
-  themeName: InputSignal<string> = input<string>(V_BUTTON_THEME);
-  disabled: InputSignal<boolean> = input<boolean>(false);
+  appearance: InputSignal<string> = input<string>(V_BUTTON_THEME);
+  public disabled: InputSignal<boolean> = input<boolean>(false);
 
   clicked = output<Event>();
 
@@ -59,8 +57,8 @@ export class VButtonComponent implements OnInit, OnDestroy {
       if (this.hasApplyTheme) {
         this.themeManager.unApply(this.prevTheme);
       }
-      await this.themeManager.apply(this.themeName(), this.elRef);
-      this.prevTheme = this.themeName();
+      await this.themeManager.apply(this.appearance(), this.elRef);
+      this.prevTheme = this.appearance();
       this.hasApplyTheme = true;
     });
   }
@@ -77,6 +75,6 @@ export class VButtonComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.themeManager.unApply(this.themeName());
+    this.themeManager.unApply(this.appearance());
   }
 }
