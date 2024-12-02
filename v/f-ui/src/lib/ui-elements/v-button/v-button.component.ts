@@ -50,6 +50,8 @@ export class VButtonComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    setTimeout(() => console.log(this.loader), 300);
+    setTimeout(() => console.log(this.loader?.isLoading()), 300);
   }
 
   changeThemeEffect() {

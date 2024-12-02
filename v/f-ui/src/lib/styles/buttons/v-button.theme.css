@@ -1,19 +1,26 @@
 :host {
   background: transparent;
   border: none;
+  color: var(--baseTextColor);
 
+  &[disabled=true] .button-wrapper {
+    background: var(--baseDisabledColor);
+    color: var(--baseDisabledTextColor);
+    pointer-events: none;
+  }
 }
 
 .button-wrapper {
   display: flex;
   align-items: center;
-  background: var(--baseBackground);
-  border-radius: var(--brRadius);
+  border-radius: 2px;
+  background: var(--baseColor);
+  height: var(--mSize);
   outline: none;
-  border: var(--baseBorder);
-  border-right: none;
-  border-left: none;
-  padding: 10px 20px;
+  transition-property: var(--transitionPropertyBase);
+  transition-duration: var(--transitionDurationBase);
+  padding: 0 20px;
+  box-sizing: border-box;
 
   color: var(--textColor);
   font-weight: 500;
@@ -21,39 +28,25 @@
   position: relative;
   box-shadow: var(--baseBoxShadow);
 
-  &:after {
-    width: 9px;
-    top: 0;
-    right: -9px;
-    height: 100%;
-    position: absolute;
-    content: '';
-    background: var(--rightPixel) no-repeat;
+  &:hover:not(:disabled) {
+    background: var(--baseHoverColor);
   }
 
-  &:before {
-    position: absolute;
-    width: 9px;
-    top: 0;
-    height: 100%;
-    left: -9px;
-    content: '';
-    background: var(--leftPixel) no-repeat;
-  }
-
-  &:hover {
-    background: var(--baseHoverBackground);
+  &:active:not(:disabled) {
+    background: var(--baseActiveColor);
   }
 
   &[disabled=true] {
-    background: var(--baseDisabledBackground);
-    color: var(--disabledColor);
+    background: var(--baseDisabledColor);
+    color: var(--baseDisabledTextColor);
     pointer-events: none;
   }
 
   .loader {
     position: absolute;
     left: 10px;
+    top: 53%;
+    transform: translateY(-50%);
   }
 
   .loader__item {
@@ -65,7 +58,7 @@
 
   .loader-circle {
     fill: none;
-    stroke: var(--baseDisabledBackground);
+    stroke: var(--disabledColor-2);
     stroke-width: 1.5rem;
     animation: vLoaderDashOffset 3s linear infinite;
   }

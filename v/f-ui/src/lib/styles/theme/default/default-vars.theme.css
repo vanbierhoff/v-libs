@@ -1,9 +1,17 @@
 :root {
-  --baseBackground: #2245C5;
-  --baseHoverBackground: #1939ad;
-  --baseDisabledBackground: #6b706f;
-  --baseBorder: 3px solid #0a2793;
+  --baseColor: #c7368b;
+  --baseHoverColor: #c22f81;
+  --baseActiveColor: #ce5396;
+  --baseDisabledColor: #d7acbe;
+  --baseDisabledTextColor: #4f112d;
+  --baseTextColor: #fff;
+  --disabledColor-2: #502738;
+  --mSize: 40px;
+  --baseBorder: 3px solid #a21667;
   --baseRad: 4px;
-  --baseBoxShadow: 2px 2px 4px 0px #0a2793;
+  --baseBoxShadow: 2px 2px 4px 0px #bd207c;
+
+  --transitionPropertyBase: 'color, background, opacity, box-shadow, border';
+  --transitionDurationBase: 0.3s;
 }
 

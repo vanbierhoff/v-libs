@@ -20,7 +20,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class VLoaderDirective implements OnInit {
   @Input()
   public template: TemplateRef<any> | null = null;
- // TODO использовать битовую маску или классиччесский сеттер который дернет signal
+  // TODO использовать битовую маску или классиччесский сеттер который дернет signal
   isLoadInput: InputSignal<boolean> = input(false);
 
 
