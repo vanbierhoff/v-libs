@@ -6,6 +6,9 @@
     "publish:tree": "cd dist/v/tree-creator && npm publish",
     "publish:f": "cd dist/v/f-core && npm publish",
     "publish:f-ui": "cd dist/v/f-ui && npm publish",
+    "publish:reaction": "cd dist/v/reactions && npm publish",
+    "publish:cdk": "cd dist/v/f-ui && npm publish",
+    "publish:task": "cd dist/v/f-ui && npm publish",
     "publish:themes": "cd dist/v/themes && npm publish"
   },
   "private": true,
