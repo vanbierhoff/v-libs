@@ -12,9 +12,8 @@ import { CommonModule } from '@angular/common';
 import { ComponentToken } from '../../../const/component.token';
 import { attrController } from '../../../utils/attr-ontroller';
 import { ThemeManagerService } from '@v/themes';
-import {  V_TEXTAREA_THEME } from '../const/v-textarea.theme';
+import { V_TEXTAREA_THEME } from '../const/v-textarea.theme';
 import { ValueTransformer } from '../../../shared';
-
 import {
   FormGroupDirective, NgControl
 } from '@angular/forms';
@@ -27,7 +26,8 @@ import {
   templateUrl: './v-textarea.component.html',
   host: {
     '(input)': 'inputValue($event.target.value)',
-    '[value]': 'computedInputValue()'
+    '[value]': 'computedInputValue()',
+    '[attr.focused]': 'disabled()'
   },
   providers: [{
     provide: ComponentToken, useExisting: forwardRef(() => VTextareaComponent)
@@ -45,7 +45,7 @@ export class VTextareaComponent implements OnInit, OnDestroy {
               protected themeManager: ThemeManagerService
   ) {
     attrController(elRef, {
-      disabled: this.locked,
+      disabled: this.disabled,
       readonly: this.readonly
     });
 
@@ -53,9 +53,9 @@ export class VTextareaComponent implements OnInit, OnDestroy {
   }
 
   readonly: InputSignal<boolean> = input<boolean>(false);
-  locked: InputSignal<boolean> = input<boolean>(false);
+  disabled: InputSignal<boolean> = input<boolean>(false);
 
-  themeName: InputSignal<string> = input<string>(V_TEXTAREA_THEME);
+  appearance: InputSignal<string> = input<string>(V_TEXTAREA_THEME);
 
   @Input() startValue: string = '';
 
@@ -66,6 +66,8 @@ export class VTextareaComponent implements OnInit, OnDestroy {
   @Output()
   inputEv: EventEmitter<any> = new EventEmitter();
 
+  protected hasApplyTheme: boolean = false;
+  protected prevTheme: string = '';
 
   protected value: WritableSignal<string | number | unknown> = signal('');
 
@@ -75,18 +77,14 @@ export class VTextareaComponent implements OnInit, OnDestroy {
       return v;
     }
   );
-  readonly control: NgControl | null = inject(NgControl, {optional: true, self: true});
-
-  protected hasApplyTheme: boolean = false;
-  protected prevTheme: string = '';
-
+  readonly control: NgControl | null = inject(NgControl, { optional: true, self: true });
 
   inputValue(v: any) {
     this.value.set(v);
   }
 
   ngOnInit() {
-    this.themeManager.apply(this.themeName(), this.elRef);
+    this.themeManager.apply(this.appearance(), this.elRef);
   }
 
   // TODO set destroy ref or set injector to fix memory leaks
@@ -95,15 +93,15 @@ export class VTextareaComponent implements OnInit, OnDestroy {
       if (this.hasApplyTheme) {
         this.themeManager.unApply(this.prevTheme);
       }
-      await this.themeManager.apply(this.themeName(), this.elRef);
-      this.prevTheme = this.themeName();
+      await this.themeManager.apply(this.appearance(), this.elRef);
+      this.prevTheme = this.appearance();
       this.hasApplyTheme = true;
     });
 
   }
 
   ngOnDestroy() {
-    this.themeManager.unApply(this.themeName());
+    this.themeManager.unApply(this.appearance());
   }
 
 }

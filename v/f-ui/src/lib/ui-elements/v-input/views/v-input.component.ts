@@ -9,15 +9,17 @@ import {
   signal, WritableSignal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ComponentToken } from '../../../const/component.token';
+import { ComponentToken, HostComponent } from '../../../const/component.token';
 import { attrController } from '../../../utils/attr-ontroller';
 import { ThemeManagerService } from '@v/themes';
 import { V_INPUT_THEME } from '../const/v-input.theme';
 import { ValueTransformer } from '../../../shared';
-
 import {
+
   FormGroupDirective, NgControl
 } from '@angular/forms';
+import { vBaseControlFactory } from '../../../custom-controls/v-base-control.factory';
+import { VControlInterface } from '../../../custom-controls/models/v-control.interface';
 
 
 @Component({
@@ -27,7 +29,9 @@ import {
   templateUrl: './v-input.component.html',
   host: {
     '(input)': 'inputValue($event.target.value)',
-    '[value]': 'computedInputValue()'
+    '[value]': 'computedInputValue()',
+    '(focusin)': 'onFocused(true)',
+    '(focusout)': 'onFocused(false)'
   },
   providers: [{
     provide: ComponentToken, useExisting: forwardRef(() => VInputComponent)
@@ -39,22 +43,12 @@ import {
 export class VInputComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(ElementRef) protected elRef: ElementRef,
-              @Optional()
-              @Inject(FormGroupDirective)
-              readonly formDirective: FormGroupDirective | null,
               protected themeManager: ThemeManagerService
   ) {
     attrController(elRef, {
       disabled: this.locked,
       readonly: this.readonly
     });
-
-    setTimeout(() => {
-      console.log(this.formDirective);
-
-      console.log('ngControl', this.control);
-    }, 5000);
-
     this.setEffects();
   }
 
@@ -70,7 +64,9 @@ export class VInputComponent implements OnInit, OnDestroy {
   @Input() transformer: ValueTransformer<any, any> | null = null;
 
   @Output()
-  inputEv: EventEmitter<any> = new EventEmitter();
+  inputEv: EventEmitter<unknown> = new EventEmitter();
+
+  protected host: HostComponent | null = inject(HostComponent, { optional: true });
 
 
   protected value: WritableSignal<string | number | unknown> = signal('');
@@ -81,18 +77,32 @@ export class VInputComponent implements OnInit, OnDestroy {
       return v;
     }
   );
-  readonly control: NgControl | null = inject(NgControl, {optional: true, self: true});
+  readonly controller: VControlInterface = vBaseControlFactory(this.elRef, inject(NgControl, {
+    optional: true,
+    self: true
+  }));
 
-  protected hasApplyTheme: boolean = false;
-  protected prevTheme: string = '';
+  protected hasApplyTheme = false;
+  protected prevTheme = '';
 
 
   inputValue(v: any) {
     this.value.set(v);
   }
 
+  onFocused(v: boolean) {
+    this.controller.focus = v;
+  }
+
   ngOnInit() {
     this.themeManager.apply(this.themeName(), this.elRef);
+    this.registerControl();
+  }
+
+  registerControl() {
+    if (this.host) {
+      this.host.registerControl(this.controller);
+    }
   }
 
   // TODO set destroy ref or set injector to fix memory leaks

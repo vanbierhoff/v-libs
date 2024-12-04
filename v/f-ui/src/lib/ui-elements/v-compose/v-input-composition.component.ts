@@ -1,14 +1,14 @@
 import {
   AfterViewInit,
   Component,
-  ContentChild,
-  forwardRef, Input,
+  ContentChild, effect, ElementRef,
+  forwardRef, Inject, input, Input, InputSignal,
   OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ComponentToken } from '../../const/component.token';
-
-
+import { ComponentToken, HostComponent } from '../../const/component.token';
+import { V_COMPOSE_INPUT_THEME } from './const/v-input-compose.token';
+import { ThemeManagerService } from '@v/themes';
 
 
 
@@ -20,24 +20,44 @@ import { ComponentToken } from '../../const/component.token';
   templateUrl: './v-input-composition.component.html',
   styleUrl: './v-input-composition.component.scss',
   providers: [{
-    provide: ComponentToken, useExisting: forwardRef(() => VInputCompositionComponent)
+    provide: HostComponent, useExisting: forwardRef(() => VInputCompositionComponent)
   }]
 })
-export class VInputCompositionComponent implements OnInit, AfterViewInit {
+export class VInputCompositionComponent extends HostComponent {
 
-  @ContentChild(forwardRef(() => ComponentToken), {read: ComponentToken})
-  protected childComponent: ComponentToken = {} as ComponentToken;
+
+  constructor(@Inject(ElementRef) protected elRef: ElementRef,
+              protected themeManager: ThemeManagerService
+  ) {
+    super();
+    this.setEffects();
+
+  }
+
+  @ContentChild(forwardRef(() => ComponentToken), { read: ComponentToken })
+  public readonly childComponent: ComponentToken = {} as ComponentToken;
 
   @Input() label: string = '';
 
-  ngOnInit(): void {
+  protected hasApplyTheme: boolean = false;
+  protected prevTheme: string = '';
+
+
+  appearance: InputSignal<string> = input<string>(V_COMPOSE_INPUT_THEME);
+
+
+  setEffects() {
+    effect(async () => {
+      if (this.hasApplyTheme) {
+        this.themeManager.unApply(this.prevTheme);
+      }
+      await this.themeManager.apply(this.appearance(), this.elRef);
+      this.prevTheme = this.appearance();
+      this.hasApplyTheme = true;
+    });
   }
 
-  ngAfterViewInit() {
-    this.childComponent?.control?.statusChanges?.subscribe(data => console.log(data));
-    console.log(this.childComponent.control?.errors);
-    // this.childComponent.formField.listenEvent(FORM_FIELD_EVENTS.changeValue, () => {
-    //   this.childComponent.formField.validate();
-    // });
+  override registerControlHook(): void {
+    this.childComponent?.control?.ngControl?.statusChanges?.subscribe(data => console.log(data));
   }
 }

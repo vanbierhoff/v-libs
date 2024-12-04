@@ -20,8 +20,6 @@ export class AppComponent implements OnInit {
 
   constructor() {
     effect(() => {
-      console.log('signal', this.colorSignal());
-      console.log('signal2', this.colorSignal2());
     });
   }
 
