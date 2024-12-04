@@ -1,11 +1,10 @@
-
 <div class="input-container">
   <div class="label-container" *ngIf="!label">
-    <ng-container >
+    <ng-container>
       <ng-content select="[[vLabel], label]"></ng-content>
     </ng-container>
   </div>
-  
+
   <div class="input-wrapper">
     <ng-content select="input"></ng-content>
   </div>
