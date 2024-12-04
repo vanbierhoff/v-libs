@@ -1,9 +1,10 @@
-
-import { V_INPUT_THEME } from '../ui-elements/v-input/const/v-input.theme';
-import { V_BUTTON_THEME } from '../ui-elements/v-input/const/v-button.theme';
+import { V_VARS_THEME } from '../const/theme/v-vars.theme';
+import { V_INPUT_THEME } from '../const/theme/v-input.theme';
+import { V_TEXTAREA_THEME } from '../const/theme/v-textarea.theme';
+import { V_BUTTON_THEME } from '../const/theme/v-button.theme';
 import { ThemeModuleInterface } from '@v/themes';
-import { V_TEXTAREA_THEME } from '../ui-elements/v-input/const/v-textarea.theme';
-import { V_VARS_THEME } from '../ui-elements/v-input/const/v-vars.theme';
+import { V_LABEL_THEME } from '../const/theme/v-label.theme';
+import { V_COMPOSE_INPUT_THEME } from '../ui-elements/v-compose/const/v-input-compose.token';
 
 
 export const BASE_F_UI_THEME: ThemeModuleInterface = {
@@ -23,7 +24,15 @@ export const BASE_F_UI_THEME: ThemeModuleInterface = {
     },
     {
       name: V_BUTTON_THEME,
-      cssFile: () => import('../styles//buttons/v-button.theme.css')
+      cssFile: () => import('../styles/buttons/v-button.theme.css')
+    },
+    {
+      name: V_COMPOSE_INPUT_THEME,
+      cssFile: () => import('../styles/other/v-compose.theme.css')
+    },
+    {
+      name: V_LABEL_THEME,
+      cssFile: () => import('../styles/v-label.theme.css')
     }
   ]
 };

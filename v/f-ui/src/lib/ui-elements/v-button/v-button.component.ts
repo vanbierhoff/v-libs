@@ -1,12 +1,13 @@
 import {
   Component, effect, ElementRef,
   Inject, input, Input, InputSignal, OnDestroy,
-  OnInit, output, TemplateRef
+  output, TemplateRef
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VLoaderDirective } from '../directives/v-loader/v-loader.directive';
 import { ThemeManagerService } from '@v/themes';
-import { V_BUTTON_THEME } from '../v-input/const/v-button.theme';
+import { V_BUTTON_THEME } from '../../const/theme/v-button.theme';
+
 
 
 
@@ -24,7 +25,7 @@ import { V_BUTTON_THEME } from '../v-input/const/v-button.theme';
   }
 
 })
-export class VButtonComponent implements OnInit, OnDestroy {
+export class VButtonComponent implements OnDestroy {
 
   constructor(@Inject(ElementRef) protected elRef: ElementRef,
               protected themeManager: ThemeManagerService
@@ -32,8 +33,6 @@ export class VButtonComponent implements OnInit, OnDestroy {
     this.changeThemeEffect();
   }
 
-
-  @Input() iconStyle: string = '';
   @Input() loader: VLoaderDirective | null = null;
   @Input() iconPosition: 'left' | 'right' | 'manual' = 'left';
   @Input() icon: TemplateRef<any> | null = null;
@@ -45,12 +44,6 @@ export class VButtonComponent implements OnInit, OnDestroy {
   public disabled: InputSignal<boolean> = input<boolean>(false);
 
   clicked = output<Event>();
-
-
-  ngOnInit(): void {
-    setTimeout(() => console.log(this.loader), 300);
-    setTimeout(() => console.log(this.loader?.isLoading()), 300);
-  }
 
   changeThemeEffect() {
     effect(async () => {

@@ -6,6 +6,7 @@ export interface VControlInterface {
   ngControl: NgControl | null;
 
   focusable: WritableSignal<boolean>;
+  changeValue: WritableSignal<unknown>;
 
   focus: boolean;
 }

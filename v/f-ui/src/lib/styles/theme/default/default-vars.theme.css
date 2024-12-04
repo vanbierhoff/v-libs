@@ -4,14 +4,16 @@
   --baseActiveColor: #ce5396;
   --baseDisabledColor: #d7acbe;
   --baseDisabledTextColor: #4f112d;
-  --baseTextColor: #fff;
+  --textColor: #fff;
+  --textColor-2: #a21667;
   --disabledColor-2: #502738;
   --mSize: 40px;
+  --mInputSize: 46px;
   --baseBorder: 3px solid #a21667;
   --baseRad: 4px;
   --baseBoxShadow: 2px 2px 4px 0px #bd207c;
 
-  --transitionPropertyBase: 'color, background, opacity, box-shadow, border';
+  --transitionPropertyBase: 'color, background, opacity, box-shadow';
   --transitionDurationBase: 0.3s;
 }
 

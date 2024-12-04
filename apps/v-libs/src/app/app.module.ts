@@ -6,8 +6,8 @@ import { appRoutes } from './app.routes';
 import { THEME_LINK, ThemeDataService, themePreload } from '@v/themes';
 import { BASE_THEME_LINK } from './theme/tests/base-theme/base-theme';
 import { setGlobalInjector } from '@v/cdk';
-import { V_VARS_THEME } from '../../../../v/f-ui/src/lib/ui-elements/v-input/const/v-vars.theme';
 import { BASE_F_UI_THEME } from '@v/f-ui';
+import { V_VARS_THEME } from '../../../../v/f-ui/src/lib/const/theme/v-vars.theme';
 
 
  BASE_THEME_LINK.themes?.push(BASE_F_UI_THEME);

@@ -1,0 +1,41 @@
+:host {
+  position: relative;
+
+  .input-container {
+    display: flex;
+    height: var(--mInputSize);
+  }
+
+  .input-wrapper {
+    position: absolute;
+    top: 0
+  }
+
+  input {
+    padding-top: 24px;
+  }
+
+  .label-container {
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+  }
+
+  [vLabel] {
+    will-change: transform;
+    transition-duration: 0.3s;
+    transform: translateY(0);
+  }
+
+  [vLabel][focused=true] {
+    transition-duration: 0.3s;
+    transform: translateY(-0.4em) scale(0.8);
+  }
+
+  [vLabel][filled=true] {
+    transition-duration: 0.3s;
+    transform: translateY(-0.4em) scale(0.8);
+  }
+
+}
+

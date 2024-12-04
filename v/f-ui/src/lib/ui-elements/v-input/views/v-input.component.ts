@@ -4,22 +4,21 @@ import {
   EventEmitter, forwardRef, inject,
   Inject, input,
   Input, InputSignal, OnDestroy,
-  OnInit, Optional,
+  OnInit,
   Output,
   signal, WritableSignal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ComponentToken, HostComponent } from '../../../const/component.token';
 import { attrController } from '../../../utils/attr-ontroller';
 import { ThemeManagerService } from '@v/themes';
-import { V_INPUT_THEME } from '../const/v-input.theme';
 import { ValueTransformer } from '../../../shared';
 import {
-
-  FormGroupDirective, NgControl
+  NgControl
 } from '@angular/forms';
 import { vBaseControlFactory } from '../../../custom-controls/v-base-control.factory';
 import { VControlInterface } from '../../../custom-controls/models/v-control.interface';
+import { V_INPUT_THEME } from '../../../const/theme/v-input.theme';
+import { ComponentToken, HostComponent } from '../../../as-token/component.token';
 
 
 @Component({
@@ -88,6 +87,7 @@ export class VInputComponent implements OnInit, OnDestroy {
 
   inputValue(v: any) {
     this.value.set(v);
+    this.controller.changeValue.set(v);
   }
 
   onFocused(v: boolean) {

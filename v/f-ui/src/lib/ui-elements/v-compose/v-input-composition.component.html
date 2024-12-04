@@ -1,9 +1,18 @@
-<ng-container *ngIf="!label">
-  <ng-content select="[[vLabel], label]"></ng-content>
-</ng-container>
 
-<div class="label">
-  <span>{{ label }}</span>
+<div class="input-container">
+  <div class="label-container">
+    <ng-container *ngIf="!label">
+      <ng-content select="[[vLabel], label]"></ng-content>
+    </ng-container>
+  </div>
+
+
+  <div class="label">
+    <span>{{ label }}</span>
+  </div>
+  <div class="input-wrapper">
+    <ng-content select="input"></ng-content>
+  </div>
 </div>
 
-<ng-content select="input"></ng-content>
+

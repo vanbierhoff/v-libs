@@ -1,7 +1,7 @@
 :host {
   position: relative;
   border: none;
-  height: var(--mSize);
+  height: var(--mInputSize);
   padding: 12px 10px 6px;
   box-sizing: border-box;
   background: center bottom 0 no-repeat linear-gradient(90deg, var(--baseColor)  0%, var(--baseColor)  30%, #930c5a 100%);

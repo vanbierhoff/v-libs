@@ -1,85 +1,90 @@
 :host {
   background: transparent;
   border: none;
-  color: var(--baseTextColor);
+  color: var(--textColor);
 
   &[disabled=true] .button-wrapper {
     background: var(--baseDisabledColor);
     color: var(--baseDisabledTextColor);
     pointer-events: none;
   }
-}
 
-.button-wrapper {
-  display: flex;
-  align-items: center;
-  border-radius: 2px;
-  background: var(--baseColor);
-  height: var(--mSize);
-  outline: none;
-  transition-property: var(--transitionPropertyBase);
-  transition-duration: var(--transitionDurationBase);
-  padding: 0 20px;
-  box-sizing: border-box;
+  .button-wrapper {
+    display: flex;
+    align-items: center;
+    border-radius: 2px;
+    background: var(--baseColor);
+    /*TODO завязать на размерную сетку высоту*/
+    height: var(--mSize);
+    outline: none;
+    transition-property: var(--transitionPropertyBase);
+    padding: 0 20px;
+    box-sizing: border-box;
 
-  color: var(--textColor);
-  font-weight: 500;
-  cursor: pointer;
-  position: relative;
-  box-shadow: var(--baseBoxShadow);
+    color: var(--textColor);
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    box-shadow: var(--baseBoxShadow);
 
-  &:hover:not(:disabled) {
-    background: var(--baseHoverColor);
-  }
+    &:hover:not(:disabled) {
+      transition-duration: var(--transitionDurationBase);
+      background: var(--baseHoverColor);
+    }
 
-  &:active:not(:disabled) {
-    background: var(--baseActiveColor);
-  }
+    &:active:not(:disabled) {
+      transition-duration: var(--transitionDurationBase);
+      background: var(--baseActiveColor);
+    }
 
-  &[disabled=true] {
-    background: var(--baseDisabledColor);
-    color: var(--baseDisabledTextColor);
-    pointer-events: none;
-  }
+    &[disabled=true] {
+      transition-duration: var(--transitionDurationBase);
+      background: var(--baseDisabledColor);
+      color: var(--baseDisabledTextColor);
+      pointer-events: none;
+    }
 
-  .loader {
-    position: absolute;
-    left: 10px;
-    top: 53%;
-    transform: translateY(-50%);
-  }
+    .loader {
+      position: absolute;
+      left: 10px;
+      top: 53%;
+      transform: translateY(-50%);
+    }
 
-  .loader__item {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    animation: vLoaderRotate 3s linear infinite;
-  }
+    .loader__item {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      animation: vLoaderRotate 3s linear infinite;
+    }
 
-  .loader-circle {
-    fill: none;
-    stroke: var(--disabledColor-2);
-    stroke-width: 1.5rem;
-    animation: vLoaderDashOffset 3s linear infinite;
-  }
+    .loader-circle {
+      fill: none;
+      stroke: var(--disabledColor-2);
+      stroke-width: 1.5rem;
+      animation: vLoaderDashOffset 3s linear infinite;
+    }
 
-  .v-icon {
-    i {
-      background-position: 50%;
+    .v-icon {
+      i {
+        background-position: 50%;
+      }
+    }
+
+    .v-icon--right {
+      left: 10px;
+    }
+
+    .v-icon--right {
+      right: 10px;
     }
   }
 
-  .v-icon--right {
-    left: 10px;
+  .button-wrapper--load {
+    padding-left: 40px;
   }
 
-  .v-icon--right {
-    right: 10px;
-  }
-}
 
-.button-wrapper--load {
-  padding-left: 40px;
 }
 
 

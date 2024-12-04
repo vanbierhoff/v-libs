@@ -3,7 +3,8 @@ import { deepFirstSearchAlgorithm } from '@v-libs/v/tree-creator';
 import { MOCK_ARRAY_FOR_DEEP, MOCK_OBJECT_FOR_DEEP } from './modules/tree-utils/models/mock-obj';
 import { detectChanges, newObject, oldObject } from './change-detector/change-detector';
 import { ThemeManagerService } from '@v/themes';
-import { V_VARS_THEME } from '../../../../v/f-ui/src/lib/ui-elements/v-input/const/v-vars.theme';
+import { V_VARS_THEME } from '../../../../v/f-ui/src/lib/const/theme/v-vars.theme';
+
 
 
 let changed = 0;

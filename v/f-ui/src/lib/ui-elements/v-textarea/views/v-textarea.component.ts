@@ -9,7 +9,7 @@ import {
   signal, WritableSignal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ComponentToken } from '../../../const/component.token';
+
 import { attrController } from '../../../utils/attr-ontroller';
 import { ThemeManagerService } from '@v/themes';
 import { V_TEXTAREA_THEME } from '../const/v-textarea.theme';
@@ -17,6 +17,10 @@ import { ValueTransformer } from '../../../shared';
 import {
   FormGroupDirective, NgControl
 } from '@angular/forms';
+import { ComponentToken } from '../../../as-token/component.token';
+
+
+
 
 
 @Component({
