@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "start": "nx serve v-libs",
     "publish:tree": "cd dist/v/tree-creator && npm publish",
     "publish:f": "cd dist/v/f-core && npm publish",
     "publish:f-ui": "cd dist/v/f-ui && npm publish",

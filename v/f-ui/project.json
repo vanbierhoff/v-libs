@@ -11,6 +11,7 @@
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "project": "v/f-ui/ng-package.json"
+
       },
       "configurations": {
         "production": {

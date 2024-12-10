@@ -1,6 +1,9 @@
 {
   "name": "@v/f-ui",
   "version": "0.0.1",
+  "exports": {
+    "./v-styles/*": "./src/lib/styles/*"
+},
   "peerDependencies": {
     "@angular/common": "^17.0.0",
     "@angular/core": "^17.0.0",
