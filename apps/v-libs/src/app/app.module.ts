@@ -4,13 +4,12 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { THEME_LINK, ThemeDataService, themePreload } from '@v/themes';
-import { BASE_THEME_LINK } from './theme/tests/base-theme/base-theme';
+import { BASE_THEME_LINK, F_UI_THEME } from './theme/tests/base-theme/base-theme';
 import { setGlobalInjector } from '@v/cdk';
-import { BASE_F_UI_THEME } from '@v/f-ui';
-import { V_VARS_THEME } from '../../../../v/f-ui/src/lib/const/theme/v-vars.theme';
+import { V_VARS_THEME } from '@v/f-ui';
 
 
- BASE_THEME_LINK.themes?.push(BASE_F_UI_THEME);
+ BASE_THEME_LINK.themes?.push(F_UI_THEME);
 
 @NgModule({
   declarations: [AppComponent],

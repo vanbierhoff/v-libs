@@ -3,14 +3,11 @@ import { deepFirstSearchAlgorithm } from '@v-libs/v/tree-creator';
 import { MOCK_ARRAY_FOR_DEEP, MOCK_OBJECT_FOR_DEEP } from './modules/tree-utils/models/mock-obj';
 import { detectChanges, newObject, oldObject } from './change-detector/change-detector';
 import { ThemeManagerService } from '@v/themes';
-import { V_VARS_THEME } from '../../../../v/f-ui/src/lib/const/theme/v-vars.theme';
-
-
-
-let changed = 0;
+import { V_VARS_THEME } from '@v/f-ui';
 
 @Component({
   selector: 'v-libs-root',
+  standalone: false,
   templateUrl: './app.component.html',
   providers: [ThemeManagerService],
   styleUrls: ['./app.component.scss']
@@ -18,11 +15,6 @@ let changed = 0;
 export class AppComponent implements OnInit {
   title = 'v-libs';
   users = [1, 2, 3];
-
-  constructor() {
-    effect(() => {
-    });
-  }
 
   theme = inject(ThemeManagerService);
   elRef = inject(ElementRef);

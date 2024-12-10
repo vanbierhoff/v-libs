@@ -1,5 +1,37 @@
+import { V_BUTTON_THEME, V_INPUT_THEME, V_TEXTAREA_THEME, V_VARS_THEME } from '@v/f-ui';
+import { V_LABEL_THEME } from 'v/f-ui/src/lib/const/theme/v-label.theme';
+import { V_COMPOSE_INPUT_THEME } from 'v/f-ui/src/lib/ui-elements/v-compose/const/v-input-compose.token';
 import { ThemeListInterface, ThemeModuleInterface } from 'v/themes/src/lib/models/theme-module.interface';
-import { BASE_F_UI_THEME } from '@v/f-ui';
+
+export const F_UI_THEME: ThemeModuleInterface = {
+  theme: 'base-f-ui-theme',
+  items: [
+    {
+      name: V_VARS_THEME,
+      cssFile: () => import('v/f-ui/src/lib/styles/theme/default/default-vars.theme.css')
+    },
+    {
+      name: V_INPUT_THEME,
+      cssFile: () => import('v/f-ui/src/lib/styles/v-input.theme.css')
+    },
+    {
+      name: V_TEXTAREA_THEME,
+      cssFile: () => import('v/f-ui/src/lib/styles/v-textarea.theme.css')
+    },
+    {
+      name: V_BUTTON_THEME,
+      cssFile: () => import('v/f-ui/src/lib/styles/buttons/v-button.theme.css')
+    },
+    {
+      name: V_COMPOSE_INPUT_THEME,
+      cssFile: () => import('v/f-ui/src/lib/styles/other/v-compose.theme.css')
+    },
+    {
+      name: V_LABEL_THEME,
+      cssFile: () => import('v/f-ui/src/lib/styles/v-label.theme.css')
+    }
+  ]
+};
 
 
 
