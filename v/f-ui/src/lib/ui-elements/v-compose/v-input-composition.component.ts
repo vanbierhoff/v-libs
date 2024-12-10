@@ -4,9 +4,9 @@ import {
   forwardRef, Inject, input, Input, InputSignal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { V_COMPOSE_INPUT_THEME } from './const/v-input-compose.token';
 import { ThemeManagerService } from '@v/themes';
 import { ComponentToken, HostComponent } from '../../as-token/component.token';
+import { V_COMPOSE_INPUT_THEME } from '../../const';
 
 
 

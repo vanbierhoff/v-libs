@@ -1,4 +1,4 @@
-import { ElementRef, Inject, Injectable, Renderer2 } from '@angular/core';
+import { ElementRef, Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { CssFileData, StyleData } from '../models/theme.interface';
 import { handleCssFile, toStyleFormat } from './theme-handler';
 import { DOCUMENT } from '@angular/common';
@@ -14,12 +14,14 @@ import { ThemeConsumersInterface } from '../models/theme-manager.interface';
 export class ThemeManagerService {
 
   constructor(
-    protected renderer: Renderer2,
+    rendererFactory: RendererFactory2,
     protected themeData: ThemeDataService,
     @Inject(DOCUMENT) protected doc: Document
   ) {
+    this.renderer = rendererFactory.createRenderer(null, null);
   }
 
+  protected renderer: Renderer2;
   protected themeConsumers: Array<ThemeConsumersInterface> = [];
 
   /**
