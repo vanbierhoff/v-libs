@@ -1,6 +1,5 @@
-import { V_BUTTON_THEME, V_INPUT_THEME, V_TEXTAREA_THEME, V_VARS_THEME } from '@v/f-ui';
+import { V_BUTTON_THEME, V_INPUT_THEME, V_TEXTAREA_THEME, V_VARS_THEME , V_COMPOSE_INPUT_THEME} from '@v/f-ui';
 import { V_LABEL_THEME } from 'v/f-ui/src/lib/const/theme/v-label.theme';
-import { V_COMPOSE_INPUT_THEME } from 'v/f-ui/src/lib/ui-elements/v-compose/const/v-input-compose.token';
 import { ThemeListInterface, ThemeModuleInterface } from 'v/themes/src/lib/models/theme-module.interface';
 
 export const F_UI_THEME: ThemeModuleInterface = {

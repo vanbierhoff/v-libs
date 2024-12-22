@@ -17,6 +17,10 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('./modules/reactions/reactions.component').then(c => c.ReactionsComponent)
   },
   {
+    path: 'inject',
+    loadComponent: () => import('./modules/injector/inject.component').then(m => m.InjectComponent)
+  },
+  {
     path: 'theme',
     resolve: {
       ThemesResolver

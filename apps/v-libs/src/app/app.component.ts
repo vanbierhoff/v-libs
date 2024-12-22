@@ -1,9 +1,20 @@
-import { Component, effect, ElementRef, HostBinding, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  ElementRef,
+  HostBinding,
+  inject,
+  Injector,
+  OnInit,
+  runInInjectionContext,
+  signal
+} from '@angular/core';
 import { deepFirstSearchAlgorithm } from '@v-libs/v/tree-creator';
 import { MOCK_ARRAY_FOR_DEEP, MOCK_OBJECT_FOR_DEEP } from './modules/tree-utils/models/mock-obj';
 import { detectChanges, newObject, oldObject } from './change-detector/change-detector';
 import { ThemeManagerService } from '@v/themes';
 import { V_VARS_THEME } from '@v/f-ui';
+
 
 @Component({
   selector: 'v-libs-root',
@@ -32,6 +43,9 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
+    // @ts-ignore
+//    const test = new TestInject();
+  //  test.log()
     const result = deepFirstSearchAlgorithm(MOCK_OBJECT_FOR_DEEP, {
       asResult: 'id2'
     });
@@ -52,6 +66,12 @@ export class AppComponent implements OnInit {
     } else {
       console.log('No changes detected.');
     }
+
+ //   this.inCtx()
+  }
+
+  inCtx() {
+    console.log(inject(ThemeManagerService))
   }
 
 

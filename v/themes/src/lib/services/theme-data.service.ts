@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { THEME_LINK } from '../const/theme-tokens';
 import { ThemeListInterface, ThemeModuleInterface } from '../models/theme-module.interface';
-import { find } from 'lodash';
 import { AppliesTheme } from '../models/theme-data.interface';
 
 
@@ -35,7 +34,7 @@ export class ThemeDataService {
     }
 
     this.theme.themes.forEach((subTheme: ThemeModuleInterface) => {
-      const theme = find(subTheme.items, item => item.name === name);
+      const theme = subTheme.items.find(item => item.name === name);
       if (!theme) {
         return;
       }
@@ -72,8 +71,6 @@ export class ThemeDataService {
     }
     console.warn('Styles or style block not defined');
   }
-
-
 
 }
 

@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es2022",
+    "target": "ES5",
     "useDefineForClassFields": false,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "noFallthroughCasesInSwitch": true
   },
   "files": [],

@@ -1,9 +1,5 @@
-import map from 'lodash/map';
 import { ManualInjectInterface } from './models/manual-inject.interface';
-import forEach from 'lodash/forEach';
 import { getGlobalInjector } from '../injector';
-
-
 
 /**
  *
@@ -24,18 +20,20 @@ export function InjectDepsDecorator(manual?: ManualInjectInterface[]): any {
                  * design: paramtypes. This corresponds to the types of constructor parameters. It only applies for TypeScript since,
                  * with ES6, such parameters aren’t supported. With this language, you need to supply a static getter for the parameter property.
                  */
-                // TODO CHECK REFLECT
-                const designedArgs: any[] = (Reflect as any).getMetadata('design:paramtypes', target) || [];
-                if (injector && designedArgs.length > 0 && args.length === 0) {
-                    args = map(designedArgs, (arg, index) => {
-                        let deps = injector.get(arg, index, target);
-                        if (deps) {
-                            return deps;
-                        }
+
+                  const designedArgs: any[] = (Reflect as any).getOwnMetadata('design:paramtypes', target) || [];
+                  if (injector && designedArgs.length > 0 && args.length === 0) {
+
+                    args = designedArgs.map ((arg, index) => {
+                      const deps = injector.get(arg, index);
+                      if (deps) {
+                        return deps;
+                      }
                     });
-                }
+                  }
+
                 super(...args);
-                forEach(manual, manalArg => this[manalArg.field] = injector.get(manalArg.token));
+                manual?.forEach(manalArg => this[manalArg.field] = injector.get(manalArg.token));
             }
         };
     };
