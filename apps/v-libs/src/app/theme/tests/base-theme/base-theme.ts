@@ -66,5 +66,5 @@ export const uiElTheme: ThemeModuleInterface = {
 export const BASE_THEME_LINK: ThemeListInterface = {
   theme: 'base',
   items: BaseTheme.items,
-  themes: [uiElTheme]
+  themes: [uiElTheme, F_UI_THEME]
 };

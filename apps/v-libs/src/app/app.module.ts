@@ -23,20 +23,29 @@ import { provideHttpClient, HttpClient } from '@angular/common/http';
     ThemeManagerService,
     provideHttpClient(),
     provideAppInitializer(() =>   provideRootInjector()),
-    {
-      provide: APP_INITIALIZER,
-      multi: true,
-      useFactory: (injector: Injector, t: ThemeDataService) => {
-        setGlobalInjector(injector);
-        return async () => {
-          await themePreload([V_VARS_THEME], t);
-        };
-      },
-      deps: [
-        Injector,
-        ThemeDataService
-      ]
-    },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   multi: true,
+    //   useFactory: (injector: Injector, t: ThemeDataService) => {
+    //     setGlobalInjector({
+    //       get(token: any, order?: number, originalFormConstructor?: any): any {
+    //         const notFound = Symbol('notFound');
+    //         const value = injector.get(token, notFound);
+    //         if (value === notFound) {
+    //           return;
+    //         }
+    //         return value;
+    //       }
+    //     });
+    //     return async () => {
+    //       await themePreload([V_VARS_THEME], t);
+    //     };
+    //   },
+    //   deps: [
+    //     Injector,
+    //     ThemeDataService
+    //   ]
+    // },
     {
       provide: THEME_LINK,
       useValue: BASE_THEME_LINK
