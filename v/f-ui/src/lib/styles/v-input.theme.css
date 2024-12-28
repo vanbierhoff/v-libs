@@ -16,6 +16,15 @@
     background-position: 100% 100%;
   }
 
+  &[disabled] {
+    transition-duration: var(--transitionDurationBase);
+    background: var(--secondaryDisabledTextColor);
+    color: var(--baseDisabledTextColor);
+    border: 1px solid var(--baseDisabledColor);
+    pointer-events: none;
+    z-index: -1;
+  }
+
 }
 
 @keyframes gradient {

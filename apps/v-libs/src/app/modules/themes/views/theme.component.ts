@@ -7,31 +7,39 @@ import { Button1Component } from '../components/button-1/button-1.component';
 import { Button2Component } from '../components/button-2/button-2.component';
 import { RouterLink } from '@angular/router';
 import { ThemeDataService } from '../../../../../../../v/themes/src/lib/services/theme-data.service';
-import { VInputComponent, VInputCompositionComponent, VLabelDirective } from '@v/f-ui';
+import { VInputComponent, VInputCompositionComponent, VLabelDirective, VTextareaComponent } from '@v/f-ui';
 
 
 @Component({
   selector: 'v-libs-theme',
   standalone: true,
-  imports: [CommonModule, Button1Component, Button2Component, RouterLink, VInputComponent, VInputCompositionComponent, VLabelDirective],
+  imports: [
+    CommonModule,
+    Button1Component,
+    Button2Component,
+    RouterLink,
+    VInputComponent,
+    VInputCompositionComponent,
+    VLabelDirective,
+    VTextareaComponent,
+  ],
   providers: [
     {
       provide: THEME_LINK,
-      useValue: BASE_THEME_LINK
+      useValue: BASE_THEME_LINK,
     },
 
     ThemeManagerService,
-    ThemeDataService
+    ThemeDataService,
   ],
   templateUrl: './theme.component.html',
-  styleUrl: './theme.component.scss'
+  styleUrl: './theme.component.scss',
 })
 export class ThemeComponent implements OnInit {
-
   constructor(
     protected ElRef: ElementRef,
-    protected theme: ThemeManagerService) {
-  }
+    protected theme: ThemeManagerService
+  ) {}
 
   @HostBinding('style.--colorTitle')
   public color: string = 'green';
@@ -39,7 +47,6 @@ export class ThemeComponent implements OnInit {
   public viewBtn: boolean = true;
 
   public viewBtn2: boolean = true;
-
 
   ngOnInit() {
     setTimeout(() => {

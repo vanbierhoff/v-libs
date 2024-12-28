@@ -1,4 +1,5 @@
 import { VControlInterface } from '../custom-controls/models/v-control.interface';
+import { signal, Signal } from '@angular/core';
 
 
 
@@ -11,6 +12,18 @@ export abstract class ComponentToken {
   [x: string]: any;
 
   public disabled = false;
+  protected isDisable: Signal<boolean> = signal(false)
+
+  public control: VControlInterface | null = null;
+
+}
+
+export abstract class InputToken {
+  [x: string]: any;
+
+  public disabled = false;
+
+  protected isDisable: Signal<boolean> = signal(false)
 
   public control: VControlInterface | null = null;
 
@@ -24,7 +37,7 @@ export abstract class ComponentToken {
 export abstract class HostComponent {
   [x: string]: any;
 
-  public disabled = false;
+  public disable = false;
 
   protected isSetControl = false;
   protected setControlCounter = 0;
@@ -51,8 +64,6 @@ export abstract class HostComponent {
   }
 
   registerControlHook() {
-
   }
-
 
 }

@@ -8,7 +8,7 @@
     <input vInput
            [formControlName]="'name'"
            [transformer]="transformer"
-           [locked]="locked">
+           [disabled]="locked">
 
     <span vLabel>labvel message</span>
 
@@ -17,7 +17,7 @@
   <input vInput
          [formControlName]="'type'"
          [transformer]="transformer"
-         [locked]="locked">
+         [disabled]="locked">
 
 
   <button
@@ -42,7 +42,7 @@
   <input vInput
          [formControl]="customControl"
          [transformer]="transformer"
-         [locked]="locked">
+         [disabled]="locked">
 
 
   <span vLabel>custom message</span>

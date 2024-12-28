@@ -28,6 +28,10 @@ export const F_UI_THEME: ThemeModuleInterface = {
     {
       name: V_LABEL_THEME,
       cssFile: () => import('v/f-ui/src/lib/styles/v-label.theme.css')
+    },
+    {
+      name: V_TEXTAREA_THEME,
+      cssFile: () => import('v/f-ui/src/lib/styles/v-textarea.theme.css')
     }
   ]
 };

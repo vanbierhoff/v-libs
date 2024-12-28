@@ -4,12 +4,23 @@
   <button-two></button-two>
 
   <div class="inputs">
-    <input type="text" vInput>
+    <input type="text" vInput [disabled]="true">
   </div>
 
   <div vInputCompose>
     <label vLabel>my label</label>
     <input type="text" vInput>
   </div>
+
+  <div vInputCompose >
+    <label vLabel>my label</label>
+    <input type="text" vInput [disabled]="true" >
+  </div>
 </div>
 
+<div class="block">
+ <h3>textaera</h3>
+
+  <textarea vTextarea></textarea>
+  <textarea vTextarea [disabled]="true" ></textarea>
+</div>

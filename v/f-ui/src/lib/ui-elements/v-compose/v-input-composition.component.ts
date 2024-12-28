@@ -30,6 +30,9 @@ export class VInputCompositionComponent extends HostComponent {
     super();
     this.setEffects();
 
+    effect(() => {
+    });
+
   }
 
   @ContentChild(forwardRef(() => ComponentToken), { read: ComponentToken })

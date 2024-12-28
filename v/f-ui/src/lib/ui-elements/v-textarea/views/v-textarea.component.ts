@@ -24,14 +24,16 @@ import { ComponentToken } from '../../../as-token/component.token';
 
 
 @Component({
-  selector: 'v-textarea textarea[vTextarea]',
+  selector: 'textarea[vTextarea]',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './v-textarea.component.html',
   host: {
     '(input)': 'inputValue($event.target.value)',
     '[value]': 'computedInputValue()',
-    '[attr.focused]': 'disabled()'
+    '[focused]': 'disabled()',
+    '[disabled]': 'disabled()',
+    '[attr.rows]': 'rows()'
   },
   providers: [{
     provide: ComponentToken, useExisting: forwardRef(() => VTextareaComponent)
@@ -48,16 +50,12 @@ export class VTextareaComponent implements OnInit, OnDestroy {
               readonly formDirective: FormGroupDirective | null,
               protected themeManager: ThemeManagerService
   ) {
-    attrController(elRef, {
-      disabled: this.disabled,
-      readonly: this.readonly
-    });
-
-    this.setEffects();
+    this.changeThemeEffect();
   }
 
   readonly: InputSignal<boolean> = input<boolean>(false);
   disabled: InputSignal<boolean> = input<boolean>(false);
+  rows: InputSignal<number> = input<number>(8);
 
   appearance: InputSignal<string> = input<string>(V_TEXTAREA_THEME);
 
@@ -92,7 +90,7 @@ export class VTextareaComponent implements OnInit, OnDestroy {
   }
 
   // TODO set destroy ref or set injector to fix memory leaks
-  setEffects() {
+  changeThemeEffect() {
     effect(async () => {
       if (this.hasApplyTheme) {
         this.themeManager.unApply(this.prevTheme);

@@ -30,6 +30,7 @@ import { ComponentToken, HostComponent } from '../../../as-token/component.token
     '(input)': 'inputValue($event.target.value)',
     '[value]': 'computedInputValue()',
     '(focusin)': 'onFocused(true)',
+    '[disabled]': 'disabled()',
     '(focusout)': 'onFocused(false)'
   },
   providers: [{
@@ -44,15 +45,13 @@ export class VInputComponent implements OnInit, OnDestroy {
   constructor(@Inject(ElementRef) protected elRef: ElementRef,
               protected themeManager: ThemeManagerService
   ) {
-    attrController(elRef, {
-      disabled: this.locked,
-      readonly: this.readonly
-    });
     this.setEffects();
   }
 
   readonly: InputSignal<boolean> = input<boolean>(false);
-  locked: InputSignal<boolean> = input<boolean>(false);
+  disabled: InputSignal<boolean> = input<boolean>(false);
+
+
 
   themeName: InputSignal<string> = input<string>(V_INPUT_THEME);
 
