@@ -1,8 +1,10 @@
 import { VControlInterface } from '../custom-controls/models/v-control.interface';
-import { signal, Signal } from '@angular/core';
+import { InjectionToken } from '@angular/core';
+import { DefaultHostInterface } from './default-host.interface';
 
-
-
+export const HOST_COMPONENT_STRATEGY = new InjectionToken<DefaultHostInterface>(
+  'host strategy'
+);
 
 /**
  * Class as token for register ui component
@@ -12,19 +14,6 @@ export abstract class ComponentToken {
   [x: string]: any;
 
   public disabled = false;
-  protected isDisable: Signal<boolean> = signal(false)
-
-  public control: VControlInterface | null = null;
-
-}
-
-export abstract class InputToken {
-  [x: string]: any;
-
-  public disabled = false;
-
-  protected isDisable: Signal<boolean> = signal(false)
-
   public control: VControlInterface | null = null;
 
 }
@@ -37,33 +26,9 @@ export abstract class InputToken {
 export abstract class HostComponent {
   [x: string]: any;
 
-  public disable = false;
+  public control: VControlInterface | null = null;
 
-  protected isSetControl = false;
-  protected setControlCounter = 0;
+  registerControl(control: VControlInterface) {}
 
-  protected _control: VControlInterface | null = null;
-
-  get control() {
-    return this._control || null;
-  }
-
-  registerControl(control: VControlInterface) {
-    if (this.setControlCounter >= 1) {
-      console.error('Controller re-registration is not allowed');
-      return;
-    }
-
-    if (!this.isSetControl) {
-      this._control = control;
-      this.isSetControl = true;
-      this.setControlCounter += 1;
-      this.registerControlHook();
-    }
-
-  }
-
-  registerControlHook() {
-  }
-
+  registerControlHook() {}
 }
