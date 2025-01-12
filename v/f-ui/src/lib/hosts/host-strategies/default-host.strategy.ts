@@ -40,6 +40,7 @@ export class DefaultHostStrategy implements DefaultHostInterface {
     this.control?.ngControl?.valueChanges
       ?.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((_: unknown) => {
+        console.log(this.control?.ngControl?.errors);
         this.control?.errors.set(this.control?.ngControl?.errors || null);
       });
   }

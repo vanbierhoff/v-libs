@@ -58,10 +58,8 @@ export class VInputCompositionComponent implements DefaultHostInterface {
   public readonly childComponent: ComponentToken = {} as ComponentToken;
 
   public viewError = computed(() => {
-    return (
-      this.hostStrategy.control?.ngControl?.touched &&
-      !this.hostStrategy.control.focusable()
-    );
+    const isFocus = this.hostStrategy.control?.focusable();
+    return this.hostStrategy.control?.ngControl?.touched && !isFocus;
   });
 
   public readonly label: InputSignal<string> = input('');
