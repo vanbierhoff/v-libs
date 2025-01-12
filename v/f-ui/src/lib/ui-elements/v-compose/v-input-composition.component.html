@@ -10,7 +10,7 @@
   </div>
 </div>
 
-@if (hostStrategy.control?.errors()) {
+@if (hostStrategy.control?.errors() && hostStrategy.control?.ngControl?.dirty) {
   <div class="errors-block">
     @if (errorTpl()) {
       <ng-container *ngTemplateOutlet="errorTpl();context: {$implicit: hostStrategy}"></ng-container>
