@@ -3,14 +3,13 @@
 <form [formGroup]="userForm">
 
   <div vInputCompose
-       label="label1"
        *ngIf="show">
     <input vInput
            [formControlName]="'name'"
            [transformer]="transformer"
            [disabled]="locked">
 
-    <span vLabel>labvel message</span>
+    <span vLabel>name</span>
 
   </div>
 
@@ -36,8 +35,9 @@
   </button>
 
 </form>
-<div vInputCompose
 
+
+<div vInputCompose
      *ngIf="show">
   <input vInput
          [formControl]="customControl"
@@ -48,4 +48,24 @@
   <span vLabel>custom message</span>
 
 </div>
+<div vInputCompose></div>
+
+<div vInputCompose
+     [errorTpl]="error"
+     *ngIf="show">
+  <input vInput
+         [formControl]="customControl2"
+         [transformer]="transformer"
+         [disabled]="locked">
+
+
+  <span vLabel>custom message 2</span>
+
+</div>
+
+<ng-template #error let-host>
+  {{ host.control?.errors() }}
+  <h1>test</h1>
+</ng-template>
+
 

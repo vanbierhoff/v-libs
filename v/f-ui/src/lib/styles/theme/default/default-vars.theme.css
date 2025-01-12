@@ -13,6 +13,7 @@
   --baseBorder: 3px solid #a21667;
   --baseRad: 4px;
   --baseBoxShadow: 2px 2px 4px 0px #bd207c;
+  --baseErrorColor: #e74c3c;
 
   --transitionPropertyBase: 'color, background, opacity, box-shadow';
   --transitionDurationBase: 0.3s;

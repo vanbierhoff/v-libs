@@ -37,5 +37,11 @@
     transform: translateY(-0.4em) scale(0.8);
   }
 
+  .errors-block {
+    margin-top: 2px;
+    padding-left: 12px;
+    color: var(--baseErrorColor);
+  }
+
 }
 

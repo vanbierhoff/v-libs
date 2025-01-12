@@ -1,25 +1,31 @@
 import {
-  Component, computed, effect,
+  Component,
+  computed,
+  effect,
   ElementRef,
-  EventEmitter, forwardRef, inject,
-  Inject, input,
-  Input, InputSignal, OnDestroy,
+  EventEmitter,
+  forwardRef,
+  inject,
+  Inject,
+  input,
+  InputSignal,
+  OnDestroy,
   OnInit,
   Output,
-  signal, WritableSignal
+  signal,
+  WritableSignal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { attrController } from '../../../utils/attr-ontroller';
 import { ThemeManagerService } from '@v/themes';
 import { ValueTransformer } from '../../../shared';
-import {
-  NgControl
-} from '@angular/forms';
+import { NgControl } from '@angular/forms';
 import { vBaseControlFactory } from '../../../custom-controls/v-base-control.factory';
 import { VControlInterface } from '../../../custom-controls/models/v-control.interface';
 import { V_INPUT_THEME } from '../../../const/theme/v-input.theme';
-import { ComponentToken, HostComponent } from '../../../as-token/component.token';
-
+import {
+  ComponentToken,
+  HostComponent,
+} from '../../../as-token/component.token';
 
 @Component({
   selector: 'v-input input[vInput]',
@@ -31,58 +37,59 @@ import { ComponentToken, HostComponent } from '../../../as-token/component.token
     '[value]': 'computedInputValue()',
     '(focusin)': 'onFocused(true)',
     '[disabled]': 'disabled()',
-    '(focusout)': 'onFocused(false)'
+    '(focusout)': 'onFocused(false)',
   },
-  providers: [{
-    provide: ComponentToken, useExisting: forwardRef(() => VInputComponent)
-  },
-    ThemeManagerService
+  providers: [
+    {
+      provide: ComponentToken,
+      useExisting: forwardRef(() => VInputComponent),
+    },
+    ThemeManagerService,
   ],
-  styleUrl: './v-input.component.scss'
+  styleUrl: './v-input.component.scss',
 })
 export class VInputComponent implements OnInit, OnDestroy {
-
-  constructor(@Inject(ElementRef) protected elRef: ElementRef,
-              protected themeManager: ThemeManagerService
+  constructor(
+    @Inject(ElementRef) protected elRef: ElementRef,
+    protected themeManager: ThemeManagerService
   ) {
     this.setEffects();
   }
 
-  readonly: InputSignal<boolean> = input<boolean>(false);
-  disabled: InputSignal<boolean> = input<boolean>(false);
-
-
-
-  themeName: InputSignal<string> = input<string>(V_INPUT_THEME);
-
-  @Input() startValue: string = '';
-
-  @Input() name: string = '';
-
-  @Input() transformer: ValueTransformer<any, any> | null = null;
+  public readonly readonly: InputSignal<boolean> = input<boolean>(false);
+  public readonly disabled: InputSignal<boolean> = input<boolean>(false);
+  public readonly themeName: InputSignal<string> = input<string>(V_INPUT_THEME);
+  public readonly transformer: InputSignal<
+    ValueTransformer<unknown, unknown> | any
+  > = input(null);
 
   @Output()
   inputEv: EventEmitter<unknown> = new EventEmitter();
 
-  protected host: HostComponent | null = inject(HostComponent, { optional: true });
-
+  protected host: HostComponent | null = inject(HostComponent, {
+    optional: true,
+  });
 
   protected value: WritableSignal<string | number | unknown> = signal('');
 
   protected computedInputValue = computed(() => {
-      const v = this.transformer ? this.transformer(this.value()) : this.value();
-      this.inputEv.emit(v);
-      return v;
-    }
+    const transformer: ValueTransformer<unknown, unknown> | null =
+      this.transformer();
+    const v = transformer ? transformer(this.value()) : this.value();
+    this.inputEv.emit(v);
+    return v;
+  });
+
+  readonly controller: VControlInterface = vBaseControlFactory(
+    this.elRef,
+    inject(NgControl, {
+      optional: true,
+      self: true,
+    })
   );
-  readonly controller: VControlInterface = vBaseControlFactory(this.elRef, inject(NgControl, {
-    optional: true,
-    self: true
-  }));
 
   protected hasApplyTheme = false;
   protected prevTheme = '';
-
 
   inputValue(v: any) {
     this.value.set(v);
@@ -101,6 +108,15 @@ export class VInputComponent implements OnInit, OnDestroy {
   registerControl() {
     if (this.host) {
       this.host.registerControl(this.controller);
+      this.setFirstValue();
+    }
+  }
+
+  setFirstValue() {
+    const v = this.computedInputValue();
+    this.host?.control?.ngControl?.control?.setValue(v);
+    if (v) {
+      this.inputValue(v);
     }
   }
 
@@ -114,11 +130,9 @@ export class VInputComponent implements OnInit, OnDestroy {
       this.prevTheme = this.themeName();
       this.hasApplyTheme = true;
     });
-
   }
 
   ngOnDestroy() {
     this.themeManager.unApply(this.themeName());
   }
-
 }

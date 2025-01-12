@@ -1,5 +1,5 @@
 <div class="input-container">
-  <div class="label-container" *ngIf="!label">
+  <div class="label-container" *ngIf="!label()">
     <ng-container>
       <ng-content select="[[vLabel], label]"></ng-content>
     </ng-container>
@@ -9,5 +9,19 @@
     <ng-content select="input"></ng-content>
   </div>
 </div>
+
+@if (hostStrategy.control?.errors()) {
+  <div class="errors-block">
+    @if (errorTpl()) {
+      <ng-container *ngTemplateOutlet="errorTpl();context: {$implicit: hostStrategy}"></ng-container>
+    } @else {
+      @for (item of hostStrategy.control?.errors() | formsError; track item) {
+        <div class="error">{{ item }}</div>
+      }
+    }
+
+  </div>
+}
+
 
 

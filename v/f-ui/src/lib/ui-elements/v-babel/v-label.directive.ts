@@ -5,8 +5,8 @@ import {
   ElementRef,
   inject,
   input,
-  Input,
   InputSignal,
+  Signal,
 } from '@angular/core';
 import { HostComponent } from '../../as-token/component.token';
 import { ThemeManagerService } from '@v/themes';
@@ -25,12 +25,12 @@ export class VLabelDirective {
     this.changeThemeEffect();
   }
 
-  @Input('vLabel') public label = '';
+  public vLabel: InputSignal<string> = input('');
 
   appearance: InputSignal<string> = input<string>(V_LABEL_THEME);
 
-  filled = computed(() => {
-    const v = this.hostComponent?.control?.changeValue();
+  filled: Signal<boolean> = computed(() => {
+    const v: unknown = this.hostComponent?.control?.changeValue();
     if (v !== null && v !== undefined && v !== '') {
       return true;
     }
