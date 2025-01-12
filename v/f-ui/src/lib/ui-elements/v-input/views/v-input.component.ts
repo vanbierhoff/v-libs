@@ -97,6 +97,7 @@ export class VInputComponent implements OnInit, OnDestroy {
   }
 
   onFocused(v: boolean) {
+    this.controller.focusable.set(v);
     this.controller.focus = v;
   }
 

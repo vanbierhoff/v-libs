@@ -1,5 +1,7 @@
 import {
+  ChangeDetectionStrategy,
   Component,
+  computed,
   ContentChild,
   DestroyRef,
   effect,
@@ -30,6 +32,7 @@ import { FormsErrorPipe } from '../../utils/forms-error.pipe';
   imports: [CommonModule, FormsErrorPipe],
   templateUrl: './v-input-composition.component.html',
   styleUrl: './v-input-composition.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: HOST_COMPONENT_STRATEGY,
@@ -53,6 +56,13 @@ export class VInputCompositionComponent implements DefaultHostInterface {
 
   @ContentChild(forwardRef(() => ComponentToken), { read: ComponentToken })
   public readonly childComponent: ComponentToken = {} as ComponentToken;
+
+  public viewError = computed(() => {
+    return (
+      this.hostStrategy.control?.ngControl?.touched &&
+      !this.hostStrategy.control.focusable()
+    );
+  });
 
   public readonly label: InputSignal<string> = input('');
   public readonly errorTpl: InputSignal<TemplateRef<unknown>> = input(
