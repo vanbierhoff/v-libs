@@ -7,8 +7,6 @@
   }
 
   .input-wrapper {
-    position: absolute;
-    top: 0;
   }
 
   input {
@@ -18,7 +16,9 @@
   .label-container {
     display: flex;
     align-items: center;
-    padding-left: 6px;
+    position: absolute;
+    left: 6px;
+    top: 8px;
   }
 
   [vLabel] {
@@ -38,8 +38,10 @@
   }
 
   .errors-block {
+    position: absolute;
+    top: 100%;
     margin-top: 2px;
-    padding-left: 12px;
+    padding-left: 10px;
     color: var(--baseErrorColor);
   }
 
