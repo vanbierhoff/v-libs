@@ -2,6 +2,7 @@ import { VControlInterface } from '../../custom-controls/models/v-control.interf
 import { DefaultHostInterface } from '../../as-token/default-host.interface';
 import { DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NgControl } from '@angular/forms';
 
 export class DefaultHostStrategy implements DefaultHostInterface {
   [x: string]: any;
@@ -15,6 +16,10 @@ export class DefaultHostStrategy implements DefaultHostInterface {
 
   get control(): VControlInterface | null {
     return this._control || null;
+  }
+
+  get ngControl(): NgControl | null {
+    return this._control?.ngControl || null;
   }
 
   registerControl(control: VControlInterface) {

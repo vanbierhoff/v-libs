@@ -14,10 +14,8 @@ export abstract class ComponentToken {
   [x: string]: any;
 
   public disabled = false;
-  public control: VControlInterface | null = null;
-
+  public controller: VControlInterface | null = null;
 }
-
 
 /**
  * Class as token for register ui component
@@ -26,9 +24,17 @@ export abstract class ComponentToken {
 export abstract class HostComponent {
   [x: string]: any;
 
-  public control: VControlInterface | null = null;
+  public hostStrategy: DefaultHostInterface | null = null;
 
   registerControl(control: VControlInterface) {}
 
   registerControlHook() {}
+}
+
+export interface HostComponentInterface {
+  hostStrategy: DefaultHostInterface | null;
+
+  registerControl(control: VControlInterface): void;
+
+  registerControlHook(): void;
 }

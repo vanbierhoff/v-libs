@@ -80,6 +80,9 @@ export class VInputComponent implements OnInit, OnDestroy {
     return v;
   });
 
+  protected hasApplyTheme = false;
+  protected prevTheme = '';
+
   readonly controller: VControlInterface = vBaseControlFactory(
     this.elRef,
     inject(NgControl, {
@@ -87,9 +90,6 @@ export class VInputComponent implements OnInit, OnDestroy {
       self: true,
     })
   );
-
-  protected hasApplyTheme = false;
-  protected prevTheme = '';
 
   inputValue(v: any) {
     this.value.set(v);
@@ -115,7 +115,7 @@ export class VInputComponent implements OnInit, OnDestroy {
 
   setFirstValue() {
     const v = this.computedInputValue();
-    this.host?.control?.ngControl?.control?.setValue(v);
+    this.controller.ngControl?.control?.setValue(v);
     if (v) {
       this.inputValue(v);
     }

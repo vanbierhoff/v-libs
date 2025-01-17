@@ -19,6 +19,7 @@ import {
   ComponentToken,
   HOST_COMPONENT_STRATEGY,
   HostComponent,
+  HostComponentInterface,
 } from '../../as-token/component.token';
 import { V_COMPOSE_INPUT_THEME } from '../../const';
 import { DefaultHostStrategy } from '../../hosts/host-strategies/default-host.strategy';
@@ -44,7 +45,7 @@ import { FormsErrorPipe } from '../../utils/forms-error.pipe';
     },
   ],
 })
-export class VInputCompositionComponent implements DefaultHostInterface {
+export class VInputCompositionComponent implements HostComponentInterface {
   constructor(
     @Inject(ElementRef) protected elRef: ElementRef,
     protected themeManager: ThemeManagerService
@@ -53,6 +54,7 @@ export class VInputCompositionComponent implements DefaultHostInterface {
   }
 
   public destroyRef: DestroyRef = inject(DestroyRef);
+  public hostStrategy: DefaultHostInterface = inject(HOST_COMPONENT_STRATEGY);
 
   @ContentChild(forwardRef(() => ComponentToken), { read: ComponentToken })
   public readonly childComponent: ComponentToken = {} as ComponentToken;
@@ -69,12 +71,6 @@ export class VInputCompositionComponent implements DefaultHostInterface {
 
   protected hasApplyTheme: boolean = false;
   protected prevTheme: string = '';
-
-  public hostStrategy: DefaultHostInterface = inject(HOST_COMPONENT_STRATEGY);
-
-  get control() {
-    return this.hostStrategy.control;
-  }
 
   appearance: InputSignal<string> = input<string>(V_COMPOSE_INPUT_THEME);
 

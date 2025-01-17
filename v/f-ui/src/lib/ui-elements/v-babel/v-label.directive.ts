@@ -30,7 +30,7 @@ export class VLabelDirective {
   appearance: InputSignal<string> = input<string>(V_LABEL_THEME);
 
   filled: Signal<boolean> = computed(() => {
-    const v: unknown = this.hostComponent?.control?.changeValue();
+    const v: unknown = this.hostComponent?.hostStrategy?.control?.changeValue();
     if (v !== null && v !== undefined && v !== '') {
       return true;
     }
