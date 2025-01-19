@@ -62,6 +62,10 @@ export class FormsComponent implements OnInit {
     this.initForm();
   }
 
+  submit(form: any) {
+    console.log(form);
+  }
+
   getAccessToVButton() {
     setTimeout(() => {
       console.log(this.vButton);

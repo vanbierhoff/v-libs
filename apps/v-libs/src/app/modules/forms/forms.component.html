@@ -1,6 +1,8 @@
 <p class="title">forms works!</p>
 
-<form [formGroup]="userForm">
+<form [formGroup]="userForm"
+      (ngSubmit)="submit($event)"
+>
 
   <div vInputCompose
        *ngIf="show">
@@ -24,8 +26,8 @@
     vButton
     #button
     iconPosition="right"
+    type="submit"
     [icon]="icon"
-    [disabled]="false"
   >
     <ng-template #icon>
       <i class="icon-flag icon-flag--arg"></i>
@@ -33,6 +35,8 @@
 
     button test
   </button>
+
+  <button type="submit"> sub</button>
 
 </form>
 

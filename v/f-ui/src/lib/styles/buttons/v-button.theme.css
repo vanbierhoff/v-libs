@@ -3,7 +3,7 @@
   border: none;
   color: var(--textColor);
 
-  &[disabled=true] .button-wrapper {
+  &[disabled] .button-wrapper {
     background: var(--baseDisabledColor);
     color: var(--baseDisabledTextColor);
     pointer-events: none;
@@ -37,7 +37,7 @@
       background: var(--baseActiveColor);
     }
 
-    &[disabled=true] {
+    &[disabled] {
       transition-duration: var(--transitionDurationBase);
       background: var(--baseDisabledColor);
       color: var(--baseDisabledTextColor);

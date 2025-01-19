@@ -1,16 +1,18 @@
 import {
-  Component, effect, ElementRef,
-  Inject, input, Input, InputSignal, OnDestroy,
-  output, TemplateRef
+  Component,
+  effect,
+  ElementRef,
+  Inject,
+  input,
+  Input,
+  InputSignal,
+  OnDestroy,
+  TemplateRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VLoaderDirective } from '../directives/v-loader/v-loader.directive';
 import { ThemeManagerService } from '@v/themes';
 import { V_BUTTON_THEME } from '../../const/theme/v-button.theme';
-
-
-
-
 
 @Component({
   selector: 'button[vButton], a[vButton]',
@@ -20,15 +22,13 @@ import { V_BUTTON_THEME } from '../../const/theme/v-button.theme';
   styleUrl: './v-button.component.scss',
   providers: [ThemeManagerService],
   host: {
-    '(click)': 'clickedEmit($event)',
-    '[attr.disabled]': 'disabled()'
-  }
-
+    '[attr.disabled]': 'disabled()',
+  },
 })
 export class VButtonComponent implements OnDestroy {
-
-  constructor(@Inject(ElementRef) protected elRef: ElementRef,
-              protected themeManager: ThemeManagerService
+  constructor(
+    @Inject(ElementRef) protected elRef: ElementRef,
+    protected themeManager: ThemeManagerService
   ) {
     this.changeThemeEffect();
   }
@@ -37,13 +37,12 @@ export class VButtonComponent implements OnDestroy {
   @Input() iconPosition: 'left' | 'right' | 'manual' = 'left';
   @Input() icon: TemplateRef<any> | null = null;
 
-
-  public hasApplyTheme: boolean = false;
   public prevTheme: string = '';
   appearance: InputSignal<string> = input<string>(V_BUTTON_THEME);
-  public disabled: InputSignal<boolean> = input<boolean>(false);
+  public disabled: InputSignal<true | null> = input<true | null>(null);
+  public type: InputSignal<string> = input<string>('');
 
-  clicked = output<Event>();
+  public hasApplyTheme: boolean = false;
 
   changeThemeEffect() {
     effect(async () => {
@@ -56,15 +55,8 @@ export class VButtonComponent implements OnDestroy {
     });
   }
 
-  clickedEmit(ev: Event) {
-    this.clicked.emit(ev);
-
-  }
-
   changeDisabledEffect() {
-    effect(async () => {
-
-    });
+    effect(async () => {});
   }
 
   ngOnDestroy() {
