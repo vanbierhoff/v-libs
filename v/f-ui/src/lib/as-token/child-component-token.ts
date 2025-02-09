@@ -10,7 +10,7 @@ export const HOST_COMPONENT_STRATEGY = new InjectionToken<DefaultHostInterface>(
  * Class as token for register ui component
  * The class acts as an interface indicating the available fields and methods
  */
-export abstract class ComponentToken {
+export abstract class ChildComponentToken {
   [x: string]: any;
 
   public disabled = false;
@@ -29,12 +29,4 @@ export abstract class HostComponent {
   registerControl(control: VControlInterface) {}
 
   registerControlHook() {}
-}
-
-export interface HostComponentInterface {
-  hostStrategy: DefaultHostInterface | null;
-
-  registerControl(control: VControlInterface): void;
-
-  registerControlHook(): void;
 }

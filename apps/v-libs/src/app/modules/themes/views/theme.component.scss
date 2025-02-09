@@ -3,6 +3,7 @@
   --colorTitle: red;
 
 }
+
 .block {
   margin: 20px 0;
 }
@@ -17,4 +18,13 @@
 
 .inputs {
   margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+input, textarea {
+  margin-bottom: 20px;
+}
+
+.compose {
+  margin-bottom: 20px;
 }

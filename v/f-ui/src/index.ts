@@ -4,4 +4,4 @@ export * from './lib/ui-elements';
 //export * from './lib/base-theme/base-f-ui.theme';
 export * from './lib/const';
 // for DI
-export * from './lib/as-token/component.token';
+export * from './lib/as-token/child-component-token';

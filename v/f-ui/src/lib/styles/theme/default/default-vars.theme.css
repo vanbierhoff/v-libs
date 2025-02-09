@@ -1,18 +1,19 @@
 :root {
-  --baseColor: #c7368b;
-  --baseHoverColor: #c22f81;
+  --baseColor: #ffc0e2;
+  --baseHoverColor: #fc95c2;
   --baseActiveColor: #ce5396;
-  --baseDisabledColor: #d7acbe;
+  --baseDisabledColor: #f1bcd3;
   --baseDisabledTextColor: #4f112d;
   --secondaryDisabledTextColor: #d9afc0;
-  --textColor: #fff;
+  --textColor: #000;
   --textColor-2: #a21667;
-  --disabledColor-2: #502738;
+  --disabledColor-2: #d379a0;
   --mSize: 40px;
   --mInputSize: 42px;
-  --baseBorder: 3px solid #a21667;
-  --baseRad: 4px;
-  --baseBoxShadow: 2px 2px 4px 0px #bd207c;
+  --baseRad: 8px;
+  --baseBorder: 2px solid #f540a8;
+
+  --baseBoxShadow: 2px 2px 2px 0px #f8acd8;
   --baseErrorColor: #e74c3c;
 
   --transitionPropertyBase: 'color, background, opacity, box-shadow';

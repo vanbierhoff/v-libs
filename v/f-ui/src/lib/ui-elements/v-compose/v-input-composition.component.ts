@@ -2,9 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  ContentChild,
+  contentChild,
   DestroyRef,
   effect,
+  EffectRef,
   ElementRef,
   forwardRef,
   inject,
@@ -16,11 +17,10 @@ import {
 import { CommonModule } from '@angular/common';
 import { ThemeManagerService } from '@v/themes';
 import {
-  ComponentToken,
+  ChildComponentToken,
   HOST_COMPONENT_STRATEGY,
   HostComponent,
-  HostComponentInterface,
-} from '../../as-token/component.token';
+} from '../../as-token/child-component-token';
 import { V_COMPOSE_INPUT_THEME } from '../../const';
 import { DefaultHostStrategy } from '../../hosts/host-strategies/default-host.strategy';
 import { VControlInterface } from '../../custom-controls/models/v-control.interface';
@@ -45,7 +45,7 @@ import { FormsErrorPipe } from '../../utils/forms-error.pipe';
     },
   ],
 })
-export class VInputCompositionComponent implements HostComponentInterface {
+export class VInputCompositionComponent {
   constructor(
     @Inject(ElementRef) protected elRef: ElementRef,
     protected themeManager: ThemeManagerService
@@ -56,8 +56,9 @@ export class VInputCompositionComponent implements HostComponentInterface {
   public destroyRef: DestroyRef = inject(DestroyRef);
   public hostStrategy: DefaultHostInterface = inject(HOST_COMPONENT_STRATEGY);
 
-  @ContentChild(forwardRef(() => ComponentToken), { read: ComponentToken })
-  public readonly childComponent: ComponentToken = {} as ComponentToken;
+  public readonly child = contentChild(ChildComponentToken, {
+    read: ChildComponentToken,
+  });
 
   public viewError = computed(() => {
     const isFocus = this.hostStrategy.control?.focusable();
@@ -74,7 +75,7 @@ export class VInputCompositionComponent implements HostComponentInterface {
 
   appearance: InputSignal<string> = input<string>(V_COMPOSE_INPUT_THEME);
 
-  changeThemeEffect() {
+  private changeThemeEffect(): void {
     effect(async () => {
       if (this.hasApplyTheme) {
         this.themeManager.unApply(this.prevTheme);
@@ -85,12 +86,17 @@ export class VInputCompositionComponent implements HostComponentInterface {
     });
   }
 
-  public registerControlHook(): void {
-    this.hostStrategy.registerControlHook();
-  }
+  private registerEffRef: EffectRef = effect(() => {
+    const controller = this.child()?.controller;
+    if (controller) {
+      this.registerControl(controller);
+    }
+  });
 
-  public registerControl(control: VControlInterface): void {
+  private registerControl(control: VControlInterface): void {
     this.hostStrategy.destroyRef = this.destroyRef;
     this.hostStrategy.registerControl(control);
+    this.hostStrategy.registerControlHook();
+    this.registerEffRef.destroy();
   }
 }

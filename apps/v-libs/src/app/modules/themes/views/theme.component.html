@@ -1,4 +1,3 @@
-
 <div class="content">
   <button-one></button-one>
   <button-two></button-two>
@@ -7,20 +6,27 @@
     <input type="text" vInput [disabled]="true">
   </div>
 
-  <div vInputCompose>
+  <div vInputCompose class="compose">
     <label vLabel>my label</label>
     <input type="text" vInput>
   </div>
 
-  <div vInputCompose >
+  <div vInputCompose class="compose">
     <label vLabel>my label</label>
-    <input type="text" vInput [disabled]="true" >
+    <input type="text" vInput [disabled]="true">
   </div>
 </div>
 
 <div class="block">
- <h3>textaera</h3>
+  <h3>textaera</h3>
 
   <textarea vTextarea></textarea>
-  <textarea vTextarea [disabled]="true" ></textarea>
+  <textarea vTextarea [disabled]="true"></textarea>
+
+  <div vInputCompose>
+    <label vLabel>my textarea label</label>
+    <textarea vTextarea></textarea>
+  </div>
+
+
 </div>

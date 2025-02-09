@@ -1,10 +1,11 @@
 @for (user of users; track $index) {
-{{ user }}
-        } @empty {
-Empty list of users
+  {{ user }}
+} @empty {
+  Empty list of users
 }
 <h1 class="title"> hello</h1>
 
 <a routerLink="theme">to theme</a>
+<a routerLink="rx-lazy">rx lazy</a>
 
 <router-outlet></router-outlet>

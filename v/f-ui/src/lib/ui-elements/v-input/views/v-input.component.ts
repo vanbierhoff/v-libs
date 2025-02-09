@@ -3,15 +3,14 @@ import {
   computed,
   effect,
   ElementRef,
-  EventEmitter,
   forwardRef,
   inject,
-  Inject,
   input,
   InputSignal,
   OnDestroy,
   OnInit,
-  Output,
+  output,
+  OutputEmitterRef,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -23,9 +22,9 @@ import { vBaseControlFactory } from '../../../custom-controls/v-base-control.fac
 import { VControlInterface } from '../../../custom-controls/models/v-control.interface';
 import { V_INPUT_THEME } from '../../../const/theme/v-input.theme';
 import {
-  ComponentToken,
+  ChildComponentToken,
   HostComponent,
-} from '../../../as-token/component.token';
+} from '../../../as-token/child-component-token';
 
 @Component({
   selector: 'v-input input[vInput]',
@@ -41,7 +40,7 @@ import {
   },
   providers: [
     {
-      provide: ComponentToken,
+      provide: ChildComponentToken,
       useExisting: forwardRef(() => VInputComponent),
     },
     ThemeManagerService,
@@ -49,12 +48,8 @@ import {
   styleUrl: './v-input.component.scss',
 })
 export class VInputComponent implements OnInit, OnDestroy {
-  constructor(
-    @Inject(ElementRef) protected elRef: ElementRef,
-    protected themeManager: ThemeManagerService
-  ) {
-    this.setEffects();
-  }
+  protected elRef: ElementRef = inject(ElementRef);
+  protected themeManager: ThemeManagerService = inject(ThemeManagerService);
 
   public readonly readonly: InputSignal<boolean> = input<boolean>(false);
   public readonly disabled: InputSignal<boolean> = input<boolean>(false);
@@ -63,8 +58,19 @@ export class VInputComponent implements OnInit, OnDestroy {
     ValueTransformer<unknown, unknown> | any
   > = input(null);
 
-  @Output()
-  inputEv: EventEmitter<unknown> = new EventEmitter();
+  public readonly controller: VControlInterface = vBaseControlFactory(
+    this.elRef,
+    inject(NgControl, {
+      optional: true,
+      self: true,
+    })
+  );
+
+  public readonly inputEv: OutputEmitterRef<unknown> = output();
+
+  constructor() {
+    this.setEffects();
+  }
 
   protected host: HostComponent | null = inject(HostComponent, {
     optional: true,
@@ -83,37 +89,22 @@ export class VInputComponent implements OnInit, OnDestroy {
   protected hasApplyTheme = false;
   protected prevTheme = '';
 
-  readonly controller: VControlInterface = vBaseControlFactory(
-    this.elRef,
-    inject(NgControl, {
-      optional: true,
-      self: true,
-    })
-  );
-
-  inputValue(v: any) {
+  public inputValue(v: unknown) {
     this.value.set(v);
     this.controller.changeValue.set(v);
   }
 
-  onFocused(v: boolean) {
+  public onFocused(v: boolean) {
     this.controller.focusable.set(v);
     this.controller.focus = v;
   }
 
   ngOnInit() {
     this.themeManager.apply(this.themeName(), this.elRef);
-    this.registerControl();
+    this.setFirstValue();
   }
 
-  registerControl() {
-    if (this.host) {
-      this.host.registerControl(this.controller);
-      this.setFirstValue();
-    }
-  }
-
-  setFirstValue() {
+  private setFirstValue() {
     const v = this.computedInputValue();
     this.controller.ngControl?.control?.setValue(v);
     if (v) {
@@ -121,8 +112,7 @@ export class VInputComponent implements OnInit, OnDestroy {
     }
   }
 
-  // TODO set destroy ref or set injector to fix memory leaks
-  setEffects() {
+  private setEffects() {
     effect(async () => {
       if (this.hasApplyTheme) {
         this.themeManager.unApply(this.prevTheme);
@@ -133,7 +123,7 @@ export class VInputComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.themeManager.unApply(this.themeName());
   }
 }

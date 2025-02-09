@@ -1,21 +1,21 @@
 :host {
-    position: relative;
-    border: none;
-    padding: 12px 10px 6px;
-    box-sizing: border-box;
-    background: center bottom 0 no-repeat linear-gradient(90deg, var(--baseColor)  0%, var(--baseColor)  30%, #930c5a 100%);
-    background-size: 400% 2px;
-    box-shadow: var(--baseBoxShadow);
+  position: relative;
+  border: none;
+  padding: 24px 14px 8px;
+  box-sizing: border-box;
+  background: center bottom 0 no-repeat linear-gradient(90deg, var(--baseColor) 0%, var(--baseColor) 30%, #930c5a 100%);
+  background-size: 400% 2px;
+  box-shadow: var(--baseBoxShadow);
 
   width: var(--tWidth);
 
-    &:focus {
-      animation: gradient 0.4s ease;
-      box-shadow: 3px 3px 4px 1px #930c5a;
-      outline: none;
-      border: none;
-      background-position: 100% 100%;
-    }
+  &:focus {
+    animation: gradient 0.4s ease;
+    box-shadow: 3px 3px 4px 1px #930c5a;
+    outline: none;
+    border: none;
+    background-position: 100% 100%;
+  }
 
   &[disabled] {
     transition-duration: var(--transitionDurationBase);
@@ -26,8 +26,7 @@
     z-index: -1;
   }
 
-  }
-
+}
 
 
 @keyframes gradient {

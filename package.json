@@ -10,7 +10,9 @@
     "publish:reaction": "cd dist/v/reactions && npm publish",
     "publish:cdk": "cd dist/v/f-ui && npm publish",
     "publish:task": "cd dist/v/f-ui && npm publish",
-    "publish:themes": "cd dist/v/themes && npm publish"
+    "publish:themes": "cd dist/v/themes && npm publish",
+    "------------TESTS": "-----------------------------------------------",
+    "test": ""
   },
   "private": true,
   "dependencies": {

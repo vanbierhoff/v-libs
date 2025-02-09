@@ -12,15 +12,14 @@
   .button-wrapper {
     display: flex;
     align-items: center;
-    border-radius: 2px;
     background: var(--baseColor);
+    border-radius: var(--baseRad);
     /*TODO завязать на размерную сетку высоту*/
     height: var(--mSize);
     outline: none;
     transition-property: var(--transitionPropertyBase);
     padding: 0 20px;
     box-sizing: border-box;
-
     color: var(--textColor);
     font-weight: 500;
     cursor: pointer;
