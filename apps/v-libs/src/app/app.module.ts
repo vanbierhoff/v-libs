@@ -1,28 +1,29 @@
-import { APP_INITIALIZER, Injector, NgModule, provideAppInitializer } from '@angular/core';
+import { NgModule, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
-import { THEME_LINK, ThemeDataService, ThemeManagerService, themePreload } from '@v/themes';
-import { BASE_THEME_LINK, F_UI_THEME } from './theme/tests/base-theme/base-theme';
-import { provideRootInjector, setGlobalInjector } from '@v/cdk';
-import { V_VARS_THEME } from '@v/f-ui';
-import { provideHttpClient, HttpClient } from '@angular/common/http';
+import { THEME_LINK } from '@v/themes';
+import {
+  BASE_THEME_LINK,
+  F_UI_THEME,
+} from './theme/tests/base-theme/base-theme';
+import { provideRootInjector } from '@v/cdk';
+import { VButtonComponent } from '@v/f-ui';
+import { provideHttpClient } from '@angular/common/http';
 
-
- BASE_THEME_LINK.themes?.push(F_UI_THEME);
+BASE_THEME_LINK.themes?.push(F_UI_THEME);
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' })
+    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
+    VButtonComponent,
   ],
   providers: [
-
-    ThemeManagerService,
     provideHttpClient(),
-    provideAppInitializer(() =>   provideRootInjector()),
+    provideAppInitializer(() => provideRootInjector()),
     // {
     //   provide: APP_INITIALIZER,
     //   multi: true,
@@ -48,11 +49,9 @@ import { provideHttpClient, HttpClient } from '@angular/common/http';
     // },
     {
       provide: THEME_LINK,
-      useValue: BASE_THEME_LINK
-    }
-
+      useValue: BASE_THEME_LINK,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

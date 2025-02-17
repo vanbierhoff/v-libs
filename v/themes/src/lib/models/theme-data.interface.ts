@@ -1,13 +1,14 @@
 import { ThemeInterface } from './theme.interface';
 
-
-
 export interface AppliesTheme {
   theme: string;
   item: ThemeInterface;
+  meta?: AppliesThemeMeta;
 }
 
-
+export interface AppliesThemeMeta {
+  typeLink?: 'lazy' | 'permanent';
+}
 
 export interface PreloadThemeList {
   theme: string;

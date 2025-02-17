@@ -2,13 +2,15 @@ import { Component, ElementRef, HostBinding, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { THEME_LINK } from '../../../../../../../v/themes/src/lib/const/theme-tokens';
 import { ThemeManagerService } from '../../../../../../../v/themes/src/lib/services/theme-manager.service';
-import { BASE_THEME_LINK, BaseTheme } from '../../../theme/tests/base-theme/base-theme';
+import { BASE_THEME_LINK } from '../../../theme/tests/base-theme/base-theme';
 import { Button1Component } from '../components/button-1/button-1.component';
 import { Button2Component } from '../components/button-2/button-2.component';
-import { RouterLink } from '@angular/router';
-import { ThemeDataService } from '../../../../../../../v/themes/src/lib/services/theme-data.service';
-import { VInputComponent, VInputCompositionComponent, VLabelDirective, VTextareaComponent } from '@v/f-ui';
-
+import {
+  VInputComponent,
+  VInputCompositionComponent,
+  VLabelDirective,
+  VTextareaComponent,
+} from '@v/f-ui';
 
 @Component({
   selector: 'v-libs-theme',
@@ -17,7 +19,6 @@ import { VInputComponent, VInputCompositionComponent, VLabelDirective, VTextarea
     CommonModule,
     Button1Component,
     Button2Component,
-    RouterLink,
     VInputComponent,
     VInputCompositionComponent,
     VLabelDirective,
@@ -28,9 +29,6 @@ import { VInputComponent, VInputCompositionComponent, VLabelDirective, VTextarea
       provide: THEME_LINK,
       useValue: BASE_THEME_LINK,
     },
-
-    ThemeManagerService,
-    ThemeDataService,
   ],
   templateUrl: './theme.component.html',
   styleUrl: './theme.component.scss',

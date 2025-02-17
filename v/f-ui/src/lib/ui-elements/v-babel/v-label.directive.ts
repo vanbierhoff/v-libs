@@ -6,6 +6,7 @@ import {
   inject,
   input,
   InputSignal,
+  OnDestroy,
   Signal,
 } from '@angular/core';
 import { HostComponent } from '../../as-token/child-component-token';
@@ -20,7 +21,7 @@ import { V_LABEL_THEME } from '../../const/theme/v-label.theme';
     '[attr.focused]': 'focused()',
   },
 })
-export class VLabelDirective {
+export class VLabelDirective implements OnDestroy {
   constructor() {
     this.changeThemeEffect();
   }
@@ -59,5 +60,9 @@ export class VLabelDirective {
       this.prevTheme = this.appearance();
       this.hasApplyTheme = true;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.themeManager.unApply(this.appearance());
   }
 }

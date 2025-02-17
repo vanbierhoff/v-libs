@@ -12,6 +12,7 @@ import {
   Inject,
   input,
   InputSignal,
+  OnDestroy,
   TemplateRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -45,7 +46,7 @@ import { FormsErrorPipe } from '../../utils/forms-error.pipe';
     },
   ],
 })
-export class VInputCompositionComponent {
+export class VInputCompositionComponent implements OnDestroy {
   constructor(
     @Inject(ElementRef) protected elRef: ElementRef,
     protected themeManager: ThemeManagerService
@@ -98,5 +99,9 @@ export class VInputCompositionComponent {
     this.hostStrategy.registerControl(control);
     this.hostStrategy.registerControlHook();
     this.registerEffRef.destroy();
+  }
+
+  ngOnDestroy(): void {
+    this.themeManager.unApply(this.appearance());
   }
 }

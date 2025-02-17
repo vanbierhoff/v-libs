@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   effect,
   ElementRef,
@@ -7,7 +8,10 @@ import {
   Input,
   InputSignal,
   OnDestroy,
+  signal,
   TemplateRef,
+  untracked,
+  WritableSignal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VLoaderDirective } from '../directives/v-loader/v-loader.directive';
@@ -20,7 +24,8 @@ import { V_BUTTON_THEME } from '../../const/theme/v-button.theme';
   imports: [CommonModule],
   templateUrl: './v-button.component.html',
   styleUrl: './v-button.component.scss',
-  providers: [ThemeManagerService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [],
   host: {
     '[attr.disabled]': 'disabled()',
   },
@@ -38,25 +43,21 @@ export class VButtonComponent implements OnDestroy {
   @Input() icon: TemplateRef<any> | null = null;
 
   public prevTheme: string = '';
-  appearance: InputSignal<string> = input<string>(V_BUTTON_THEME);
+  public appearance: InputSignal<string> = input<string>(V_BUTTON_THEME);
   public disabled: InputSignal<true | null> = input<true | null>(null);
   public type: InputSignal<string> = input<string>('');
 
-  public hasApplyTheme: boolean = false;
+  public hasApplyTheme: WritableSignal<boolean> = signal(false);
 
-  changeThemeEffect() {
+  changeThemeEffect(): void {
     effect(async () => {
-      if (this.hasApplyTheme) {
+      if (this.prevTheme) {
         this.themeManager.unApply(this.prevTheme);
       }
       await this.themeManager.apply(this.appearance(), this.elRef);
       this.prevTheme = this.appearance();
-      this.hasApplyTheme = true;
+      untracked(() => this.hasApplyTheme.set(true));
     });
-  }
-
-  changeDisabledEffect() {
-    effect(async () => {});
   }
 
   ngOnDestroy() {

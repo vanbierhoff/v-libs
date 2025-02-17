@@ -1,19 +1,16 @@
 :host {
   position: relative;
-  border: none;
-  padding: 24px 14px 8px;
+  padding: 22px 14px 8px 16px;
+  background: transparent;
   box-sizing: border-box;
-  background: center bottom 0 no-repeat linear-gradient(90deg, var(--baseColor) 0%, var(--baseColor) 30%, #930c5a 100%);
-  background-size: 400% 2px;
-  box-shadow: var(--baseBoxShadow);
-
+  border: 2px solid var(--baseColor);
+  border-radius: var(--baseRad);
   width: var(--tWidth);
+  transition: border-color .2s;
 
   &:focus {
-    animation: gradient 0.4s ease;
-    box-shadow: 3px 3px 4px 1px #930c5a;
     outline: none;
-    border: none;
+    border-color: var(--baseEffectColor);
     background-position: 100% 100%;
   }
 
@@ -25,7 +22,6 @@
     pointer-events: none;
     z-index: -1;
   }
-
 }
 
 

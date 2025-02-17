@@ -28,7 +28,7 @@
 
     &:hover:not(:disabled) {
       transition-duration: var(--transitionDurationBase);
-      background: var(--baseHoverColor);
+      background: var(--baseEffectColor);
     }
 
     &:active:not(:disabled) {

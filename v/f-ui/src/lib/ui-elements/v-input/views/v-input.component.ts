@@ -43,7 +43,6 @@ import {
       provide: ChildComponentToken,
       useExisting: forwardRef(() => VInputComponent),
     },
-    ThemeManagerService,
   ],
   styleUrl: './v-input.component.scss',
 })
@@ -53,7 +52,9 @@ export class VInputComponent implements OnInit, OnDestroy {
 
   public readonly readonly: InputSignal<boolean> = input<boolean>(false);
   public readonly disabled: InputSignal<boolean> = input<boolean>(false);
-  public readonly themeName: InputSignal<string> = input<string>(V_INPUT_THEME);
+  public readonly appearance: InputSignal<string> =
+    input<string>(V_INPUT_THEME);
+
   public readonly transformer: InputSignal<
     ValueTransformer<unknown, unknown> | any
   > = input(null);
@@ -100,7 +101,6 @@ export class VInputComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.themeManager.apply(this.themeName(), this.elRef);
     this.setFirstValue();
   }
 
@@ -117,13 +117,13 @@ export class VInputComponent implements OnInit, OnDestroy {
       if (this.hasApplyTheme) {
         this.themeManager.unApply(this.prevTheme);
       }
-      await this.themeManager.apply(this.themeName(), this.elRef);
-      this.prevTheme = this.themeName();
+      await this.themeManager.apply(this.appearance(), this.elRef);
+      this.prevTheme = this.appearance();
       this.hasApplyTheme = true;
     });
   }
 
   ngOnDestroy(): void {
-    this.themeManager.unApply(this.themeName());
+    this.themeManager.unApply(this.appearance());
   }
 }

@@ -6,9 +6,6 @@
     height: var(--mInputSize);
   }
 
-  .input-wrapper {
-  }
-
   input {
     padding-top: 24px;
   }
@@ -17,7 +14,7 @@
     display: flex;
     align-items: center;
     position: absolute;
-    left: 6px;
+    left: 10px;
     top: 8px;
   }
 
@@ -28,11 +25,14 @@
   }
 
   [vLabel][focused=true] {
+    margin-left: -4px;
     transition-duration: 0.3s;
     transform: translateY(-0.4em) scale(0.8);
   }
 
   [vLabel][filled=true] {
+    margin-left: -4px;
+    left: 6px;
     transition-duration: 0.3s;
     transform: translateY(-0.4em) scale(0.8);
   }

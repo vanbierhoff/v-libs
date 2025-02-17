@@ -1,6 +1,6 @@
 :root {
   --baseColor: #ffc0e2;
-  --baseHoverColor: #fc95c2;
+  --baseEffectColor: #fc95c2;
   --baseActiveColor: #ce5396;
   --baseDisabledColor: #f1bcd3;
   --baseDisabledTextColor: #4f112d;
@@ -9,7 +9,7 @@
   --textColor-2: #a21667;
   --disabledColor-2: #d379a0;
   --mSize: 40px;
-  --mInputSize: 42px;
+  --mInputSize: 44px;
   --baseRad: 8px;
   --baseBorder: 2px solid #f540a8;
 

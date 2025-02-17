@@ -18,12 +18,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeManagerService } from '@v/themes';
-import { V_TEXTAREA_THEME } from '../const/v-textarea.theme';
 import { ValueTransformer } from '../../../shared';
 import { FormGroupDirective, NgControl } from '@angular/forms';
 import { ChildComponentToken } from '../../../as-token/child-component-token';
 import { VControlInterface } from '../../../custom-controls/models/v-control.interface';
 import { vBaseControlFactory } from '../../../custom-controls/v-base-control.factory';
+import { V_TEXTAREA_THEME } from '../../../const';
 
 @Component({
   selector: 'textarea[vTextarea]',
@@ -44,7 +44,6 @@ import { vBaseControlFactory } from '../../../custom-controls/v-base-control.fac
       provide: ChildComponentToken,
       useExisting: forwardRef(() => VTextareaComponent),
     },
-    ThemeManagerService,
   ],
   styleUrl: './v-textarea.component.scss',
 })
@@ -97,9 +96,7 @@ export class VTextareaComponent implements OnInit, OnDestroy {
     return v;
   });
 
-  public ngOnInit(): void {
-    this.themeManager.apply(this.appearance(), this.elRef);
-  }
+  public ngOnInit(): void {}
 
   public onFocused(v: boolean) {
     this.controller.focusable.set(v);
@@ -111,7 +108,8 @@ export class VTextareaComponent implements OnInit, OnDestroy {
     this.controller.changeValue.set(v);
   }
 
-  protected changeThemeEffect() {
+  protected changeThemeEffect(): void {
+    console.count('change effetc t sssadasdasdasdasdasdasdasdasd');
     effect(async () => {
       if (this.hasApplyTheme) {
         this.themeManager.unApply(this.prevTheme);
@@ -122,7 +120,7 @@ export class VTextareaComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.themeManager.unApply(this.appearance());
   }
 }
