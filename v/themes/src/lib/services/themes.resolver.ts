@@ -31,5 +31,30 @@ export const ThemesResolver: (
 export const ThemePreload = async (appliesStyleNames: Array<string>) => {
   const themeService: ThemeManagerService = inject(ThemeManagerService);
   for await (const name of appliesStyleNames) {
+    await themeService.linkThemeCss(name);
+  }
+};
+
+/**
+ * Resolve applies blocks and style before change to a route
+ * @description Usage if you need preload styles or css after go to route
+ */
+export const ThemesPreloadResolver: (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => Promise<void> = async (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
+  if (!route?.data?.['appliesStyleNames']) {
+    return;
+  }
+  const themeManager: ThemeManagerService = inject(ThemeManagerService);
+  const applies: string[] = route?.data?.['appliesStyleNames'];
+  if (!applies) {
+    return;
+  }
+  for await (const name of applies) {
+    await themeManager.linkThemeCss(name);
   }
 };

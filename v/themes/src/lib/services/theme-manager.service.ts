@@ -5,11 +5,14 @@ import {
   Renderer2,
   RendererFactory2,
 } from '@angular/core';
-import { CssFileData, StyleData } from '../models/theme.interface';
 import { handleCssFile, toStyleFormat } from './theme-handler';
 import { DOCUMENT } from '@angular/common';
 import { CssResourceInterface } from '../models/css-resource.interface';
-import { hasCssHash, removeCssHash } from '../helpers/hash-generator';
+import {
+  hasCssHash,
+  hashGenerator,
+  removeCssHash,
+} from '../helpers/hash-generator';
 import { ThemeDataService } from './theme-data.service';
 import { AppliesTheme } from '../models/theme-data.interface';
 import { LinkedThemeInterface } from '../models/theme-manager.interface';
@@ -23,8 +26,7 @@ export class ThemeManagerService {
   );
   protected themeData: ThemeDataService = inject(ThemeDataService);
   protected doc: Document = inject(DOCUMENT);
-  protected linkedTheme: Array<LinkedThemeInterface> = [];
-  protected linkedThemeMap: Map<string, LinkedThemeInterface> = new Map<
+  protected linkedTheme: Map<string, LinkedThemeInterface> = new Map<
     string,
     LinkedThemeInterface
   >();
@@ -40,41 +42,37 @@ export class ThemeManagerService {
     if (!theme) {
       return;
     }
-    const cssResource: CssResourceInterface =
-      await this.themeData.loadCssResource(theme);
-
-    const hash = hasCssHash(name);
+    const hash = hasCssHash(name) || hashGenerator(name);
     if (this.isThemeLink(name) && hash) {
       this.setAttribute(elRef, hash, '');
       this.upConsumers(name);
       return;
     }
 
+    this.linkedTheme.set(name, {} as LinkedThemeInterface);
+    const cssResource: CssResourceInterface =
+      await this.themeData.loadCssResource(theme);
+
     if (cssResource.type === 'style') {
       this.setAttribute(elRef, 'style', toStyleFormat(cssResource.value));
       return;
     }
 
-    const parsedCss = handleCssFile(cssResource.value, name);
+    const parsedCss = handleCssFile(cssResource.value, name, hash);
 
-    if (parsedCss.hash) {
-      this.setAttribute(elRef, parsedCss.hash, '');
-    }
-
-    if (this.isThemeLink(name)) {
-      this.upConsumers(name);
-      return;
+    if (hash) {
+      this.setAttribute(elRef, hash, '');
     }
 
     const style: HTMLStyleElement = this.createStyleElement(
       parsedCss.style,
-      parsedCss.hash
+      hash
     );
 
     this.linkCssFileToDocument(style);
 
     const linkTheme = this.createLinkTheme(theme, style);
-    this.linkedTheme.push(linkTheme);
+    this.linkedTheme.set(name, linkTheme);
     this.upConsumers(name);
   }
 
@@ -82,12 +80,30 @@ export class ThemeManagerService {
     this.removeByNameConsumers(name);
   }
 
+  public async linkThemeCss(name: string) {
+    const applies = this.themeData.getApplyTheme(name);
+    if (!applies) {
+      return;
+    }
+    const hash = hasCssHash(name) || hashGenerator(name);
+    const cssResource: CssResourceInterface =
+      await this.themeData.loadCssResource(applies);
+    const parsedCss = handleCssFile(cssResource.value, name, hash);
+
+    const style: HTMLStyleElement = this.createStyleElement(
+      parsedCss.style,
+      hash
+    );
+    this.linkedTheme.set(name, this.createLinkTheme(applies, style));
+    this.linkCssFileToDocument(style);
+  }
+
   protected linkCssFileToDocument(style: HTMLStyleElement) {
     this.renderer.appendChild(this.doc.head, style);
   }
 
   protected isThemeLink(name: string): boolean {
-    return this.linkedTheme.some((theme) => theme.name === name);
+    return this.linkedTheme.has(name);
   }
 
   protected createLinkTheme(
@@ -108,7 +124,7 @@ export class ThemeManagerService {
   }
 
   protected upConsumers(name: string): void {
-    const theme = this.linkedTheme.find((theme) => theme.name === name);
+    const theme = this.linkedTheme.get(name);
     if (!theme) {
       return;
     }
@@ -121,7 +137,6 @@ export class ThemeManagerService {
     name: string,
     value: string = ''
   ): void {
-    console.log(el);
     this.renderer.setAttribute(el.nativeElement, name, value);
   }
 
@@ -134,47 +149,20 @@ export class ThemeManagerService {
     return style;
   }
 
-  // Унести в themeData и назвать иначе
-  // сделать метод для определения типа cssFile или style для apply
-  protected async defineTypeLink(
-    theme: AppliesTheme
-  ): Promise<CssResourceInterface> {
-    if (theme?.item.style) {
-      const result: StyleData = await theme.item.style();
-      return {
-        type: 'style',
-        value: result,
-      };
-    }
-    if (theme?.item.cssFile) {
-      const result: CssFileData = await theme.item.cssFile();
-      return {
-        type: 'css',
-        value: result.default,
-      };
-    }
-    throw new Error('Styles or style block not defined');
-  }
-
   protected removeByNameConsumers(name: string) {
-    const consumer = this.linkedTheme.find((item) => item.name === name);
-    if (!consumer) {
+    const linkedTheme = this.linkedTheme.get(name);
+    if (!linkedTheme) {
       return;
     }
-    consumer.consumers -= 1;
-    const count = consumer.consumers;
+    linkedTheme.consumers -= 1;
+    const count = linkedTheme.consumers;
 
     if (count === 0) {
-      const index = this.linkedTheme.findIndex((item) => item.name === name);
-      const linkedTheme = this.linkedTheme[index];
-      if (!linkedTheme) {
-        return;
-      }
       linkedTheme.styleData.forEach((style) => {
         style.style.remove();
         removeCssHash(style.linkName);
       });
-      this.linkedTheme.splice(index, 1);
+      this.linkedTheme.delete(name);
     }
   }
 

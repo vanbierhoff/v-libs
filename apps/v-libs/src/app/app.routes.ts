@@ -1,5 +1,9 @@
 import { Route } from '@angular/router';
-import { ThemesResolver } from '../../../../v/themes/src/lib/services/themes.resolver';
+import {
+  ThemesPreloadResolver,
+  ThemesResolver,
+} from '../../../../v/themes/src/lib/services/themes.resolver';
+import { V_INPUT_THEME, V_TEXTAREA_THEME } from '@v/f-ui';
 
 export const appRoutes: Route[] = [
   {
@@ -38,10 +42,11 @@ export const appRoutes: Route[] = [
   {
     path: 'theme',
     resolve: {
-      ThemesResolver,
+      // ThemesResolver,
+      ThemesPreloadResolver,
     },
     data: {
-      appliesStyleNames: ['buttonCss', 'buttonBlock'],
+      appliesStyleNames: [V_INPUT_THEME, V_TEXTAREA_THEME],
     },
     loadComponent: () =>
       import('./modules/themes/views/theme.component').then(
