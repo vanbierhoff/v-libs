@@ -7,7 +7,7 @@ export interface AppliesTheme {
 }
 
 export interface AppliesThemeMeta {
-  typeLink?: 'lazy' | 'permanent';
+  isPermanent: boolean;
 }
 
 export interface PreloadThemeList {

@@ -38,11 +38,10 @@ export class ThemeManagerService2 {
       this.upConsumers(name);
       return;
     }
-    const themes: AppliesTheme[] | void = this.themeData.getApplies(name);
-    if (!themes) {
+    const theme: AppliesTheme | void = this.themeData.getApplyTheme(name);
+    if (!theme) {
       return;
     }
-    const theme: AppliesTheme = themes[0];
     const typeLinkTheme: TypeLinkThemeInterface = await this.defineTypeLink(
       theme
     );
@@ -51,10 +50,7 @@ export class ThemeManagerService2 {
       this.setAttribute(elRef, 'style', toStyleFormat(typeLinkTheme.value));
       return;
     }
-    const parsedCss = handleCssFile(
-      typeLinkTheme.value,
-      this.getThemeLinkName(theme, theme.theme)
-    );
+    const parsedCss = handleCssFile(typeLinkTheme.value, name);
 
     this.setAttribute(elRef, parsedCss.hash, '');
 

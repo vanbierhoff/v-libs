@@ -4,15 +4,12 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { THEME_LINK } from '@v/themes';
-import {
-  BASE_THEME_LINK,
-  F_UI_THEME,
-} from './theme/tests/base-theme/base-theme';
+import { BASE_THEME_LINK } from './theme/tests/base-theme/base-theme';
 import { provideRootInjector } from '@v/cdk';
 import { VButtonComponent } from '@v/f-ui';
 import { provideHttpClient } from '@angular/common/http';
-
-BASE_THEME_LINK.themes?.push(F_UI_THEME);
+// test push
+//BASE_THEME_LINK.themes?.push(F_UI_THEME);
 
 @NgModule({
   declarations: [AppComponent],
