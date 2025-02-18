@@ -7,5 +7,5 @@ export interface LinkedThemeInterface {
     style: HTMLStyleElement;
     linkName: string;
   }>;
-  meta?: AppliesThemeMeta;
+  meta: AppliesThemeMeta;
 }

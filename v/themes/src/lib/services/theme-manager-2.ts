@@ -8,7 +8,7 @@ import {
 import { CssFileData, StyleData } from '../models/theme.interface';
 import { handleCssFile, toStyleFormat } from './theme-handler';
 import { DOCUMENT } from '@angular/common';
-import { TypeLinkThemeInterface } from '../models/type-link-theme.interface';
+import { CssResourceInterface } from '../models/css-resource.interface';
 import { hasCssHash, removeCssHash } from '../helpers/hash-generator';
 import { ThemeDataService } from './theme-data.service';
 import { AppliesTheme } from '../models/theme-data.interface';
@@ -42,7 +42,7 @@ export class ThemeManagerService2 {
     if (!theme) {
       return;
     }
-    const typeLinkTheme: TypeLinkThemeInterface = await this.defineTypeLink(
+    const typeLinkTheme: CssResourceInterface = await this.defineTypeLink(
       theme
     );
 
@@ -119,7 +119,7 @@ export class ThemeManagerService2 {
 
   protected async defineTypeLink(
     theme: AppliesTheme
-  ): Promise<TypeLinkThemeInterface> {
+  ): Promise<CssResourceInterface> {
     if (theme?.item.style) {
       const result: StyleData = await theme.item.style();
       return {

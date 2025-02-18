@@ -3,7 +3,7 @@ import { ThemeInterface } from './theme.interface';
 export interface AppliesTheme {
   theme: string;
   item: ThemeInterface;
-  meta?: AppliesThemeMeta;
+  meta: AppliesThemeMeta;
 }
 
 export interface AppliesThemeMeta {

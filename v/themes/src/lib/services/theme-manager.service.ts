@@ -8,7 +8,7 @@ import {
 import { CssFileData, StyleData } from '../models/theme.interface';
 import { handleCssFile, toStyleFormat } from './theme-handler';
 import { DOCUMENT } from '@angular/common';
-import { TypeLinkThemeInterface } from '../models/type-link-theme.interface';
+import { CssResourceInterface } from '../models/css-resource.interface';
 import { hasCssHash, removeCssHash } from '../helpers/hash-generator';
 import { ThemeDataService } from './theme-data.service';
 import { AppliesTheme } from '../models/theme-data.interface';
@@ -24,6 +24,10 @@ export class ThemeManagerService {
   protected themeData: ThemeDataService = inject(ThemeDataService);
   protected doc: Document = inject(DOCUMENT);
   protected linkedTheme: Array<LinkedThemeInterface> = [];
+  protected linkedThemeMap: Map<string, LinkedThemeInterface> = new Map<
+    string,
+    LinkedThemeInterface
+  >();
 
   /**
    *
@@ -36,9 +40,8 @@ export class ThemeManagerService {
     if (!theme) {
       return;
     }
-    const typeLinkTheme: TypeLinkThemeInterface = await this.defineTypeLink(
-      theme
-    );
+    const cssResource: CssResourceInterface =
+      await this.themeData.loadCssResource(theme);
 
     const hash = hasCssHash(name);
     if (this.isThemeLink(name) && hash) {
@@ -47,12 +50,12 @@ export class ThemeManagerService {
       return;
     }
 
-    if (typeLinkTheme.type === 'style') {
-      this.setAttribute(elRef, 'style', toStyleFormat(typeLinkTheme.value));
+    if (cssResource.type === 'style') {
+      this.setAttribute(elRef, 'style', toStyleFormat(cssResource.value));
       return;
     }
 
-    const parsedCss = handleCssFile(typeLinkTheme.value, name);
+    const parsedCss = handleCssFile(cssResource.value, name);
 
     if (parsedCss.hash) {
       this.setAttribute(elRef, parsedCss.hash, '');
@@ -135,7 +138,7 @@ export class ThemeManagerService {
   // сделать метод для определения типа cssFile или style для apply
   protected async defineTypeLink(
     theme: AppliesTheme
-  ): Promise<TypeLinkThemeInterface> {
+  ): Promise<CssResourceInterface> {
     if (theme?.item.style) {
       const result: StyleData = await theme.item.style();
       return {

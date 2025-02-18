@@ -5,39 +5,17 @@ import {
   ThemeModuleInterface,
 } from '../models/theme-module.interface';
 import { AppliesTheme } from '../models/theme-data.interface';
-import { ThemeInterface } from '../models';
+import {
+  CssFileData,
+  CssResourceInterface,
+  StyleData,
+  ThemeInterface,
+} from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeDataService {
   constructor(@Inject(THEME_LINK) private theme: ThemeListInterface) {}
 
-  // public getApplyTheme(name: string): Array<AppliesTheme> | void {
-  //   const appliesList: AppliesTheme = [];
-  //   const theme = {
-  //     theme: this.theme.theme,
-  //     item: this.theme.items.find((item) => item.name === name),
-  //   };
-  //   if (theme.item !== undefined) {
-  //     appliesList.push(theme as AppliesTheme);
-  //   }
-  //
-  //   if (!this.theme?.themes) {
-  //     return appliesList;
-  //   }
-  //
-  //   this.theme.themes.forEach((subTheme: ThemeModuleInterface) => {
-  //     const theme = subTheme.items.find((item) => item.name === name);
-  //     if (!theme) {
-  //       return;
-  //     }
-  //     appliesList.push({
-  //       theme: theme.name,
-  //       item: theme,
-  //     });
-  //   });
-  //
-  //   return appliesList;
-  // }
   /**
    *
    * @param name - theme/style name
@@ -66,6 +44,26 @@ export class ThemeDataService {
       }
       await this.loadStyles(appliesList);
     }
+  }
+
+  public async loadCssResource(
+    theme: AppliesTheme
+  ): Promise<CssResourceInterface> {
+    if (theme?.item.style) {
+      const result: StyleData = await theme.item.style();
+      return {
+        type: 'style',
+        value: result,
+      };
+    }
+    if (theme?.item.cssFile) {
+      const result: CssFileData = await theme.item.cssFile();
+      return {
+        type: 'css',
+        value: result.default,
+      };
+    }
+    throw new Error('Styles or style block not defined');
   }
 
   // Унести в themeData и назвать иначе
