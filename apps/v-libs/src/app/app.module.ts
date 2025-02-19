@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
-import { THEME_LINK } from '@v/themes';
+import { THEME_LINK, ThemePreload } from '@v/themes';
 import { BASE_THEME_LINK } from './theme/tests/base-theme/base-theme';
 import { provideRootInjector } from '@v/cdk';
-import { VButtonComponent } from '@v/f-ui';
+import { V_VARS_THEME, VButtonComponent } from '@v/f-ui';
 import { provideHttpClient } from '@angular/common/http';
 // test push
 //BASE_THEME_LINK.themes?.push(F_UI_THEME);
@@ -48,6 +48,7 @@ import { provideHttpClient } from '@angular/common/http';
       provide: THEME_LINK,
       useValue: BASE_THEME_LINK,
     },
+    provideAppInitializer(() => ThemePreload([V_VARS_THEME])),
   ],
   bootstrap: [AppComponent],
 })

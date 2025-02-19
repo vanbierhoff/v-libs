@@ -85,7 +85,11 @@ export class ThemeManagerService {
     if (!applies) {
       return;
     }
+    if (this.isThemeLink(name)) {
+      return;
+    }
     const hash = hasCssHash(name) || hashGenerator(name);
+
     const cssResource: CssResourceInterface =
       await this.themeData.loadCssResource(applies);
     const parsedCss = handleCssFile(cssResource.value, name, hash);
