@@ -54,24 +54,20 @@ export class ThemeManagerService implements OnDestroy {
     }
     const hash = name;
     if (this.isThemeLink(name)) {
-      this.setAttribute(elRef, hash, '');
-      this.upConsumers(name);
-      if (!this.isServer) {
-        return;
-      }
-      this.ssrHydrator.saveToStateTheme(this.linkedTheme);
+      this.setExistTheme(elRef, hash, name);
       return;
     }
     this.linkedTheme.set(name, { consumers: 0 } as LinkedThemeInterface);
     const cssResource: CssResourceInterface =
       await this.themeData.loadCssResource(theme);
 
+    // TODO сейвить стили как строку в linked и аплаить без асинхронности
     if (cssResource.type === 'style') {
       this.setAttribute(elRef, 'style', toStyleFormat(cssResource.value));
       return;
     }
 
-    const parsedCss = handleCssFile(cssResource.value, name, hash);
+    const parsedCss = handleCssFile(cssResource.value, hash);
 
     if (hash) {
       this.setAttribute(elRef, hash, '');
@@ -113,7 +109,7 @@ export class ThemeManagerService implements OnDestroy {
 
     const cssResource: CssResourceInterface =
       await this.themeData.loadCssResource(applies);
-    const parsedCss = handleCssFile(cssResource.value, name, hash);
+    const parsedCss = handleCssFile(cssResource.value, hash);
 
     const style: HTMLStyleElement = this.createStyleElement(
       parsedCss.style,
@@ -129,6 +125,15 @@ export class ThemeManagerService implements OnDestroy {
 
   protected isThemeLink(name: string): boolean {
     return this.linkedTheme.has(name);
+  }
+
+  protected setExistTheme(elRef: ElementRef, hash: string, themeName: string) {
+    this.setAttribute(elRef, hash, '');
+    this.upConsumers(themeName);
+    if (!this.isServer) {
+      return;
+    }
+    this.ssrHydrator.saveToStateTheme(this.linkedTheme);
   }
 
   protected createLinkTheme(

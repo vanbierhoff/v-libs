@@ -17,7 +17,6 @@ export function formatKey(key: string): string {
 
 export function handleCssFile(
   css: string,
-  name: string,
   hash: string
 ): {
   style: string;
