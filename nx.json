@@ -32,6 +32,17 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
+    },
+    "@angular-devkit/build-angular:browser": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "e2e-ci--**/*": {
+      "dependsOn": ["^build"]
+    },
+    "server": {
+      "cache": true
     }
   },
   "namedInputs": {
@@ -50,10 +61,10 @@
   },
   "generators": {
     "@nx/angular:application": {
-      "style": "scss",
+      "e2eTestRunner": "cypress",
       "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
+      "style": "scss",
+      "unitTestRunner": "jest"
     },
     "@nx/angular:library": {
       "linter": "eslint",
@@ -63,5 +74,22 @@
       "style": "scss"
     }
   },
-  "nxCloudAccessToken": "ODhkNDg1YjktZjAyOS00MTRlLTkzZjItMGQ3NWM4OGU5MmE5fHJlYWQtd3JpdGU="
+  "nxCloudAccessToken": "ODhkNDg1YjktZjAyOS00MTRlLTkzZjItMGQ3NWM4OGU5MmE5fHJlYWQtd3JpdGU=",
+  "plugins": [
+    {
+      "plugin": "@nx/cypress/plugin",
+      "options": {
+        "targetName": "cypress:e2e",
+        "openTargetName": "open-cypress",
+        "componentTestingTargetName": "component-test",
+        "ciTargetName": "e2e-ci"
+      }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "eslint:lint"
+      }
+    }
+  ]
 }

@@ -2,24 +2,34 @@ import {
   ElementRef,
   inject,
   Injectable,
+  OnDestroy,
+  PLATFORM_ID,
   Renderer2,
   RendererFactory2,
 } from '@angular/core';
 import { handleCssFile, toStyleFormat } from './theme-handler';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, isPlatformServer } from '@angular/common';
 import { CssResourceInterface } from '../models/css-resource.interface';
-import {
-  hasCssHash,
-  hashGenerator,
-  removeCssHash,
-} from '../helpers/hash-generator';
+import { removeCssHash } from '../helpers/hash-generator';
 import { ThemeDataService } from './theme-data.service';
 import { AppliesTheme } from '../models/theme-data.interface';
 import { LinkedThemeInterface } from '../models/theme-manager.interface';
+import { ThemeSsrHydrator } from './theme-ssr.hydrator';
 
 @Injectable({ providedIn: 'root' })
-export class ThemeManagerService {
+export class ThemeManagerService implements OnDestroy {
   protected rendererFactory: RendererFactory2 = inject(RendererFactory2);
+  protected platformId = inject(PLATFORM_ID);
+  protected ssrHydrator: ThemeSsrHydrator = inject(ThemeSsrHydrator);
+  protected isServer: boolean = isPlatformServer(this.platformId);
+
+  constructor() {
+    const linkedThemes = this.ssrHydrator.hydrateTheme();
+    if (linkedThemes) {
+      this.linkedTheme = linkedThemes;
+    }
+  }
+
   protected renderer: Renderer2 = this.rendererFactory.createRenderer(
     null,
     null
@@ -42,14 +52,14 @@ export class ThemeManagerService {
     if (!theme) {
       return;
     }
-    const hash = hasCssHash(name) || hashGenerator(name);
-    if (this.isThemeLink(name) && hash) {
+    const hash = name;
+    if (this.isThemeLink(name)) {
       this.setAttribute(elRef, hash, '');
       this.upConsumers(name);
+      this.ssrHydrator.saveToStateTheme(this.linkedTheme);
       return;
     }
-
-    this.linkedTheme.set(name, {} as LinkedThemeInterface);
+    this.linkedTheme.set(name, { consumers: 0 } as LinkedThemeInterface);
     const cssResource: CssResourceInterface =
       await this.themeData.loadCssResource(theme);
 
@@ -74,9 +84,13 @@ export class ThemeManagerService {
     const linkTheme = this.createLinkTheme(theme, style);
     this.linkedTheme.set(name, linkTheme);
     this.upConsumers(name);
+    this.ssrHydrator.saveToStateTheme(this.linkedTheme);
   }
 
   public unApply(name: string) {
+    if (this.isServer) {
+      return;
+    }
     this.removeByNameConsumers(name);
   }
 
@@ -88,7 +102,8 @@ export class ThemeManagerService {
     if (this.isThemeLink(name)) {
       return;
     }
-    const hash = hasCssHash(name) || hashGenerator(name);
+
+    const hash = name;
 
     const cssResource: CssResourceInterface =
       await this.themeData.loadCssResource(applies);
@@ -114,9 +129,10 @@ export class ThemeManagerService {
     appliesTheme: AppliesTheme,
     style: HTMLStyleElement
   ) {
+    const consumers = this.linkedTheme.get(appliesTheme.item.name)?.consumers;
     return {
       name: appliesTheme.item.name,
-      consumers: 0,
+      consumers: consumers || 0,
       styleData: [
         {
           style: style,
@@ -132,7 +148,6 @@ export class ThemeManagerService {
     if (!theme) {
       return;
     }
-
     theme.consumers = theme.consumers + 1;
   }
 
@@ -144,7 +159,7 @@ export class ThemeManagerService {
     this.renderer.setAttribute(el.nativeElement, name, value);
   }
 
-  protected createStyleElement(css: string, hash: string) {
+  protected createStyleElement(css: string, hash: string): HTMLStyleElement {
     const style: HTMLStyleElement = this.doc.createElement(
       'STYLE'
     ) as HTMLStyleElement;
@@ -153,7 +168,7 @@ export class ThemeManagerService {
     return style;
   }
 
-  protected removeByNameConsumers(name: string) {
+  protected removeByNameConsumers(name: string): void {
     const linkedTheme = this.linkedTheme.get(name);
     if (!linkedTheme) {
       return;
@@ -171,6 +186,8 @@ export class ThemeManagerService {
   }
 
   protected getThemeLinkName(theme: AppliesTheme, name: string): string {
-    return theme.theme + '-' + name;
+    return theme.theme;
   }
+
+  public ngOnDestroy(): void {}
 }

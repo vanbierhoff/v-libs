@@ -1,0 +1,17 @@
+.button-1 {
+}
+
+:host {
+  color: #86980d;
+  background: #dac015 !important;
+  background: url('../../../../../assets/flags/arg.svg');
+  font-size: 14px;
+
+  button {
+    border-radius: 14px;
+    color: #a913e5;
+  }
+}
+
+
+

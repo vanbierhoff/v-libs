@@ -48,8 +48,9 @@ import { V_TEXTAREA_THEME } from '../../../const';
   styleUrl: './v-textarea.component.scss',
 })
 export class VTextareaComponent implements OnInit, OnDestroy {
+  protected elRef: ElementRef = inject(ElementRef);
+
   constructor(
-    @Inject(ElementRef) protected elRef: ElementRef,
     @Optional()
     @Inject(FormGroupDirective)
     readonly formDirective: FormGroupDirective | null,
