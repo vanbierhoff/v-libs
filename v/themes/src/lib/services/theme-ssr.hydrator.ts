@@ -49,12 +49,10 @@ export class ThemeSsrHydrator {
       hydratedTheme.set(theme.theme, {
         name: theme.theme,
         consumers: theme.consumers,
-        styleData: [
-          {
-            style,
-            linkName: theme.theme,
-          },
-        ],
+        styleData: {
+          style,
+          linkName: theme.theme,
+        },
         meta: theme.meta,
       });
     });

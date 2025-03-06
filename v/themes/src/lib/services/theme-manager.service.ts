@@ -56,6 +56,9 @@ export class ThemeManagerService implements OnDestroy {
     if (this.isThemeLink(name)) {
       this.setAttribute(elRef, hash, '');
       this.upConsumers(name);
+      if (!this.isServer) {
+        return;
+      }
       this.ssrHydrator.saveToStateTheme(this.linkedTheme);
       return;
     }
@@ -84,6 +87,9 @@ export class ThemeManagerService implements OnDestroy {
     const linkTheme = this.createLinkTheme(theme, style);
     this.linkedTheme.set(name, linkTheme);
     this.upConsumers(name);
+    if (!this.isServer) {
+      return;
+    }
     this.ssrHydrator.saveToStateTheme(this.linkedTheme);
   }
 
@@ -133,12 +139,10 @@ export class ThemeManagerService implements OnDestroy {
     return {
       name: appliesTheme.item.name,
       consumers: consumers || 0,
-      styleData: [
-        {
-          style: style,
-          linkName: this.getThemeLinkName(appliesTheme, appliesTheme.item.name),
-        },
-      ],
+      styleData: {
+        style: style,
+        linkName: this.getThemeLinkName(appliesTheme, appliesTheme.item.name),
+      },
       meta: appliesTheme.meta,
     };
   }
@@ -177,10 +181,8 @@ export class ThemeManagerService implements OnDestroy {
     const count = linkedTheme.consumers;
 
     if (count === 0) {
-      linkedTheme.styleData.forEach((style) => {
-        style.style.remove();
-        removeCssHash(style.linkName);
-      });
+      linkedTheme.styleData.style.remove();
+      removeCssHash(linkedTheme.styleData.linkName);
       this.linkedTheme.delete(name);
     }
   }
