@@ -26,6 +26,7 @@ export const F_UI_THEME: ThemeModuleInterface = {
       name: V_INPUT_THEME,
       cssFile: () =>
         import('!!raw-loader!v/f-ui/src/lib/styles/v-input.theme.css'),
+      isPermanent: true,
     },
     {
       name: V_TEXTAREA_THEME,

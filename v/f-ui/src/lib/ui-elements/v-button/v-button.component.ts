@@ -8,10 +8,7 @@ import {
   Input,
   InputSignal,
   OnDestroy,
-  signal,
   TemplateRef,
-  untracked,
-  WritableSignal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VLoaderDirective } from '../directives/v-loader/v-loader.directive';
@@ -42,25 +39,40 @@ export class VButtonComponent implements OnDestroy {
   @Input() iconPosition: 'left' | 'right' | 'manual' = 'left';
   @Input() icon: TemplateRef<any> | null = null;
 
-  public prevTheme: string = '';
-  public appearance: InputSignal<string> = input<string>(V_BUTTON_THEME);
+  public appearance: InputSignal<string[]> = input<string[]>([V_BUTTON_THEME]);
   public disabled: InputSignal<true | null> = input<true | null>(null);
   public type: InputSignal<string> = input<string>('');
 
-  public hasApplyTheme: WritableSignal<boolean> = signal(false);
+  public hasApplyTheme: boolean = false;
+
+  private appliedTheme: string[] = [];
 
   changeThemeEffect(): void {
     effect(async () => {
-      if (this.prevTheme) {
-        this.themeManager.unApply(this.prevTheme);
+      if (!this.appearance().length) {
+        return;
       }
-      await this.themeManager.apply(this.appearance(), this.elRef);
-      this.prevTheme = this.appearance();
-      untracked(() => this.hasApplyTheme.set(true));
+
+      if (this.hasApplyTheme) {
+        this.unApplyTheme();
+        this.hasApplyTheme = false;
+      }
+
+      for await (const theme of this.appearance()) {
+        await this.themeManager.apply(theme, this.elRef);
+        this.appliedTheme.push(theme);
+        this.hasApplyTheme = true;
+      }
     });
   }
 
-  ngOnDestroy() {
-    this.themeManager.unApply(this.appearance());
+  private unApplyTheme(): void {
+    this.appliedTheme.forEach((theme: string) =>
+      this.themeManager.unApply(theme, this.elRef)
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.unApplyTheme();
   }
 }

@@ -63,8 +63,9 @@ export class VTextareaComponent implements OnInit, OnDestroy {
   public readonly disabled: InputSignal<boolean> = input<boolean>(false);
   public readonly rows: InputSignal<number> = input<number>(8);
 
-  public readonly appearance: InputSignal<string> =
-    input<string>(V_TEXTAREA_THEME);
+  public readonly appearance: InputSignal<string[]> = input<string[]>([
+    V_TEXTAREA_THEME,
+  ]);
 
   public readonly transformer: InputSignal<
     ValueTransformer<unknown, unknown> | null | undefined
@@ -81,7 +82,6 @@ export class VTextareaComponent implements OnInit, OnDestroy {
   public readonly inputEv: OutputEmitterRef<unknown> = output<unknown>();
 
   protected hasApplyTheme: boolean = false;
-  protected prevTheme: string = '';
 
   protected value: WritableSignal<string | number | unknown> = signal('');
 
@@ -109,19 +109,34 @@ export class VTextareaComponent implements OnInit, OnDestroy {
     this.controller.changeValue.set(v);
   }
 
+  protected appliedTheme: string[] = [];
+
   protected changeThemeEffect(): void {
-    console.count('change effetc t sssadasdasdasdasdasdasdasdasd');
     effect(async () => {
-      if (this.hasApplyTheme) {
-        this.themeManager.unApply(this.prevTheme);
+      if (!this.appearance().length) {
+        return;
       }
-      await this.themeManager.apply(this.appearance(), this.elRef);
-      this.prevTheme = this.appearance();
-      this.hasApplyTheme = true;
+
+      if (this.hasApplyTheme) {
+        this.unApplyTheme();
+        this.hasApplyTheme = false;
+      }
+
+      for await (const theme of this.appearance()) {
+        await this.themeManager.apply(theme, this.elRef);
+        this.appliedTheme.push(theme);
+        this.hasApplyTheme = true;
+      }
     });
   }
 
+  private unApplyTheme(): void {
+    this.appliedTheme.forEach((theme: string) =>
+      this.themeManager.unApply(theme, this.elRef)
+    );
+  }
+
   ngOnDestroy(): void {
-    this.themeManager.unApply(this.appearance());
+    this.unApplyTheme();
   }
 }

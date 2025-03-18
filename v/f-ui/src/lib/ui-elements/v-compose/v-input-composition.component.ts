@@ -57,6 +57,10 @@ export class VInputCompositionComponent implements OnDestroy {
   public destroyRef: DestroyRef = inject(DestroyRef);
   public hostStrategy: DefaultHostInterface = inject(HOST_COMPONENT_STRATEGY);
 
+  public readonly appearance: InputSignal<string[]> = input<string[]>([
+    V_COMPOSE_INPUT_THEME,
+  ]);
+
   public readonly child = contentChild(ChildComponentToken, {
     read: ChildComponentToken,
   });
@@ -66,24 +70,31 @@ export class VInputCompositionComponent implements OnDestroy {
     return this.hostStrategy.control?.ngControl?.touched && !isFocus;
   });
 
+  public hasApplyTheme: boolean = false;
+
   public readonly label: InputSignal<string> = input('');
   public readonly errorTpl: InputSignal<TemplateRef<unknown>> = input(
     undefined as unknown as TemplateRef<unknown>
   );
 
-  protected hasApplyTheme: boolean = false;
-  protected prevTheme: string = '';
-
-  appearance: InputSignal<string> = input<string>(V_COMPOSE_INPUT_THEME);
+  private appliedTheme: string[] = [];
 
   private changeThemeEffect(): void {
     effect(async () => {
-      if (this.hasApplyTheme) {
-        this.themeManager.unApply(this.prevTheme);
+      if (!this.appearance().length) {
+        return;
       }
-      await this.themeManager.apply(this.appearance(), this.elRef);
-      this.prevTheme = this.appearance();
-      this.hasApplyTheme = true;
+
+      if (this.hasApplyTheme) {
+        this.unApplyTheme();
+        this.hasApplyTheme = false;
+      }
+
+      for await (const theme of this.appearance()) {
+        await this.themeManager.apply(theme, this.elRef);
+        this.appliedTheme.push(theme);
+        this.hasApplyTheme = true;
+      }
     });
   }
 
@@ -101,7 +112,13 @@ export class VInputCompositionComponent implements OnDestroy {
     this.registerEffRef.destroy();
   }
 
+  private unApplyTheme(): void {
+    this.appliedTheme.forEach((theme: string) =>
+      this.themeManager.unApply(theme, this.elRef)
+    );
+  }
+
   ngOnDestroy(): void {
-    this.themeManager.unApply(this.appearance());
+    this.unApplyTheme();
   }
 }

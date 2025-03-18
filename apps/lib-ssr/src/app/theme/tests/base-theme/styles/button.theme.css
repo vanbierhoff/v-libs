@@ -1,14 +1,7 @@
 :host {
   color: #86980d;
-  background: red !important;
-
-  button {
-    color: red;
-  }
-}
-
-.button-1 {
-  /*font-size: 24px;*/
-  /*background: aquamarine;*/
+  font-size: 24px;
+  background: aquamarine;
+  border-radius: 12px;
 }
 

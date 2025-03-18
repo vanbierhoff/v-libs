@@ -2,7 +2,6 @@ import {
   ElementRef,
   inject,
   Injectable,
-  OnDestroy,
   PLATFORM_ID,
   Renderer2,
   RendererFactory2,
@@ -17,7 +16,7 @@ import { LinkedThemeInterface } from '../models/theme-manager.interface';
 import { ThemeSsrHydrator } from './theme-ssr.hydrator';
 
 @Injectable({ providedIn: 'root' })
-export class ThemeManagerService implements OnDestroy {
+export class ThemeManagerService {
   protected rendererFactory: RendererFactory2 = inject(RendererFactory2);
   protected platformId = inject(PLATFORM_ID);
   protected ssrHydrator: ThemeSsrHydrator = inject(ThemeSsrHydrator);
@@ -41,13 +40,57 @@ export class ThemeManagerService implements OnDestroy {
     LinkedThemeInterface
   >();
 
+  public async apply(
+    name: string | string[],
+    elRef: ElementRef
+  ): Promise<void> {
+    if (typeof name === 'string') {
+      await this.applyTheme(name, elRef);
+      return;
+    }
+    for await (const theme of name) {
+      await this.applyTheme(theme, elRef);
+    }
+  }
+
+  public unApply(name: string, elRef: ElementRef): void {
+    this.removeAttribute(elRef, name);
+    if (this.isServer || this.linkedTheme.get(name)?.meta?.isPermanent) {
+      return;
+    }
+    this.removeByNameConsumers(name);
+  }
+
+  public async linkThemeCss(name: string) {
+    const applies = this.themeData.getApplyTheme(name);
+    if (!applies) {
+      return;
+    }
+    if (this.isThemeLink(name)) {
+      return;
+    }
+
+    const hash = name;
+
+    const cssResource: CssResourceInterface =
+      await this.themeData.loadCssResource(applies);
+    const parsedCss = handleCssFile(cssResource.value, hash);
+
+    const style: HTMLStyleElement = this.createStyleElement(
+      parsedCss.style,
+      hash
+    );
+    this.linkedTheme.set(name, this.createLinkTheme(applies, style));
+    this.linkCssFileToDocument(style);
+  }
+
   /**
    *
    * @param name - theme/style name
    * @param elRef - ElRef target el
    * Apply style or css file by name
    */
-  public async apply(name: string, elRef: ElementRef): Promise<void> {
+  protected async applyTheme(name: string, elRef: ElementRef): Promise<void> {
     const theme: AppliesTheme | void = this.themeData.getApplyTheme(name);
     if (!theme) {
       return;
@@ -89,36 +132,6 @@ export class ThemeManagerService implements OnDestroy {
     this.ssrHydrator.saveToStateTheme(this.linkedTheme);
   }
 
-  public unApply(name: string) {
-    if (this.isServer) {
-      return;
-    }
-    this.removeByNameConsumers(name);
-  }
-
-  public async linkThemeCss(name: string) {
-    const applies = this.themeData.getApplyTheme(name);
-    if (!applies) {
-      return;
-    }
-    if (this.isThemeLink(name)) {
-      return;
-    }
-
-    const hash = name;
-
-    const cssResource: CssResourceInterface =
-      await this.themeData.loadCssResource(applies);
-    const parsedCss = handleCssFile(cssResource.value, hash);
-
-    const style: HTMLStyleElement = this.createStyleElement(
-      parsedCss.style,
-      hash
-    );
-    this.linkedTheme.set(name, this.createLinkTheme(applies, style));
-    this.linkCssFileToDocument(style);
-  }
-
   protected linkCssFileToDocument(style: HTMLStyleElement) {
     this.renderer.appendChild(this.doc.head, style);
   }
@@ -128,6 +141,10 @@ export class ThemeManagerService implements OnDestroy {
   }
 
   protected setExistTheme(elRef: ElementRef, hash: string, themeName: string) {
+    if (elRef.nativeElement.hasAttribute(hash)) {
+      return;
+    }
+
     this.setAttribute(elRef, hash, '');
     this.upConsumers(themeName);
     if (!this.isServer) {
@@ -168,6 +185,10 @@ export class ThemeManagerService implements OnDestroy {
     this.renderer.setAttribute(el.nativeElement, name, value);
   }
 
+  protected removeAttribute(el: ElementRef, name: string): void {
+    this.renderer.removeAttribute(el.nativeElement, name);
+  }
+
   protected createStyleElement(css: string, hash: string): HTMLStyleElement {
     const style: HTMLStyleElement = this.doc.createElement(
       'STYLE'
@@ -195,6 +216,4 @@ export class ThemeManagerService implements OnDestroy {
   protected getThemeLinkName(theme: AppliesTheme, name: string): string {
     return theme.theme;
   }
-
-  public ngOnDestroy(): void {}
 }

@@ -1,13 +1,15 @@
 import {
   Component,
+  ElementRef,
   inject,
   OnInit,
   PLATFORM_ID,
   Renderer2,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { VButtonComponent } from '@v/f-ui';
+import { V_VARS_THEME, VButtonComponent } from '@v/f-ui';
 import { DOCUMENT, isPlatformServer } from '@angular/common';
+import { ThemeManagerService } from '@v/themes';
 
 @Component({
   imports: [RouterModule, VButtonComponent],
@@ -18,6 +20,8 @@ import { DOCUMENT, isPlatformServer } from '@angular/common';
 export class AppComponent implements OnInit {
   renderer2: Renderer2 = inject(Renderer2);
   doc: Document = inject(DOCUMENT);
+  themeManager = inject(ThemeManagerService);
+  elRef = inject(ElementRef);
 
   protected platformId = inject(PLATFORM_ID);
   protected isServer: boolean = isPlatformServer(this.platformId);
@@ -29,6 +33,7 @@ export class AppComponent implements OnInit {
   title = 'lib-ssr';
 
   ngOnInit() {
+    this.themeManager.apply(V_VARS_THEME, this.elRef);
     if (this.isServer) {
       return;
     }
