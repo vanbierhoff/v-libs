@@ -23,7 +23,7 @@ export class ThemeManagerService {
   protected isServer: boolean = isPlatformServer(this.platformId);
 
   constructor() {
-    const linkedThemes = this.ssrHydrator.hydrateTheme();
+    const linkedThemes = this.ssrHydrator.hydrateThemes();
     if (linkedThemes) {
       this.linkedTheme = linkedThemes;
     }
@@ -105,6 +105,7 @@ export class ThemeManagerService {
       await this.themeData.loadCssResource(theme);
 
     // TODO сейвить стили как строку в linked и аплаить без асинхронности
+    // Как выше на IsThemeLink
     if (cssResource.type === 'style') {
       this.setAttribute(elRef, 'style', toStyleFormat(cssResource.value));
       return;

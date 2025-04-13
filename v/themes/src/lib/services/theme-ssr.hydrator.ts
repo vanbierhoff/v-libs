@@ -29,7 +29,7 @@ export class ThemeSsrHydrator {
     console.log('savedstate', this.transferState.get(state, []));
   }
 
-  public hydrateTheme(): Map<string, LinkedThemeInterface> | void {
+  public hydrateThemes(): Map<string, LinkedThemeInterface> | void {
     const hydratedTheme: Map<string, LinkedThemeInterface> = new Map<
       string,
       LinkedThemeInterface

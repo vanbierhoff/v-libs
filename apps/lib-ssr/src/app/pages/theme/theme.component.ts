@@ -5,6 +5,7 @@ import {
   VInputComponent,
   VInputCompositionComponent,
   VLabelDirective,
+  VTextareaComponent,
 } from '@v/f-ui';
 
 @Component({
@@ -14,6 +15,7 @@ import {
     VInputComponent,
     VInputCompositionComponent,
     VLabelDirective,
+    VTextareaComponent,
   ],
   selector: 'app-theme',
   templateUrl: './theme.component.html',
