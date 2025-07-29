@@ -12,7 +12,10 @@
     "publish:task": "cd dist/v/f-ui && npm publish",
     "publish:themes": "cd dist/v/themes && npm publish",
     "------------TESTS": "-----------------------------------------------",
-    "test": ""
+    "test": "",
+
+    "------------BUILD": "-----------------------------------------------",
+    "build-ui": "nx build f-ui"
   },
   "private": true,
   "dependencies": {
