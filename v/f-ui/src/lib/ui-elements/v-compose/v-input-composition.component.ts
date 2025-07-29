@@ -18,10 +18,10 @@ import {
 import { CommonModule } from '@angular/common';
 import { ThemeManagerService } from '@v/themes';
 import {
-  ChildComponentToken,
   HOST_COMPONENT_STRATEGY,
   HostComponent,
-} from '../../as-token/child-component-token';
+  TextFieldChildComponentToken,
+} from '../../as-token/text-field-child-component-token';
 import { V_COMPOSE_INPUT_THEME } from '../../const';
 import { DefaultHostStrategy } from '../../hosts/host-strategies/default-host.strategy';
 import { VControlInterface } from '../../custom-controls/models/v-control.interface';
@@ -64,12 +64,10 @@ export class VInputCompositionComponent implements OnDestroy {
     V_COMPOSE_INPUT_THEME,
   ]);
 
-  public readonly child: Signal<ChildComponentToken | undefined> = contentChild(
-    ChildComponentToken,
-    {
-      read: ChildComponentToken,
-    }
-  );
+  public readonly child: Signal<TextFieldChildComponentToken | undefined> =
+    contentChild(TextFieldChildComponentToken, {
+      read: TextFieldChildComponentToken,
+    });
 
   public viewError: Signal<boolean> = computed(() => {
     const isFocus: boolean | undefined = this.hostStrategy.control?.focusable();
@@ -109,6 +107,7 @@ export class VInputCompositionComponent implements OnDestroy {
       this.child()?.controller;
     if (controller) {
       this.registerControl(controller);
+      this.registerEffRef.destroy();
     }
   });
 

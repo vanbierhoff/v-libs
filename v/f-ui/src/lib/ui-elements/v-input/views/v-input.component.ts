@@ -1,5 +1,6 @@
 import {
   Component,
+  computed,
   effect,
   ElementRef,
   forwardRef,
@@ -10,6 +11,7 @@ import {
   OnInit,
   output,
   OutputEmitterRef,
+  Signal,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -20,10 +22,10 @@ import { vControlFactory } from '../../../custom-controls/v-control.factory';
 import { VControlInterface } from '../../../custom-controls/models/v-control.interface';
 import { V_INPUT_THEME } from '../../../const/theme/v-input.theme';
 import {
-  ChildComponentToken,
   HostComponent,
-} from '../../../as-token/child-component-token';
-import { ValueTransformerSignal } from '../../../shared';
+  TextFieldChildComponentToken,
+} from '../../../as-token/text-field-child-component-token';
+import { ValueTransformerSignal } from '../../../shared/transformers/models/value-transformers.interface';
 
 @Component({
   selector: 'v-input input[vInput]',
@@ -32,13 +34,14 @@ import { ValueTransformerSignal } from '../../../shared';
   templateUrl: './v-input.component.html',
   host: {
     '(input)': 'inputValue($event.target.value)',
+    '[value]': 'computedInputValue()',
     '(focusin)': 'onFocused(true)',
     '[disabled]': 'disabled()',
     '(focusout)': 'onFocused(false)',
   },
   providers: [
     {
-      provide: ChildComponentToken,
+      provide: TextFieldChildComponentToken,
       useExisting: forwardRef(() => VInputComponent),
     },
   ],
@@ -53,10 +56,11 @@ export class VInputComponent implements OnInit, OnDestroy {
   public readonly appearance: InputSignal<string[]> = input<string[]>([
     V_INPUT_THEME,
   ]);
-
   public readonly valueTransformer: InputSignal<
     ValueTransformerSignal<unknown, string>
   > = input();
+
+  public readonly inputEv: OutputEmitterRef<unknown> = output();
 
   public readonly controller: VControlInterface = vControlFactory(
     this.elRef,
@@ -66,7 +70,17 @@ export class VInputComponent implements OnInit, OnDestroy {
     })
   );
 
-  public readonly inputEv: OutputEmitterRef<unknown> = output();
+  protected computedInputValue: Signal<unknown> = computed(() => {
+    let v: unknown;
+    const transformer = this.valueTransformer();
+    if (transformer) {
+      v = transformer(this.value());
+    } else {
+      v = this.value();
+    }
+    this.inputEv.emit(v);
+    return v;
+  });
 
   protected hasApplyTheme: boolean = false;
 

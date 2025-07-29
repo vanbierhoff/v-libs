@@ -9,7 +9,7 @@ import {
   OnDestroy,
   Signal,
 } from '@angular/core';
-import { HostComponent } from '../../as-token/child-component-token';
+import { HostComponent } from '../../as-token/text-field-child-component-token';
 import { ThemeManagerService } from '@v/themes';
 import { V_LABEL_THEME } from '../../const/theme/v-label.theme';
 

@@ -39,9 +39,11 @@ export class VButtonComponent implements OnDestroy {
   @Input() iconPosition: 'left' | 'right' | 'manual' = 'left';
   @Input() icon: TemplateRef<any> | null = null;
 
-  public appearance: InputSignal<string[]> = input<string[]>([V_BUTTON_THEME]);
-  public disabled: InputSignal<true | null> = input<true | null>(null);
-  public type: InputSignal<string> = input<string>('');
+  public readonly appearance: InputSignal<string[]> = input<string[]>([
+    V_BUTTON_THEME,
+  ]);
+  public readonly disabled: InputSignal<true | null> = input<true | null>(null);
+  public readonly type: InputSignal<string> = input<string>('');
 
   public hasApplyTheme: boolean = false;
 
@@ -66,13 +68,13 @@ export class VButtonComponent implements OnDestroy {
     });
   }
 
-  private unApplyTheme(): void {
+  protected unApplyTheme(): void {
     this.appliedTheme.forEach((theme: string) =>
       this.themeManager.unApply(theme, this.elRef)
     );
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.unApplyTheme();
   }
 }

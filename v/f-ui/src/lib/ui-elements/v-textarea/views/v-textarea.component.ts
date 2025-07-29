@@ -5,22 +5,20 @@ import {
   ElementRef,
   forwardRef,
   inject,
-  Inject,
   input,
   InputSignal,
   OnDestroy,
-  OnInit,
-  Optional,
   output,
   OutputEmitterRef,
+  Signal,
   signal,
   WritableSignal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeManagerService } from '@v/themes';
 import { ValueTransformer } from '../../../shared';
-import { FormGroupDirective, NgControl } from '@angular/forms';
-import { ChildComponentToken } from '../../../as-token/child-component-token';
+import { NgControl } from '@angular/forms';
+import { TextFieldChildComponentToken } from '../../../as-token/text-field-child-component-token';
 import { VControlInterface } from '../../../custom-controls/models/v-control.interface';
 import { vControlFactory } from '../../../custom-controls/v-control.factory';
 import { V_TEXTAREA_THEME } from '../../../const';
@@ -41,21 +39,17 @@ import { V_TEXTAREA_THEME } from '../../../const';
   },
   providers: [
     {
-      provide: ChildComponentToken,
+      provide: TextFieldChildComponentToken,
       useExisting: forwardRef(() => VTextareaComponent),
     },
   ],
   styleUrl: './v-textarea.component.scss',
 })
-export class VTextareaComponent implements OnInit, OnDestroy {
+export class VTextareaComponent implements OnDestroy {
   protected elRef: ElementRef = inject(ElementRef);
+  protected themeManager: ThemeManagerService = inject(ThemeManagerService);
 
-  constructor(
-    @Optional()
-    @Inject(FormGroupDirective)
-    readonly formDirective: FormGroupDirective | null,
-    protected themeManager: ThemeManagerService
-  ) {
+  constructor() {
     this.changeThemeEffect();
   }
 
@@ -81,11 +75,10 @@ export class VTextareaComponent implements OnInit, OnDestroy {
 
   public readonly inputEv: OutputEmitterRef<unknown> = output<unknown>();
 
-  protected hasApplyTheme: boolean = false;
+  protected readonly value: WritableSignal<string | number | unknown> =
+    signal('');
 
-  protected value: WritableSignal<string | number | unknown> = signal('');
-
-  protected computedInputValue = computed(() => {
+  protected computedInputValue: Signal<unknown> = computed(() => {
     let v: unknown;
     const transformer = this.transformer();
     if (transformer) {
@@ -97,7 +90,7 @@ export class VTextareaComponent implements OnInit, OnDestroy {
     return v;
   });
 
-  public ngOnInit(): void {}
+  protected hasApplyTheme: boolean = false;
 
   public onFocused(v: boolean) {
     this.controller.focusable.set(v);

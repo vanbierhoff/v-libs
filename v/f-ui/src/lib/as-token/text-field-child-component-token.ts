@@ -10,10 +10,10 @@ export const HOST_COMPONENT_STRATEGY = new InjectionToken<DefaultHostInterface>(
  * Class as token for register ui component
  * The class acts as an interface indicating the available fields and methods
  */
-export abstract class ChildComponentToken {
+export abstract class TextFieldChildComponentToken {
   [x: string]: any;
 
-  public disabled = false;
+  public disabled: boolean = false;
   public controller: VControlInterface | null = null;
 }
 
