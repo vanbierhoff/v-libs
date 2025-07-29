@@ -25,8 +25,4 @@ export abstract class HostComponent {
   [x: string]: any;
 
   public hostStrategy: DefaultHostInterface | null = null;
-
-  registerControl(control: VControlInterface) {}
-
-  registerControlHook() {}
 }

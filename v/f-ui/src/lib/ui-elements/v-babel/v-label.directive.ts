@@ -26,6 +26,11 @@ export class VLabelDirective implements OnDestroy {
     this.changeThemeEffect();
   }
 
+  protected hostComponent: HostComponent | null = inject(HostComponent, {
+    optional: true,
+  });
+  protected themeManager = inject(ThemeManagerService);
+
   public readonly vLabel: InputSignal<string> = input('');
 
   public readonly appearance: InputSignal<string[]> = input<string[]>([
@@ -33,7 +38,7 @@ export class VLabelDirective implements OnDestroy {
   ]);
 
   public filled: Signal<boolean> = computed(() => {
-    const v: unknown = this.hostComponent?.hostStrategy?.control?.changeValue();
+    const v: unknown = this.hostComponent?.hostStrategy?.control?.value();
     if (v !== null && v !== undefined && v !== '') {
       return true;
     }
@@ -45,10 +50,7 @@ export class VLabelDirective implements OnDestroy {
   );
 
   protected elRef = inject(ElementRef);
-  protected hostComponent: HostComponent | null = inject(HostComponent, {
-    optional: true,
-  });
-  protected themeManager = inject(ThemeManagerService);
+
   protected hasApplyTheme: boolean = false;
   protected appliedTheme: string[] = [];
 

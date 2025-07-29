@@ -9,10 +9,10 @@ import {
   ElementRef,
   forwardRef,
   inject,
-  Inject,
   input,
   InputSignal,
   OnDestroy,
+  Signal,
   TemplateRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -47,35 +47,41 @@ import { FormsErrorPipe } from '../../utils/forms-error.pipe';
   ],
 })
 export class VInputCompositionComponent implements OnDestroy {
-  constructor(
-    @Inject(ElementRef) protected elRef: ElementRef,
-    protected themeManager: ThemeManagerService
-  ) {
+  constructor() {
     this.changeThemeEffect();
   }
 
-  public destroyRef: DestroyRef = inject(DestroyRef);
-  public hostStrategy: DefaultHostInterface = inject(HOST_COMPONENT_STRATEGY);
+  protected readonly elRef: ElementRef = inject(ElementRef);
+  protected readonly themeManager: ThemeManagerService =
+    inject(ThemeManagerService);
+
+  public readonly destroyRef: DestroyRef = inject(DestroyRef);
+  public readonly hostStrategy: DefaultHostInterface = inject(
+    HOST_COMPONENT_STRATEGY
+  );
 
   public readonly appearance: InputSignal<string[]> = input<string[]>([
     V_COMPOSE_INPUT_THEME,
   ]);
 
-  public readonly child = contentChild(ChildComponentToken, {
-    read: ChildComponentToken,
-  });
+  public readonly child: Signal<ChildComponentToken | undefined> = contentChild(
+    ChildComponentToken,
+    {
+      read: ChildComponentToken,
+    }
+  );
 
-  public viewError = computed(() => {
-    const isFocus = this.hostStrategy.control?.focusable();
-    return this.hostStrategy.control?.ngControl?.touched && !isFocus;
+  public viewError: Signal<boolean> = computed(() => {
+    const isFocus: boolean | undefined = this.hostStrategy.control?.focusable();
+    return !!(this.hostStrategy?.ngControl?.touched && !isFocus);
   });
-
-  public hasApplyTheme: boolean = false;
 
   public readonly label: InputSignal<string> = input('');
   public readonly errorTpl: InputSignal<TemplateRef<unknown>> = input(
     undefined as unknown as TemplateRef<unknown>
   );
+
+  public hasApplyTheme: boolean = false;
 
   private appliedTheme: string[] = [];
 
@@ -99,16 +105,15 @@ export class VInputCompositionComponent implements OnDestroy {
   }
 
   private registerEffRef: EffectRef = effect(() => {
-    const controller = this.child()?.controller;
+    const controller: VControlInterface | undefined | null =
+      this.child()?.controller;
     if (controller) {
       this.registerControl(controller);
     }
   });
 
   private registerControl(control: VControlInterface): void {
-    this.hostStrategy.destroyRef = this.destroyRef;
-    this.hostStrategy.registerControl(control);
-    this.hostStrategy.registerControlHook();
+    this.hostStrategy.registerControl(control, this.destroyRef);
     this.registerEffRef.destroy();
   }
 

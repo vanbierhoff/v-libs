@@ -1,0 +1,23 @@
+<section>
+
+  <form [formGroup]="form">
+
+    <div vInputCompose>
+      <span vLabel>label</span>
+      <input type="text" vInput formControlName="name">
+    </div>
+
+    <button vButton>my button</button>
+
+  </form>
+
+
+</section>
+
+<div>
+  name value: {{ name | async }}
+
+</div>
+<div>
+  startVal: {{ startValue }}
+</div>

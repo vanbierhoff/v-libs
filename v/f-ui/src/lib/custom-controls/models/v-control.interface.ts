@@ -5,10 +5,12 @@ export interface VControlInterface {
   ngControl: NgControl | null;
 
   focusable: WritableSignal<boolean>;
-  changeValue: WritableSignal<unknown>;
+  value: WritableSignal<unknown>;
   errors: WritableSignal<ValidationErrors | null>;
 
   focus: boolean;
+
+  onChange(v: unknown): void;
 }
 
 export interface VErrorsInterface {

@@ -31,7 +31,7 @@ export const ThemesResolver: (
 export const ThemePreload = async (appliesStyleNames: Array<string>) => {
   const themeService: ThemeManagerService = inject(ThemeManagerService);
   for await (const name of appliesStyleNames) {
-    await themeService.linkThemeCss(name);
+    await themeService.linkThemeAsCssFile(name);
   }
 };
 
@@ -55,6 +55,6 @@ export const ThemesPreloadResolver: (
     return;
   }
   for await (const name of applies) {
-    await themeManager.linkThemeCss(name);
+    await themeManager.linkThemeAsCssFile(name);
   }
 };

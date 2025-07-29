@@ -1,7 +1,12 @@
-import { Component, ElementRef, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostBinding,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ThemeManagerService } from '../../../../../../../../v/themes/src/lib/services/theme-manager.service';
-
+import { ThemeManagerService } from '../../../../../../../../v/themes/src/lib/services/theme-manage.oldr.service';
 
 @Component({
   selector: 'button-one',
@@ -9,25 +14,22 @@ import { ThemeManagerService } from '../../../../../../../../v/themes/src/lib/se
   imports: [CommonModule],
 
   templateUrl: './button-1.component.html',
-  styleUrl: './button-1.component.scss'
+  styleUrl: './button-1.component.scss',
 })
 export class Button1Component implements OnInit, OnDestroy {
-
   constructor(
     protected ElRef: ElementRef,
-    protected theme: ThemeManagerService) {
-  }
-
+    protected theme: ThemeManagerService
+  ) {}
 
   @HostBinding('style.--colorTitle')
   public color: string = 'green';
-
 
   ngOnInit() {
     this.theme.apply('buttonCss', this.ElRef);
   }
 
   ngOnDestroy() {
-    this.theme.unApply('buttonCss');
+    this.theme.unApply('buttonCss', this.ElRef);
   }
 }

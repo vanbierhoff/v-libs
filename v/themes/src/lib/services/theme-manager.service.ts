@@ -6,21 +6,32 @@ import {
   Renderer2,
   RendererFactory2,
 } from '@angular/core';
-import { handleCssFile, toStyleFormat } from './theme-handler';
+import { handleCssFile } from './theme-handler';
 import { DOCUMENT, isPlatformServer } from '@angular/common';
 import { CssResourceInterface } from '../models/css-resource.interface';
-import { removeCssHash } from '../helpers/hash-generator';
 import { ThemeDataService } from './theme-data.service';
 import { AppliesTheme } from '../models/theme-data.interface';
 import { LinkedThemeInterface } from '../models/theme-manager.interface';
 import { ThemeSsrHydrator } from './theme-ssr.hydrator';
+import { StringElementStrategy } from './strategies/style-string.strategy';
+import { StyleElementStrategy } from './strategies/style-element.strategy';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeManagerService {
   protected rendererFactory: RendererFactory2 = inject(RendererFactory2);
+  protected renderer: Renderer2 = this.rendererFactory.createRenderer(
+    null,
+    null
+  );
   protected platformId = inject(PLATFORM_ID);
   protected ssrHydrator: ThemeSsrHydrator = inject(ThemeSsrHydrator);
   protected isServer: boolean = isPlatformServer(this.platformId);
+  protected stringStrategy: StringElementStrategy = new StringElementStrategy(
+    this.renderer
+  );
+  protected styleElStrategy: StyleElementStrategy = new StyleElementStrategy(
+    this.renderer
+  );
 
   constructor() {
     const linkedThemes = this.ssrHydrator.hydrateThemes();
@@ -29,10 +40,6 @@ export class ThemeManagerService {
     }
   }
 
-  protected renderer: Renderer2 = this.rendererFactory.createRenderer(
-    null,
-    null
-  );
   protected themeData: ThemeDataService = inject(ThemeDataService);
   protected doc: Document = inject(DOCUMENT);
   protected linkedTheme: Map<string, LinkedThemeInterface> = new Map<
@@ -40,6 +47,7 @@ export class ThemeManagerService {
     LinkedThemeInterface
   >();
 
+  // добваить метод проверки загрузки темы если загружена - накидывать сихнронно
   public async apply(
     name: string | string[],
     elRef: ElementRef
@@ -61,12 +69,12 @@ export class ThemeManagerService {
     this.removeByNameConsumers(name);
   }
 
-  public async linkThemeCss(name: string) {
+  public async linkThemeAsCssFile(name: string) {
     const applies = this.themeData.getApplyTheme(name);
     if (!applies) {
       return;
     }
-    if (this.isThemeLink(name)) {
+    if (this.isThemeLinked(name)) {
       return;
     }
 
@@ -95,37 +103,49 @@ export class ThemeManagerService {
     if (!theme) {
       return;
     }
-    const hash = name;
-    if (this.isThemeLink(name)) {
-      this.setExistTheme(elRef, hash, name);
+    const hash: string = name;
+    if (this.isThemeLinked(name)) {
+      this.applyOnElementExistTheme(elRef, hash, name);
       return;
     }
     this.linkedTheme.set(name, { consumers: 0 } as LinkedThemeInterface);
     const cssResource: CssResourceInterface =
       await this.themeData.loadCssResource(theme);
 
+    const linkStyleParam = [
+      name,
+      cssResource,
+      theme,
+      this.renderer,
+      this.linkedTheme,
+      elRef,
+      hash,
+    ];
+
     // TODO сейвить стили как строку в linked и аплаить без асинхронности
     // Как выше на IsThemeLink
     if (cssResource.type === 'style') {
-      this.setAttribute(elRef, 'style', toStyleFormat(cssResource.value));
-      return;
+      this.stringStrategy.linkStyle(
+        name,
+        cssResource,
+        theme,
+        this.renderer,
+        this.linkedTheme,
+        elRef,
+        hash
+      );
+    } else {
+      this.styleElStrategy.linkStyle(
+        name,
+        cssResource,
+        theme,
+        this.renderer,
+        this.linkedTheme,
+        elRef,
+        hash
+      );
     }
 
-    const parsedCss = handleCssFile(cssResource.value, hash);
-
-    if (hash) {
-      this.setAttribute(elRef, hash, '');
-    }
-
-    const style: HTMLStyleElement = this.createStyleElement(
-      parsedCss.style,
-      hash
-    );
-
-    this.linkCssFileToDocument(style);
-
-    const linkTheme = this.createLinkTheme(theme, style);
-    this.linkedTheme.set(name, linkTheme);
     this.upConsumers(name);
     if (!this.isServer) {
       return;
@@ -137,11 +157,15 @@ export class ThemeManagerService {
     this.renderer.appendChild(this.doc.head, style);
   }
 
-  protected isThemeLink(name: string): boolean {
+  protected isThemeLinked(name: string): boolean {
     return this.linkedTheme.has(name);
   }
 
-  protected setExistTheme(elRef: ElementRef, hash: string, themeName: string) {
+  protected applyOnElementExistTheme(
+    elRef: ElementRef,
+    hash: string,
+    themeName: string
+  ) {
     if (elRef.nativeElement.hasAttribute(hash)) {
       return;
     }
@@ -200,18 +224,16 @@ export class ThemeManagerService {
   }
 
   protected removeByNameConsumers(name: string): void {
-    const linkedTheme = this.linkedTheme.get(name);
+    const linkedTheme: object | undefined = this.linkedTheme.get(name);
     if (!linkedTheme) {
       return;
     }
-    linkedTheme.consumers -= 1;
-    const count = linkedTheme.consumers;
 
-    if (count === 0) {
-      linkedTheme.styleData.style.remove();
-      removeCssHash(linkedTheme.styleData.linkName);
-      this.linkedTheme.delete(name);
+    if (Object.prototype.hasOwnProperty.call(linkedTheme, 'styleAsString')) {
+      this.stringStrategy.removeByNameConsumers(name, this.linkedTheme);
+      return;
     }
+    this.styleElStrategy.removeByNameConsumers(name, this.linkedTheme);
   }
 
   protected getThemeLinkName(theme: AppliesTheme, name: string): string {

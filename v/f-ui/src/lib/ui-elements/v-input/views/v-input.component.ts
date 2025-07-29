@@ -1,6 +1,5 @@
 import {
   Component,
-  computed,
   effect,
   ElementRef,
   forwardRef,
@@ -16,15 +15,15 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeManagerService } from '@v/themes';
-import { ValueTransformer } from '../../../shared';
 import { NgControl } from '@angular/forms';
-import { vBaseControlFactory } from '../../../custom-controls/v-base-control.factory';
+import { vControlFactory } from '../../../custom-controls/v-control.factory';
 import { VControlInterface } from '../../../custom-controls/models/v-control.interface';
 import { V_INPUT_THEME } from '../../../const/theme/v-input.theme';
 import {
   ChildComponentToken,
   HostComponent,
 } from '../../../as-token/child-component-token';
+import { ValueTransformerSignal } from '../../../shared';
 
 @Component({
   selector: 'v-input input[vInput]',
@@ -33,7 +32,6 @@ import {
   templateUrl: './v-input.component.html',
   host: {
     '(input)': 'inputValue($event.target.value)',
-    '[value]': 'computedInputValue()',
     '(focusin)': 'onFocused(true)',
     '[disabled]': 'disabled()',
     '(focusout)': 'onFocused(false)',
@@ -56,11 +54,11 @@ export class VInputComponent implements OnInit, OnDestroy {
     V_INPUT_THEME,
   ]);
 
-  public readonly transformer: InputSignal<
-    ValueTransformer<unknown, unknown> | any
-  > = input(null);
+  public readonly valueTransformer: InputSignal<
+    ValueTransformerSignal<unknown, string>
+  > = input();
 
-  public readonly controller: VControlInterface = vBaseControlFactory(
+  public readonly controller: VControlInterface = vControlFactory(
     this.elRef,
     inject(NgControl, {
       optional: true,
@@ -73,7 +71,7 @@ export class VInputComponent implements OnInit, OnDestroy {
   protected hasApplyTheme: boolean = false;
 
   constructor() {
-    this.setEffects();
+    this.createAppearanceEffect();
   }
 
   protected host: HostComponent | null = inject(HostComponent, {
@@ -84,37 +82,30 @@ export class VInputComponent implements OnInit, OnDestroy {
 
   protected value: WritableSignal<string | number | unknown> = signal('');
 
-  protected computedInputValue = computed(() => {
-    const transformer: ValueTransformer<unknown, unknown> | null =
-      this.transformer();
-    const v = transformer ? transformer(this.value()) : this.value();
-    this.inputEv.emit(v);
-    return v;
-  });
-
   public inputValue(v: unknown) {
     this.value.set(v);
-    this.controller.changeValue.set(v);
+    this.controller.onChange(v);
   }
 
-  public onFocused(v: boolean) {
+  public onFocused(v: boolean): void {
     this.controller.focusable.set(v);
     this.controller.focus = v;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.setFirstValue();
   }
 
-  private setFirstValue() {
-    const v = this.computedInputValue();
-    this.controller.ngControl?.control?.setValue(v);
+  private setFirstValue(): void {
+    const v: unknown =
+      this.controller.ngControl?.control?.value ||
+      this.controller.ngControl?.value;
     if (v) {
       this.inputValue(v);
     }
   }
 
-  private setEffects() {
+  private createAppearanceEffect(): void {
     effect(async () => {
       if (!this.appearance().length) {
         return;

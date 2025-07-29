@@ -22,7 +22,7 @@ import { ValueTransformer } from '../../../shared';
 import { FormGroupDirective, NgControl } from '@angular/forms';
 import { ChildComponentToken } from '../../../as-token/child-component-token';
 import { VControlInterface } from '../../../custom-controls/models/v-control.interface';
-import { vBaseControlFactory } from '../../../custom-controls/v-base-control.factory';
+import { vControlFactory } from '../../../custom-controls/v-control.factory';
 import { V_TEXTAREA_THEME } from '../../../const';
 
 @Component({
@@ -71,7 +71,7 @@ export class VTextareaComponent implements OnInit, OnDestroy {
     ValueTransformer<unknown, unknown> | null | undefined
   > = input();
 
-  public readonly controller: VControlInterface = vBaseControlFactory(
+  public readonly controller: VControlInterface = vControlFactory(
     this.elRef,
     inject(NgControl, {
       optional: true,
@@ -106,7 +106,7 @@ export class VTextareaComponent implements OnInit, OnDestroy {
 
   public inputValue(v: unknown) {
     this.value.set(v);
-    this.controller.changeValue.set(v);
+    this.controller.value.set(v);
   }
 
   protected appliedTheme: string[] = [];

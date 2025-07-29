@@ -5,10 +5,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgControl } from '@angular/forms';
 
 export class DefaultHostStrategy implements DefaultHostInterface {
-  [x: string]: any;
-
-  public hostStrategy: DefaultHostStrategy = {} as DefaultHostStrategy;
-  public destroyRef: DestroyRef | undefined;
+  public hostStrategy: DefaultHostStrategy = this;
+  private destroyRef: DestroyRef | undefined;
   protected isSetControl = false;
   protected setControlCounter = 0;
 
@@ -22,27 +20,32 @@ export class DefaultHostStrategy implements DefaultHostInterface {
     return this._control?.ngControl || null;
   }
 
-  registerControl(control: VControlInterface) {
+  public registerControl(
+    control: VControlInterface,
+    destroyRef: DestroyRef
+  ): void {
     if (this.setControlCounter >= 1) {
       console.error('Controller re-registration is not allowed');
       return;
     }
 
-    if (!this.isSetControl) {
-      this._control = control;
-      this.isSetControl = true;
-      this.setControlCounter += 1;
-      this.registerControlHook();
+    if (this.isSetControl) {
+      return;
     }
-    return this._control;
+
+    this.destroyRef = destroyRef;
+    this._control = control;
+    this.isSetControl = true;
+    this.setControlCounter += 1;
+    this.registerControlHook();
   }
 
-  registerControlHook() {
+  public registerControlHook(): void {
     this.observeErrors();
   }
 
-  observeErrors() {
-    this.control?.ngControl?.valueChanges
+  private observeErrors(): void {
+    this?.ngControl?.valueChanges
       ?.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((_: unknown) => {
         this.control?.errors.set(this.control?.ngControl?.errors || null);

@@ -6,9 +6,6 @@ export interface DefaultHostInterface {
   control: VControlInterface | null;
   ngControl: NgControl | null;
   hostStrategy: DefaultHostInterface | null;
-  destroyRef: DestroyRef | any | undefined;
 
-  registerControl(control: VControlInterface): void;
-
-  registerControlHook(): void;
+  registerControl(control: VControlInterface, dRef: DestroyRef): void;
 }

@@ -2,11 +2,11 @@
   position: relative;
   --broder-rad: 4px;
   --border-color: var(--baseColor);
-  --textColor: #01152d;;
   --focus-color: #165cab;
   --fontSize: 14px;
   font-size: var(--fontSize);
   color: var(--textColor);
+  caret-color: var(--caretColor);
   border: 2px solid var(--border-color);
 }
 

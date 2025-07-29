@@ -6,4 +6,9 @@ export const appRoutes: Route[] = [
     loadComponent: () =>
       import('./pages/theme/theme.component').then((m) => m.ThemeComponent),
   },
+  {
+    path: 'form',
+    loadComponent: () =>
+      import('./pages/forms/form.component').then((m) => m.FormComponent),
+  },
 ];
